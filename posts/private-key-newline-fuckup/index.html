@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang='en' dir='auto'><head>
+  <meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<meta name='description' content='
+A short story about wasting a day on a single newline at the end of a private key.
+'>
+
+<meta property='og:title' content='How I fucked up with a private key and newlines • madhead'>
+<meta property='og:description' content='
+A short story about wasting a day on a single newline at the end of a private key.
+'>
+<meta property='og:url' content='https://madhead.me/posts/private-key-newline-fuckup/'>
+<meta property='og:site_name' content='madhead'>
+<meta property='og:type' content='article'><meta property='article:section' content='posts'><meta property='article:tag' content='ssh'><meta property='article:tag' content='fuckup'><meta property='article:tag' content='rant'><meta property='article:published_time' content='2021-02-09T23:00:00&#43;03:00'/><meta property='article:modified_time' content='2021-02-09T23:00:00&#43;03:00'/><meta name='twitter:card' content='summary'>
+
+<meta name="generator" content="Hugo 0.79.1" />
+
+  <title>How I fucked up with a private key and newlines • madhead</title>
+  <link rel='canonical' href='https://madhead.me/posts/private-key-newline-fuckup/'>
+  
+  
+  <link rel='icon' href='/favicon.ico'>
+<link rel='stylesheet' href='/assets/css/main.eecc3c56.css'><style>
+:root{--color-accent:#000000;}
+</style>
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-101212543-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  
+
+</head>
+<body class='page type-posts has-sidebar'>
+
+  <div class='site'><div id='sidebar' class='sidebar'>
+  <a class='screen-reader-text' href='#main-menu'>Skip to Main Menu</a>
+
+  <div class='container'><section class='widget widget-about sep-after'>
+  <header>
+    
+    <div class='logo'>
+      <a href='/'>
+        <img src='/images/logo.svg'>
+      </a>
+    </div>
+    
+    <div class='desc'>
+    
+    </div>
+  </header>
+
+</section>
+<section class='widget widget-sidebar_menu sep-after'><nav id='sidebar-menu' class='menu sidebar-menu' aria-label='Sidebar Menu'>
+    <div class='container'>
+      <ul><li class='item'>
+  <a href='/posts/'>posts</a></li><li class='item'>
+  <a href='/tags/'>tags</a></li><li class='item'>
+  <a href='https://stackoverflow.com/cv/madhead'>cv</a></li></ul>
+    </div>
+  </nav>
+
+</section>
+
+<section class='widget widget-sidebar_menu sep-after'>
+  <nav id='sidebar-menu' class='menu sidebar-menu' aria-label='Sidebar Menu'>
+    <div class='container'>
+      <ul><li class='item'>
+          <a href='https://ru.madhead.me/'>RU</a>
+        </li></ul>
+    </div>
+  </nav>
+</section><section class='widget widget-social_menu sep-after'><nav aria-label='Social Menu'>
+    <ul><li>
+        <a href='mailto:siarhei.krukau@gmail.com' target='_blank' rel='noopener me'>
+          <span class='screen-reader-text'>Contact via Email</span><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+  <polyline points="22,6 12,13 2,6"/>
+  
+</svg>
+</a>
+      </li><li>
+        <a href='https://gitlab.com/madhead' target='_blank' rel='noopener me'>
+          <span class='screen-reader-text'>Open Gitlab account in new tab</span><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <path d="M22.65 14.39L12 22.13 1.35 14.39a.84.84 0 0 1-.3-.94l1.22-3.78 2.44-7.51A.42.42 0 0 1 4.82 2a.43.43 0 0 1 .58 0 .42.42 0 0 1 .11.18l2.44 7.49h8.1l2.44-7.51A.42.42 0 0 1 18.6 2a.43.43 0 0 1 .58 0 .42.42 0 0 1 .11.18l2.44 7.51L23 13.45a.84.84 0 0 1-.35.94z"/>
+  
+</svg>
+</a>
+      </li><li>
+        <a href='https://github.com/madhead' target='_blank' rel='noopener me'>
+          <span class='screen-reader-text'>Open Github account in new tab</span><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+  
+</svg>
+</a>
+      </li><li>
+        <a href='https://stackoverflow.com/users/750510' target='_blank' rel='noopener me'>
+          <span class='screen-reader-text'>Open Stackoverflow account in new tab</span><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <line x1="3.472" y1="18.689" x2="16.612" y2="18.689" />
+  <line x1="4.017" y1="12.715" x2="16.884" y2="15.404" />
+  <line x1="5.991" y1="6.673" x2="17.906" y2="12.238" />
+  <line x1="9.582" y1="1.021" x2="19.692" y2="9.430" />
+  
+</svg>
+</a>
+      </li><li>
+        <a href='https://linkedin.com/in/krukaus' target='_blank' rel='noopener me'>
+          <span class='screen-reader-text'>Open Linkedin account in new tab</span><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+  <rect x="2" y="9" width="4" height="12"/>
+  <circle cx="4" cy="4" r="2"/>
+  
+</svg>
+</a>
+      </li><li>
+        <a href='https://instagram.com/m.a.d.h.e.a.d' target='_blank' rel='noopener me'>
+          <span class='screen-reader-text'>Open Instagram account in new tab</span><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+  <line x1="17.5" y1="6.5" x2="17.5" y2="6.5"/>
+  
+</svg>
+</a>
+      </li><li>
+        <a href='https://www.youtube.com/channel/UCO2UZ6hUzjn9XQIdwwkcXJQ' target='_blank' rel='noopener me'>
+          <span class='screen-reader-text'>Open Youtube account in new tab</span><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z" />
+  <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" />
+  
+</svg>
+</a>
+      </li><li>
+        <a href='https://twitter.com/m_a_d_h_e_a_d' target='_blank' rel='noopener me'>
+          <span class='screen-reader-text'>Open Twitter account in new tab</span><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/>
+  
+</svg>
+</a>
+      </li></ul>
+  </nav>
+</section></div>
+
+  <div class='sidebar-overlay'></div>
+</div><div class='main'><nav id='main-menu' class='menu main-menu' aria-label='Main Menu'>
+  <div class='container'>
+    <a class='screen-reader-text' href='#content'>Skip to Content</a>
+
+<button id='sidebar-toggler' class='sidebar-toggler' aria-controls='sidebar'>
+  <span class='screen-reader-text'>Toggle Sidebar</span>
+  <span class='open'><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <line x1="3" y1="12" x2="21" y2="12" />
+  <line x1="3" y1="6" x2="21" y2="6" />
+  <line x1="3" y1="18" x2="21" y2="18" />
+  
+</svg>
+</span>
+  <span class='close'><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <line x1="18" y1="6" x2="6" y2="18" />
+  <line x1="6" y1="6" x2="18" y2="18" />
+  
+</svg>
+</span>
+</button>
+    <ul></ul>
+  </div>
+</nav><div class='header-widgets'>
+        <div class='container'></div>
+      </div>
+
+      <header id='header' class='header site-header'>
+        <div class='container sep-after'>
+          <div class='header-info'><p class='site-title title'>madhead</p><p class='desc site-desc'></p>
+          </div>
+        </div>
+      </header>
+
+      <main id='content'>
+
+
+<article lang='en' class='entry'>
+  <header class='header entry-header'>
+  <div class='container sep-after'>
+    <div class='header-info'>
+      <h1 class='title'>How I fucked up with a private key and newlines</h1>
+      
+
+    </div>
+    <div class='entry-meta'>
+  <span class='posted-on'><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+  <line x1="16" y1="2" x2="16" y2="6"/>
+  <line x1="8" y1="2" x2="8" y2="6"/>
+  <line x1="3" y1="10" x2="21" y2="10"/>
+  
+</svg>
+<span class='screen-reader-text'>Posted on </span>
+  <time class='entry-date' datetime='2021-02-09T23:00:00&#43;03:00'>2021-02-09</time>
+</span>
+
+  
+  
+<span class='reading-time'><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <circle cx="12" cy="12" r="10"/>
+  <polyline points="12 6 12 12 15 15"/>
+  
+</svg>
+3 mins to read
+</span>
+
+
+</div>
+
+
+  </div>
+</header>
+
+  
+  
+
+  <div class='container entry-content'>
+  <div class="paragraph">
+<p>A short story about wasting a day on a single newline at the end of a private key.</p>
+</div>
+<div class="paragraph">
+<p>I was trying to set up a CI/CD pipeline with <a href="https://github.com/features/actions">GitHub Actions</a>, more specifically — configure a deployment via SSH.
+Generally, to connect to a server with SSH one needs a key pair: the public key goes to the server’s <code>.ssh/authorized_keys</code> and the private key is used to connect to the server.</p>
+</div>
+<div class="paragraph">
+<p>So, I’ve generated a key pair with a command like <code>ssh-keygen -b 4096</code>.</p>
+</div>
+<div class="paragraph">
+<p>I’ve added the public key to the target server and tried to connect with a new key — <em>everything was working on my machine</em>.</p>
+</div>
+<div class="paragraph">
+<p>Then I had to put the private key somewhere on GitHub so I could use it in a workflow.
+GitHub doesn’t support files as secrets, only strings.
+So, I’ve copied my private key and pasted it as a secret.</p>
+</div>
+<div class="paragraph">
+<p>Like that:</p>
+</div>
+<div class="paragraph">
+<figure class="align-center">
+    <img src="//storage.googleapis.com/madheadme-static/posts/private-key-newline-fuckup/001.png"/> 
+</figure>
+
+</div>
+<div class="paragraph">
+<p>Note that cursor at the end of the last line of the secret.</p>
+</div>
+<div class="paragraph">
+<p>Then I used some <a href="https://stackoverflow.com/a/49418406/750510">black magic</a> to save this secret to a file:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yml" data-lang="yml">- run: printf %s &#34;$DEPLOYMENT_KEY&#34; &gt; ~/.ssh/deployment_key
+  shell: bash
+  env:
+    DEPLOYMENT_KEY: ${{ secrets.DEPLOYMENT_KEY }}
+- run: chmod 600 ~/.ssh/deployment_key</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>…spending like an hour learning the importance of double quotes…</p>
+</div>
+<div class="paragraph">
+<p>Finally, I got my key in <code>~/.ssh/deployment_key</code> and it looked fine.
+To check that, I’ve <a href="https://docs.github.com/en/actions/guides/storing-workflow-data-as-artifacts">stored it as an artifact</a>, downloaded that artifact at the end of the workflow, and checked the key manually.</p>
+</div>
+<div class="paragraph">
+<p>But when I tried to use that key with Ansible to connect to a server I got a really strange error message:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>fatal: [42.42.42.42]: UNREACHABLE! =&gt; {&#34;changed&#34;: false, &#34;msg&#34;: &#34;Failed to connect to the host via ssh: Warning: Permanently added &#39;42.42.42.42&#39; (ECDSA) to the list of known hosts.\r\nLoad key \&#34;/home/runner/.ssh/deployment_key\&#34;: invalid format\r\nubuntu@42.42.42.42: Permission denied (publickey).&#34;, &#34;unreachable&#34;: true}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>I was really surprised to see that &#34;invalid format&#34; and &#34;permission denied&#34;. And the shit hit the fan.</p>
+</div>
+<div class="paragraph">
+<p>I’ve increased Ansible’s logging to the most verbose level, but it wasn’t informative, just more text with the same message at the end.</p>
+</div>
+<div class="paragraph">
+<p>I’ve googled those errors and double-checked <a href="https://serverfault.com/a/854212/151519">the number of hyphens</a> in &#34;BEGIN OPENSSH PRIVATE KEY&#34; line.</p>
+</div>
+<div class="paragraph">
+<p>I’ve generated a new key a few times.</p>
+</div>
+<div class="paragraph">
+<p>I’ve tried RSA, ECDSA, and ED25519 algorithms.</p>
+</div>
+<div class="paragraph">
+<p>I’ve ensured <a href="https://stackoverflow.com/a/9270753/750510">the permissions</a> on the key are <code>0600</code>, and even tried <code>0400</code>.</p>
+</div>
+<div class="paragraph">
+<p>No luck.</p>
+</div>
+<div class="paragraph">
+<p>At the very bottom of my despair, I ended up reading an article about <a href="https://en.wikipedia.org/wiki/Privacy-Enhanced_Mail">PEM file format</a> on Wikipedia, trying to find the answer.
+From there I’ve jumped to the <a href="https://tools.ietf.org/html/rfc7468">RFC 7468</a> and tried to understand its <a href="https://en.wikipedia.org/wiki/Backus%E2%80%93Naur_form">BNF</a> description.</p>
+</div>
+<div class="paragraph">
+<figure class="align-center">
+    <img src="//storage.googleapis.com/madheadme-static/posts/private-key-newline-fuckup/002.png"/> 
+</figure>
+
+</div>
+<div class="paragraph">
+<p>I’ve checked the <a href="https://tools.ietf.org/html/rfc1421">RFC 1421</a> and it mentioned CRLF at the end of the <code>-----END BLA-BLA-BLA-----</code> line.</p>
+</div>
+<div class="paragraph">
+<p>What a surprise!</p>
+</div>
+<div class="paragraph">
+<p>I’ve updated the secret on GitHub one last time, making sure that there is a newline and the end of it.</p>
+</div>
+<div class="paragraph">
+<p>And it fixed the error, the deployment proceeded. 😌</p>
+</div>
+<div class="paragraph">
+<p>Let me end this rant with a <a href="https://youtu.be/zNMpSVorNr0?t=26">scene</a> from the &#34;Atomic Blonde&#34;, where David Percival expresses his love to Berlin, moments before being mortally shot. 🤬</p>
+</div>
+<div class="paragraph">
+<figure class="align-center">
+    <img src="//storage.googleapis.com/madheadme-static/posts/private-key-newline-fuckup/003.png"/> 
+</figure>
+
+</div>
+</div>
+
+  
+<footer class='entry-footer'>
+  <div class='container sep-before'><div class='tags'><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <path d="M20.59,13.41l-7.17,7.17a2,2,0,0,1-2.83,0L2,12V2H12l8.59,8.59A2,2,0,0,1,20.59,13.41Z"/>
+  <line x1="7" y1="7" x2="7" y2="7"/>
+  
+</svg>
+<span class='screen-reader-text'>Tags: </span><a class='tag' href='/tags/ssh/'>ssh</a>, <a class='tag' href='/tags/fuckup/'>fuckup</a>, <a class='tag' href='/tags/rant/'>rant</a></div>
+
+  </div>
+</footer>
+
+
+</article>
+
+
+<section id='comments' class='comments'>
+  <div class='container sep-before'>
+    <div class='comments-area'><div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "madhead-me" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+  </div>
+</section>
+
+      </main>
+
+      <footer id='footer' class='footer'>
+        <div class='container sep-before'><div class='copyright'>
+  <p></p>
+</div>
+
+        </div>
+      </footer>
+
+    </div>
+  </div><script>window.__assets_js_src="/assets/js/"</script>
+
+<script src='/assets/js/main.f54bd0ac.js'></script>
+
+</body>
+
+</html>
+

@@ -1,0 +1,406 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on madhead</title>
+    <link>https://madhead.me/tags/</link>
+    <description>Recent content in Tags on madhead</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Thu, 27 May 2021 22:19:00 +0200</lastBuildDate><atom:link href="https://madhead.me/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>bash magic</title>
+      <link>https://madhead.me/tags/bash-magic/</link>
+      <pubDate>Thu, 27 May 2021 22:19:00 +0200</pubDate>
+      
+      <guid>https://madhead.me/tags/bash-magic/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>linux</title>
+      <link>https://madhead.me/tags/linux/</link>
+      <pubDate>Thu, 27 May 2021 22:19:00 +0200</pubDate>
+      
+      <guid>https://madhead.me/tags/linux/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>ci</title>
+      <link>https://madhead.me/tags/ci/</link>
+      <pubDate>Sun, 28 Mar 2021 00:30:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/tags/ci/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>github actions</title>
+      <link>https://madhead.me/tags/github-actions/</link>
+      <pubDate>Sun, 28 Mar 2021 00:30:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/tags/github-actions/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>pet projects</title>
+      <link>https://madhead.me/tags/pet-projects/</link>
+      <pubDate>Sun, 28 Mar 2021 00:30:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/tags/pet-projects/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>telegram</title>
+      <link>https://madhead.me/tags/telegram/</link>
+      <pubDate>Tue, 16 Mar 2021 09:00:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/tags/telegram/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>gradle</title>
+      <link>https://madhead.me/tags/gradle/</link>
+      <pubDate>Sat, 27 Feb 2021 18:00:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/tags/gradle/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>maven</title>
+      <link>https://madhead.me/tags/maven/</link>
+      <pubDate>Sat, 27 Feb 2021 18:00:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/tags/maven/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>rant</title>
+      <link>https://madhead.me/tags/rant/</link>
+      <pubDate>Sat, 27 Feb 2021 18:00:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/tags/rant/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>fuckup</title>
+      <link>https://madhead.me/tags/fuckup/</link>
+      <pubDate>Tue, 09 Feb 2021 23:00:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/tags/fuckup/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>ssh</title>
+      <link>https://madhead.me/tags/ssh/</link>
+      <pubDate>Tue, 09 Feb 2021 23:00:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/tags/ssh/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>ansible</title>
+      <link>https://madhead.me/tags/ansible/</link>
+      <pubDate>Mon, 08 Feb 2021 21:00:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/tags/ansible/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>docker</title>
+      <link>https://madhead.me/tags/docker/</link>
+      <pubDate>Thu, 24 Dec 2020 22:05:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/tags/docker/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>dot</title>
+      <link>https://madhead.me/tags/dot/</link>
+      <pubDate>Thu, 24 Dec 2020 22:05:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/tags/dot/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>graphviz</title>
+      <link>https://madhead.me/tags/graphviz/</link>
+      <pubDate>Thu, 24 Dec 2020 22:05:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/tags/graphviz/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>kafka</title>
+      <link>https://madhead.me/tags/kafka/</link>
+      <pubDate>Thu, 18 Jun 2020 09:00:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/tags/kafka/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>kotlin</title>
+      <link>https://madhead.me/tags/kotlin/</link>
+      <pubDate>Thu, 18 Jun 2020 09:00:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/tags/kotlin/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>java</title>
+      <link>https://madhead.me/tags/java/</link>
+      <pubDate>Wed, 27 May 2020 09:00:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/tags/java/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>redis</title>
+      <link>https://madhead.me/tags/redis/</link>
+      <pubDate>Wed, 11 Mar 2020 09:00:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/tags/redis/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>detekt</title>
+      <link>https://madhead.me/tags/detekt/</link>
+      <pubDate>Wed, 12 Feb 2020 09:00:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/tags/detekt/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>aws</title>
+      <link>https://madhead.me/tags/aws/</link>
+      <pubDate>Thu, 26 Sep 2019 09:00:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/tags/aws/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>junit</title>
+      <link>https://madhead.me/tags/junit/</link>
+      <pubDate>Thu, 26 Sep 2019 09:00:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/tags/junit/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>lifehack</title>
+      <link>https://madhead.me/tags/lifehack/</link>
+      <pubDate>Tue, 20 Aug 2019 09:00:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/tags/lifehack/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>opensearch</title>
+      <link>https://madhead.me/tags/opensearch/</link>
+      <pubDate>Tue, 20 Aug 2019 09:00:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/tags/opensearch/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>git</title>
+      <link>https://madhead.me/tags/git/</link>
+      <pubDate>Tue, 23 Jul 2019 09:00:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/tags/git/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>aws lambda</title>
+      <link>https://madhead.me/tags/aws-lambda/</link>
+      <pubDate>Fri, 05 Apr 2019 22:02:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/tags/aws-lambda/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>aws api gateway</title>
+      <link>https://madhead.me/tags/aws-api-gateway/</link>
+      <pubDate>Tue, 13 Nov 2018 21:00:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/tags/aws-api-gateway/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>jfrog cli</title>
+      <link>https://madhead.me/tags/jfrog-cli/</link>
+      <pubDate>Sun, 16 Sep 2018 02:31:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/tags/jfrog-cli/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>aws cli</title>
+      <link>https://madhead.me/tags/aws-cli/</link>
+      <pubDate>Sat, 15 Sep 2018 17:14:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/tags/aws-cli/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>nvidia</title>
+      <link>https://madhead.me/tags/nvidia/</link>
+      <pubDate>Sun, 19 Aug 2018 01:42:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/tags/nvidia/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>kde</title>
+      <link>https://madhead.me/tags/kde/</link>
+      <pubDate>Sat, 18 Aug 2018 22:01:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/tags/kde/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>back to the future</title>
+      <link>https://madhead.me/tags/back-to-the-future/</link>
+      <pubDate>Sun, 12 Aug 2018 04:58:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/tags/back-to-the-future/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>inkscape</title>
+      <link>https://madhead.me/tags/inkscape/</link>
+      <pubDate>Sun, 12 Aug 2018 04:58:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/tags/inkscape/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>jfuture 2018</title>
+      <link>https://madhead.me/tags/jfuture-2018/</link>
+      <pubDate>Sun, 12 Aug 2018 04:58:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/tags/jfuture-2018/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>vector graphics</title>
+      <link>https://madhead.me/tags/vector-graphics/</link>
+      <pubDate>Sun, 12 Aug 2018 04:58:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/tags/vector-graphics/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>bash</title>
+      <link>https://madhead.me/tags/bash/</link>
+      <pubDate>Sat, 07 Jul 2018 05:24:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/tags/bash/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>magic</title>
+      <link>https://madhead.me/tags/magic/</link>
+      <pubDate>Wed, 04 Jul 2018 04:47:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/tags/magic/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>one-liner</title>
+      <link>https://madhead.me/tags/one-liner/</link>
+      <pubDate>Wed, 04 Jul 2018 04:47:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/tags/one-liner/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>windows</title>
+      <link>https://madhead.me/tags/windows/</link>
+      <pubDate>Wed, 21 Mar 2018 16:50:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/tags/windows/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>chef</title>
+      <link>https://madhead.me/tags/chef/</link>
+      <pubDate>Sun, 17 Sep 2017 01:10:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/tags/chef/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>kitchen</title>
+      <link>https://madhead.me/tags/kitchen/</link>
+      <pubDate>Sun, 17 Sep 2017 01:10:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/tags/kitchen/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>squid</title>
+      <link>https://madhead.me/tags/squid/</link>
+      <pubDate>Sun, 17 Sep 2017 01:10:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/tags/squid/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>vagrant</title>
+      <link>https://madhead.me/tags/vagrant/</link>
+      <pubDate>Sun, 17 Sep 2017 01:10:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/tags/vagrant/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>kotlin/native</title>
+      <link>https://madhead.me/tags/kotlin/native/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://madhead.me/tags/kotlin/native/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

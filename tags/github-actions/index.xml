@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>github actions on madhead</title>
+    <link>https://madhead.me/tags/github-actions/</link>
+    <description>Recent content in github actions on madhead</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Sun, 28 Mar 2021 00:30:00 +0300</lastBuildDate><atom:link href="https://madhead.me/tags/github-actions/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Reading Java properties in GitHub Actions</title>
+      <link>https://madhead.me/posts/read-java-properties/</link>
+      <pubDate>Sun, 28 Mar 2021 00:30:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/posts/read-java-properties/</guid>
+      <description>&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;Have you &lt;a href=&#34;../semver-utils&#34;&gt;heard&lt;/a&gt; that GitHub Actions are cool?&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;I just want to share another action with you, that you may find useful in your Java projects.&lt;/p&gt;
+&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>One-stop shop for working with semantic versions in your GitHub Actions workflows</title>
+      <link>https://madhead.me/posts/semver-utils/</link>
+      <pubDate>Thu, 25 Mar 2021 23:00:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/posts/semver-utils/</guid>
+      <description>&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;GitHub Actions are so cool!&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;Check out &lt;a href=&#34;https://youtu.be/-sr9_AItFQQ&#34;&gt;our recording&lt;/a&gt; about them @ &lt;a href=&#34;https://www.youtube.com/channel/UCFMIGfAAUXUqnnNcWpdezJQ&#34;&gt;Ministry of Testing Abu Dhabi&lt;/a&gt; if you want a quick sneak peek, but today I want to self-advertise one of the reusable Actions I made for you.
+And it wasn’t hard at all, thanks to the way they work (although I’m going to &lt;a href=&#34;../../tags/rant&#34;&gt;rant&lt;/a&gt; about that in future articles).&lt;/p&gt;
+&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>Keeping Gradle up-to-date</title>
+      <link>https://madhead.me/posts/keeping-gradle-up-to-date/</link>
+      <pubDate>Tue, 16 Jul 2019 09:00:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/posts/keeping-gradle-up-to-date/</guid>
+      <description>&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;&lt;a href=&#34;https://gradle.org&#34;&gt;Gradle&lt;/a&gt; is an awesome build tool, and I am always looking forward to new versions to enjoy the latest features, performance improvements and bug fixes.
+Actually, forget what I’ve said about bugfixes: Gradle works like a charm.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;I could just check &lt;a href=&#34;http://services.gradle.org/distributions&#34;&gt;Gradle’s distributions&lt;/a&gt; page periodically, or &lt;a href=&#34;https://help.github.com/en/articles/watching-and-unwatching-releases-for-a-repository&#34;&gt;subscribe&lt;/a&gt; to their &lt;a href=&#34;https://github.com/gradle/gradle/releases&#34;&gt;releases&lt;/a&gt; on GitHub to get notified about new versions faster.
+And I actually do that from time to time when I need to know the latest available version.
+But how can I keep Gradle up-to-date in the existing codebases?&lt;/p&gt;
+&lt;/div&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

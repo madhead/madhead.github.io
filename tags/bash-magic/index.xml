@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>bash magic on madhead</title>
+    <link>https://madhead.me/tags/bash-magic/</link>
+    <description>Recent content in bash magic on madhead</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Thu, 27 May 2021 22:19:00 +0200</lastBuildDate><atom:link href="https://madhead.me/tags/bash-magic/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Sony α6300 as a webcam on Manjaro Lunux</title>
+      <link>https://madhead.me/posts/dslr-webcam/</link>
+      <pubDate>Thu, 27 May 2021 22:19:00 +0200</pubDate>
+      
+      <guid>https://madhead.me/posts/dslr-webcam/</guid>
+      <description>Original article.
+ Change USB connection in settings on camera to PC Remote.
+ sudo pacman -S gphoto2 v4l-utils v4l2loopback-dkms ffmpeg sudo modprobe v4l2loopback exclusive_caps=1 max_buffers=2 v4l2-ctl --list-devices gphoto2 --stdout --capture-movie | ffmpeg -i - -vcodec rawvideo -pix_fmt yuv420p -threads 8 -f v4l2 /dev/video&amp;lt;N&amp;gt; #from v4l2-ctl output   </description>
+    </item>
+    
+    <item>
+      <title>AWS Lambda environment variables → AWS SSM parameters in one (long) bash line</title>
+      <link>https://madhead.me/posts/oneliners-1/</link>
+      <pubDate>Wed, 04 Jul 2018 04:47:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/posts/oneliners-1/</guid>
+      <description>&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;So, you want to use AWS SSM parameters instead of AWS Lambda environment variables?
+But you already have dozens of variables defined?&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;Keep calm (tested in production) and use this one-liner.&lt;/p&gt;
+&lt;/div&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

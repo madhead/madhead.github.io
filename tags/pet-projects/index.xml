@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>pet projects on madhead</title>
+    <link>https://madhead.me/tags/pet-projects/</link>
+    <description>Recent content in pet projects on madhead</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Sun, 28 Mar 2021 00:30:00 +0300</lastBuildDate><atom:link href="https://madhead.me/tags/pet-projects/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Reading Java properties in GitHub Actions</title>
+      <link>https://madhead.me/posts/read-java-properties/</link>
+      <pubDate>Sun, 28 Mar 2021 00:30:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/posts/read-java-properties/</guid>
+      <description>&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;Have you &lt;a href=&#34;../semver-utils&#34;&gt;heard&lt;/a&gt; that GitHub Actions are cool?&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;I just want to share another action with you, that you may find useful in your Java projects.&lt;/p&gt;
+&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>One-stop shop for working with semantic versions in your GitHub Actions workflows</title>
+      <link>https://madhead.me/posts/semver-utils/</link>
+      <pubDate>Thu, 25 Mar 2021 23:00:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/posts/semver-utils/</guid>
+      <description>&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;GitHub Actions are so cool!&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;Check out &lt;a href=&#34;https://youtu.be/-sr9_AItFQQ&#34;&gt;our recording&lt;/a&gt; about them @ &lt;a href=&#34;https://www.youtube.com/channel/UCFMIGfAAUXUqnnNcWpdezJQ&#34;&gt;Ministry of Testing Abu Dhabi&lt;/a&gt; if you want a quick sneak peek, but today I want to self-advertise one of the reusable Actions I made for you.
+And it wasn’t hard at all, thanks to the way they work (although I’m going to &lt;a href=&#34;../../tags/rant&#34;&gt;rant&lt;/a&gt; about that in future articles).&lt;/p&gt;
+&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>ImgMacroBot</title>
+      <link>https://madhead.me/posts/imgmacrobot/</link>
+      <pubDate>Tue, 16 Mar 2021 09:00:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/posts/imgmacrobot/</guid>
+      <description>&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;&lt;a href=&#34;https://t.me/ImgMacroBot&#34;&gt;@ImgMacroBot&lt;/a&gt; is an &lt;a href=&#34;https://core.telegram.org/bots/inline&#34;&gt;inline&lt;/a&gt; Telegram bot for &lt;a href=&#34;https://en.wikipedia.org/wiki/Image_macro&#34;&gt;image macros&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>Graphviz @ Docker</title>
+      <link>https://madhead.me/posts/docker-dot/</link>
+      <pubDate>Thu, 24 Dec 2020 22:05:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/posts/docker-dot/</guid>
+      <description>&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;One more article about my Docker images.
+Graphviz doesn’t seem to have an official Docker image, so I’ve created &lt;a href=&#34;https://hub.docker.com/repository/docker/madhead/graphviz&#34;&gt;my own&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>Learning Kafka: Kafka Connect &#43; Wikipedia</title>
+      <link>https://madhead.me/posts/kafka-connect-wikipedia/</link>
+      <pubDate>Thu, 18 Jun 2020 09:00:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/posts/kafka-connect-wikipedia/</guid>
+      <description>&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;I’ve been developing backend software for almost 10 years already and never had a chance to work closely with &lt;a href=&#34;https://kafka.apache.org&#34;&gt;Apache Kafka&lt;/a&gt;.
+After a couple of technical interviews recently I’ve realized that it’s a significant gap in my experience.
+So, I’ve decided to learn it by playing with publicly available Wikipedia’s recent changes event stream.
+Join me in this article, where I’ll be developing a &lt;a href=&#34;https://kafka.apache.org/documentation/#connect&#34;&gt;Kafka Connect&lt;/a&gt; application listening for the latest Wikipedia edits and storing them in a Kafka topic!
+I’ll develop a &lt;a href=&#34;https://kafka.apache.org/documentation/streams&#34;&gt;Kafka Streams&lt;/a&gt; application processing this topic in one of the future articles, so stay tuned.&lt;/p&gt;
+&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>YouTube Watch Later Telegram Bot</title>
+      <link>https://madhead.me/posts/ywltb/</link>
+      <pubDate>Wed, 20 May 2020 09:00:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/posts/ywltb/</guid>
+      <description>&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;&lt;a href=&#34;https://ywltb.herokuapp.com&#34;&gt;YWLTB&lt;/a&gt; — or YouTube Watch Later Telegram Bot — is a Telegram bot that does one simple thing: adds incoming YouTube videos into your &amp;#34;Watch Later&amp;#34; playlist.&lt;/p&gt;
+&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>Redis module in Kotlin/Native</title>
+      <link>https://madhead.me/posts/kotlin-native-redis/</link>
+      <pubDate>Wed, 11 Mar 2020 09:00:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/posts/kotlin-native-redis/</guid>
+      <description>&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;Those of you who have some experience with Redis may know that it is not just a simple cache or a plain key-value store, but actually a data structures server, supporting different kinds of values.
+Out of the box it supports binary-safe strings, sets, lists, hashes, bit arrays, streams and HyperLogLogs.
+Redis also &lt;a href=&#34;https://redis.io/topics/modules-native-types&#34;&gt;provides&lt;/a&gt; a simple C API for custom data structures, called native types.
+Some of the popular community-supported native types are &lt;a href=&#34;https://oss.redislabs.com/redisbloom&#34;&gt;Bloom filters&lt;/a&gt;, &lt;a href=&#34;https://oss.redislabs.com/redisgraph&#34;&gt;graphs&lt;/a&gt;, &lt;a href=&#34;https://oss.redislabs.com/redisjson&#34;&gt;JSON objects&lt;/a&gt;, and &lt;a href=&#34;https://oss.redislabs.com/redisai&#34;&gt;tensors&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;Let’s use Kotlin/Native to implement a simple data structure for parentheses expression validation just because we can.
+But first, I want to say thanks to &lt;a href=&#34;https://research.jetbrains.org/researchers/artdegt&#34;&gt;Artyom Degtyarev&lt;/a&gt; from JetBrains, who helped a lot with Kotlin/Native in &lt;a href=&#34;https://kotlinlang.slack.com&#34;&gt;Kotlin Slack&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>JUnit 5 extensions for AWS</title>
+      <link>https://madhead.me/posts/aws-junit5/</link>
+      <pubDate>Thu, 26 Sep 2019 09:00:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/posts/aws-junit5/</guid>
+      <description>&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;Do you test the code that uses AWS services?
+Do you use JUnit 5 in your tests?
+If you do both, I may have something useful for you.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;&lt;a href=&#34;https://gitlab.com/madhead/aws-junit5&#34;&gt;JUnit 5 extensions for AWS&lt;/a&gt;: a few JUnit 5 extensions that could be useful for testing AWS-related code.
+These extensions can be used to inject clients for AWS service mocks provided by tools like &lt;a href=&#34;https://github.com/localstack/localstack&#34;&gt;localstack&lt;/a&gt;.
+Both AWS Java SDK v 2.x and v 1.x are supported.&lt;/p&gt;
+&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>Kotlin/Native for AWS Lambda</title>
+      <link>https://madhead.me/posts/kotlin-native-lambda/</link>
+      <pubDate>Fri, 05 Apr 2019 22:02:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/posts/kotlin-native-lambda/</guid>
+      <description>&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;Amazon &lt;a href=&#34;https://aws.amazon.com/about-aws/whats-new/2018/11/aws-lambda-now-supports-custom-runtimes-and-layers&#34;&gt;announced&lt;/a&gt; Lambda Runtime API on AWS &lt;a href=&#34;https://reinvent.awsevents.com&#34;&gt;re:Invent&lt;/a&gt; 2018.
+It allows developers, among other things, to build Lambda functions using any technology they want via so-called &lt;a href=&#34;https://docs.aws.amazon.com/lambda/latest/dg/runtimes-custom.html&#34;&gt;Custom Runtimes&lt;/a&gt;.
+Yes, it’s now possible to author a function on PHP, Perl, Pascal (anybody?) or even Bash (they use it in the &lt;a href=&#34;https://docs.aws.amazon.com/lambda/latest/dg/runtimes-walkthrough.html&#34;&gt;docs&lt;/a&gt;)!&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;Nice, isn’t it?
+Let’s build an AWS Lambda function with &lt;a href=&#34;https://kotlinlang.org/docs/reference/native-overview.html&#34;&gt;Kotlin/Native&lt;/a&gt;!&lt;/p&gt;
+&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>Java classes for server-side App Store receipts validation</title>
+      <link>https://madhead.me/posts/appstore-receipts-validator-j/</link>
+      <pubDate>Tue, 13 Nov 2018 21:00:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/posts/appstore-receipts-validator-j/</guid>
+      <description>&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;I’m working on a bunch of apps that need to verify App Store receipts on a JVM-based server.
+The process &lt;a href=&#34;https://developer.apple.com/documentation/appstorereceipts&#34;&gt;is described in Apples’s Documentation Archive&lt;/a&gt; but lacks of any SDK / libraries (at least for JVM).
+So I made one to improve code reuse.&lt;/p&gt;
+&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>Java classes for AWS Lambda Proxy Integration</title>
+      <link>https://madhead.me/posts/lambda-proxy-integration-java/</link>
+      <pubDate>Tue, 13 Nov 2018 20:00:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/posts/lambda-proxy-integration-java/</guid>
+      <description>&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;When I had to &lt;a href=&#34;https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html&#34;&gt;configure Lambda Proxy Integrations in AWS API Gateway&lt;/a&gt; for the second time for a week I thought about extracting Java classes in a small library for later reuse.&lt;/p&gt;
+&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>(Alpine &#43; JFrog CLI) @ Docker</title>
+      <link>https://madhead.me/posts/lv-alpina/</link>
+      <pubDate>Sun, 16 Sep 2018 02:31:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/posts/lv-alpina/</guid>
+      <description>&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;One more article about my Docker images.&lt;/p&gt;
+&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>(Alpine &#43; AWS CLI &#43; Ansible) @ Docker</title>
+      <link>https://madhead.me/posts/awesible/</link>
+      <pubDate>Sat, 15 Sep 2018 17:14:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/posts/awesible/</guid>
+      <description>&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;I’m using &lt;a href=&#34;https://bitbucket.org/product/features/pipelines&#34;&gt;Bitbucket Pipelines&lt;/a&gt; widely for CI/CD at my current position.
+It sucks a little if compare it with &lt;a href=&#34;https://about.gitlab.com/features/gitlab-ci-cd&#34;&gt;GitLab CI/CD&lt;/a&gt;, but I don’t complain.&lt;/p&gt;
+&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>Cleaning Git repos</title>
+      <link>https://madhead.me/posts/gitclean/</link>
+      <pubDate>Thu, 22 Mar 2018 20:19:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/posts/gitclean/</guid>
+      <description>&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;I guess, all popular Git repositories allow you to delete source branch when the PR with this branch is accepted.
+But sometimes you forget to use this option and end up with hundreds or thousands of stale branches across dozens of projects.&lt;/p&gt;
+&lt;/div&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

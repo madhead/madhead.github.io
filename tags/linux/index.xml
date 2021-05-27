@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>linux on madhead</title>
+    <link>https://madhead.me/tags/linux/</link>
+    <description>Recent content in linux on madhead</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Thu, 27 May 2021 22:19:00 +0200</lastBuildDate><atom:link href="https://madhead.me/tags/linux/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Sony α6300 as a webcam on Manjaro Lunux</title>
+      <link>https://madhead.me/posts/dslr-webcam/</link>
+      <pubDate>Thu, 27 May 2021 22:19:00 +0200</pubDate>
+      
+      <guid>https://madhead.me/posts/dslr-webcam/</guid>
+      <description>Original article.
+ Change USB connection in settings on camera to PC Remote.
+ sudo pacman -S gphoto2 v4l-utils v4l2loopback-dkms ffmpeg sudo modprobe v4l2loopback exclusive_caps=1 max_buffers=2 v4l2-ctl --list-devices gphoto2 --stdout --capture-movie | ffmpeg -i - -vcodec rawvideo -pix_fmt yuv420p -threads 8 -f v4l2 /dev/video&amp;lt;N&amp;gt; #from v4l2-ctl output   </description>
+    </item>
+    
+    <item>
+      <title>Kotlin/Native for AWS Lambda</title>
+      <link>https://madhead.me/posts/kotlin-native-lambda/</link>
+      <pubDate>Fri, 05 Apr 2019 22:02:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/posts/kotlin-native-lambda/</guid>
+      <description>&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;Amazon &lt;a href=&#34;https://aws.amazon.com/about-aws/whats-new/2018/11/aws-lambda-now-supports-custom-runtimes-and-layers&#34;&gt;announced&lt;/a&gt; Lambda Runtime API on AWS &lt;a href=&#34;https://reinvent.awsevents.com&#34;&gt;re:Invent&lt;/a&gt; 2018.
+It allows developers, among other things, to build Lambda functions using any technology they want via so-called &lt;a href=&#34;https://docs.aws.amazon.com/lambda/latest/dg/runtimes-custom.html&#34;&gt;Custom Runtimes&lt;/a&gt;.
+Yes, it’s now possible to author a function on PHP, Perl, Pascal (anybody?) or even Bash (they use it in the &lt;a href=&#34;https://docs.aws.amazon.com/lambda/latest/dg/runtimes-walkthrough.html&#34;&gt;docs&lt;/a&gt;)!&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;Nice, isn’t it?
+Let’s build an AWS Lambda function with &lt;a href=&#34;https://kotlinlang.org/docs/reference/native-overview.html&#34;&gt;Kotlin/Native&lt;/a&gt;!&lt;/p&gt;
+&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>Hard lesson from NVIDIA</title>
+      <link>https://madhead.me/posts/nvidia-hard-lesson/</link>
+      <pubDate>Sun, 19 Aug 2018 01:42:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/posts/nvidia-hard-lesson/</guid>
+      <description>&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;Last week I’ve managed to accidentally break my Linux installation.
+Probably, the first time for the last ten years where Linux behaved truly “unstable”.&lt;/p&gt;
+&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>Using Monday as a first day of week in KDE 5</title>
+      <link>https://madhead.me/posts/kde-calendar-monday/</link>
+      <pubDate>Sat, 18 Aug 2018 22:01:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/posts/kde-calendar-monday/</guid>
+      <description>&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;&lt;code&gt;en_US.UTF-8&lt;/code&gt; is a great locale and I am using it for my KDE desktop because it gives me full English UI, whereeas other locales can result in semi-translated UIs.
+But it has some flaws.
+For example, weeks begin on Sunday in USA.
+It’s not how we do here in Europe and it’s really annoying to see Sunday as a first day of week in a calendar widget.
+Unfortunatelly, there is no knob for this setting (or my Google-fu failed me), so let’s fix it in a dirty way.&lt;/p&gt;
+&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>Preserving MongoDB shell history in Docker</title>
+      <link>https://madhead.me/posts/preserving-mongo-history-in-docker/</link>
+      <pubDate>Sat, 07 Jul 2018 05:24:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/posts/preserving-mongo-history-in-docker/</guid>
+      <description>&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;So, you run &lt;code&gt;mongo&lt;/code&gt; in disposable Docker containers and want to preserve shell history?
+Say no more, pal.&lt;/p&gt;
+&lt;/div&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

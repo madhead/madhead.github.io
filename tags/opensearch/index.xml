@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>opensearch on madhead</title>
+    <link>https://madhead.me/tags/opensearch/</link>
+    <description>Recent content in opensearch on madhead</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Tue, 20 Aug 2019 09:00:00 +0300</lastBuildDate><atom:link href="https://madhead.me/tags/opensearch/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>OpenSearch</title>
+      <link>https://madhead.me/posts/awesome-opensearch/</link>
+      <pubDate>Tue, 20 Aug 2019 09:00:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/posts/awesome-opensearch/</guid>
+      <description>&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;I search online every day. I search on Google, StackOverflow, GitHub, Maven Central, Gradle Plugins repository, YouTube and dozen of other sites.
+And, I won’t deny, sometimes I search on Pornhub.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;I bet you search too.&lt;/p&gt;
+&lt;/div&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

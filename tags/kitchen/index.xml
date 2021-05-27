@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>kitchen on madhead</title>
+    <link>https://madhead.me/tags/kitchen/</link>
+    <description>Recent content in kitchen on madhead</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Sun, 17 Sep 2017 01:10:00 +0300</lastBuildDate><atom:link href="https://madhead.me/tags/kitchen/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Speeding up Kitchen converges with Squid</title>
+      <link>https://madhead.me/posts/kitchen-squid/</link>
+      <pubDate>Sun, 17 Sep 2017 01:10:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/posts/kitchen-squid/</guid>
+      <description>&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;One day, you may find yourself smoking too often or drinking a lot of coffee while waiting for the files to be downloaded during provisioning of Vagrant / Kitchen VMs.
+E.g: JDK size is ~200 MB and it may take a dozen of minutes to download during the execution of the &lt;code&gt;java&lt;/code&gt; recipe.
+You can save precious seconds of your life with &lt;a href=&#34;http://www.squid-cache.org&#34;&gt;Squid&lt;/a&gt;.
+Though some configuration is required, it wont take more than 5 minutes.&lt;/p&gt;
+&lt;/div&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

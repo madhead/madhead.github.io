@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>java on madhead</title>
+    <link>https://madhead.me/tags/java/</link>
+    <description>Recent content in java on madhead</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Wed, 27 May 2020 09:00:00 +0300</lastBuildDate><atom:link href="https://madhead.me/tags/java/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>How I fucked up with enum&#39;s hashCode</title>
+      <link>https://madhead.me/posts/enums-fuckup/</link>
+      <pubDate>Wed, 27 May 2020 09:00:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/posts/enums-fuckup/</guid>
+      <description>&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;A short story about a newbie’s mistake I’ve made recently.&lt;/p&gt;
+&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>Java classes for server-side App Store receipts validation</title>
+      <link>https://madhead.me/posts/appstore-receipts-validator-j/</link>
+      <pubDate>Tue, 13 Nov 2018 21:00:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/posts/appstore-receipts-validator-j/</guid>
+      <description>&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;I’m working on a bunch of apps that need to verify App Store receipts on a JVM-based server.
+The process &lt;a href=&#34;https://developer.apple.com/documentation/appstorereceipts&#34;&gt;is described in Apples’s Documentation Archive&lt;/a&gt; but lacks of any SDK / libraries (at least for JVM).
+So I made one to improve code reuse.&lt;/p&gt;
+&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>Java classes for AWS Lambda Proxy Integration</title>
+      <link>https://madhead.me/posts/lambda-proxy-integration-java/</link>
+      <pubDate>Tue, 13 Nov 2018 20:00:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/posts/lambda-proxy-integration-java/</guid>
+      <description>&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;When I had to &lt;a href=&#34;https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html&#34;&gt;configure Lambda Proxy Integrations in AWS API Gateway&lt;/a&gt; for the second time for a week I thought about extracting Java classes in a small library for later reuse.&lt;/p&gt;
+&lt;/div&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

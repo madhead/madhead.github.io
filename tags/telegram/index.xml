@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>telegram on madhead</title>
+    <link>https://madhead.me/tags/telegram/</link>
+    <description>Recent content in telegram on madhead</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Tue, 16 Mar 2021 09:00:00 +0300</lastBuildDate><atom:link href="https://madhead.me/tags/telegram/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>ImgMacroBot</title>
+      <link>https://madhead.me/posts/imgmacrobot/</link>
+      <pubDate>Tue, 16 Mar 2021 09:00:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/posts/imgmacrobot/</guid>
+      <description>&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;&lt;a href=&#34;https://t.me/ImgMacroBot&#34;&gt;@ImgMacroBot&lt;/a&gt; is an &lt;a href=&#34;https://core.telegram.org/bots/inline&#34;&gt;inline&lt;/a&gt; Telegram bot for &lt;a href=&#34;https://en.wikipedia.org/wiki/Image_macro&#34;&gt;image macros&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>Hosting multiple Telegram bots with NGINX, self-signed certificates and Ansible</title>
+      <link>https://madhead.me/posts/nginx-tg-bots/</link>
+      <pubDate>Mon, 08 Feb 2021 21:00:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/posts/nginx-tg-bots/</guid>
+      <description>&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;Imagine you have a few cool ideas for &lt;a href=&#34;https://core.telegram.org/bots&#34;&gt;Telegram bots&lt;/a&gt;.
+Bots have two options of communicating with Telegram servers: either by polling the events by using &lt;a href=&#34;https://core.telegram.org/bots/api#getupdates&#34;&gt;&lt;code&gt;getUpdates&lt;/code&gt;&lt;/a&gt; or by registering a &lt;a href=&#34;https://core.telegram.org/bots/api#setwebhook&#34;&gt;webhook&lt;/a&gt; and receiving the updates as HTTPS POST requests.
+But who the heck uses polling today?
+Right, nobody does that, and webhooks are the option.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;And here be dragons.&lt;/p&gt;
+&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>YouTube Watch Later Telegram Bot</title>
+      <link>https://madhead.me/posts/ywltb/</link>
+      <pubDate>Wed, 20 May 2020 09:00:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/posts/ywltb/</guid>
+      <description>&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;&lt;a href=&#34;https://ywltb.herokuapp.com&#34;&gt;YWLTB&lt;/a&gt; — or YouTube Watch Later Telegram Bot — is a Telegram bot that does one simple thing: adds incoming YouTube videos into your &amp;#34;Watch Later&amp;#34; playlist.&lt;/p&gt;
+&lt;/div&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

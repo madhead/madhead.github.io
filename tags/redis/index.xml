@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>redis on madhead</title>
+    <link>https://madhead.me/tags/redis/</link>
+    <description>Recent content in redis on madhead</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Wed, 11 Mar 2020 09:00:00 +0300</lastBuildDate><atom:link href="https://madhead.me/tags/redis/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Redis module in Kotlin/Native</title>
+      <link>https://madhead.me/posts/kotlin-native-redis/</link>
+      <pubDate>Wed, 11 Mar 2020 09:00:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/posts/kotlin-native-redis/</guid>
+      <description>&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;Those of you who have some experience with Redis may know that it is not just a simple cache or a plain key-value store, but actually a data structures server, supporting different kinds of values.
+Out of the box it supports binary-safe strings, sets, lists, hashes, bit arrays, streams and HyperLogLogs.
+Redis also &lt;a href=&#34;https://redis.io/topics/modules-native-types&#34;&gt;provides&lt;/a&gt; a simple C API for custom data structures, called native types.
+Some of the popular community-supported native types are &lt;a href=&#34;https://oss.redislabs.com/redisbloom&#34;&gt;Bloom filters&lt;/a&gt;, &lt;a href=&#34;https://oss.redislabs.com/redisgraph&#34;&gt;graphs&lt;/a&gt;, &lt;a href=&#34;https://oss.redislabs.com/redisjson&#34;&gt;JSON objects&lt;/a&gt;, and &lt;a href=&#34;https://oss.redislabs.com/redisai&#34;&gt;tensors&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;Let’s use Kotlin/Native to implement a simple data structure for parentheses expression validation just because we can.
+But first, I want to say thanks to &lt;a href=&#34;https://research.jetbrains.org/researchers/artdegt&#34;&gt;Artyom Degtyarev&lt;/a&gt; from JetBrains, who helped a lot with Kotlin/Native in &lt;a href=&#34;https://kotlinlang.slack.com&#34;&gt;Kotlin Slack&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,1230 @@
+<!DOCTYPE html>
+<html lang='en' dir='auto'><head>
+  <meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<meta name='description' content='
+Those of you who have some experience with Redis may know that it is not just a simple cache or a plain key-value store, but actually a data structures server, supporting different kinds of values.
+Out of the box it supports binary-safe strings, sets, lists, hashes, bit arrays, streams and HyperLogLogs.
+Redis also provides a simple C API for custom data structures, called native types.
+Some of the popular community-supported native types are Bloom filters, graphs, JSON objects, and tensors.
+
+
+Let’s use Kotlin/Native to implement a simple data structure for parentheses expression validation just because we can.
+But first, I want to say thanks to Artyom Degtyarev from JetBrains, who helped a lot with Kotlin/Native in Kotlin Slack.
+'>
+
+<meta property='og:title' content='Redis module in Kotlin/Native • madhead'>
+<meta property='og:description' content='
+Those of you who have some experience with Redis may know that it is not just a simple cache or a plain key-value store, but actually a data structures server, supporting different kinds of values.
+Out of the box it supports binary-safe strings, sets, lists, hashes, bit arrays, streams and HyperLogLogs.
+Redis also provides a simple C API for custom data structures, called native types.
+Some of the popular community-supported native types are Bloom filters, graphs, JSON objects, and tensors.
+
+
+Let’s use Kotlin/Native to implement a simple data structure for parentheses expression validation just because we can.
+But first, I want to say thanks to Artyom Degtyarev from JetBrains, who helped a lot with Kotlin/Native in Kotlin Slack.
+'>
+<meta property='og:url' content='https://madhead.me/posts/kotlin-native-redis/'>
+<meta property='og:site_name' content='madhead'>
+<meta property='og:type' content='article'><meta property='article:section' content='posts'><meta property='article:tag' content='kotlin'><meta property='article:tag' content='kotlin/native'><meta property='article:tag' content='redis'><meta property='article:tag' content='pet projects'><meta property='article:published_time' content='2020-03-11T09:00:00&#43;03:00'/><meta property='article:modified_time' content='2020-03-11T09:00:00&#43;03:00'/><meta name='twitter:card' content='summary'>
+
+<meta name="generator" content="Hugo 0.79.1" />
+
+  <title>Redis module in Kotlin/Native • madhead</title>
+  <link rel='canonical' href='https://madhead.me/posts/kotlin-native-redis/'>
+  
+  
+  <link rel='icon' href='/favicon.ico'>
+<link rel='stylesheet' href='/assets/css/main.eecc3c56.css'><style>
+:root{--color-accent:#000000;}
+</style>
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-101212543-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  
+
+</head>
+<body class='page type-posts has-sidebar'>
+
+  <div class='site'><div id='sidebar' class='sidebar'>
+  <a class='screen-reader-text' href='#main-menu'>Skip to Main Menu</a>
+
+  <div class='container'><section class='widget widget-about sep-after'>
+  <header>
+    
+    <div class='logo'>
+      <a href='/'>
+        <img src='/images/logo.svg'>
+      </a>
+    </div>
+    
+    <div class='desc'>
+    
+    </div>
+  </header>
+
+</section>
+<section class='widget widget-sidebar_menu sep-after'><nav id='sidebar-menu' class='menu sidebar-menu' aria-label='Sidebar Menu'>
+    <div class='container'>
+      <ul><li class='item'>
+  <a href='/posts/'>posts</a></li><li class='item'>
+  <a href='/tags/'>tags</a></li><li class='item'>
+  <a href='https://stackoverflow.com/cv/madhead'>cv</a></li></ul>
+    </div>
+  </nav>
+
+</section>
+
+<section class='widget widget-sidebar_menu sep-after'>
+  <nav id='sidebar-menu' class='menu sidebar-menu' aria-label='Sidebar Menu'>
+    <div class='container'>
+      <ul><li class='item'>
+          <a href='https://ru.madhead.me/'>RU</a>
+        </li></ul>
+    </div>
+  </nav>
+</section><section class='widget widget-social_menu sep-after'><nav aria-label='Social Menu'>
+    <ul><li>
+        <a href='mailto:siarhei.krukau@gmail.com' target='_blank' rel='noopener me'>
+          <span class='screen-reader-text'>Contact via Email</span><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+  <polyline points="22,6 12,13 2,6"/>
+  
+</svg>
+</a>
+      </li><li>
+        <a href='https://gitlab.com/madhead' target='_blank' rel='noopener me'>
+          <span class='screen-reader-text'>Open Gitlab account in new tab</span><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <path d="M22.65 14.39L12 22.13 1.35 14.39a.84.84 0 0 1-.3-.94l1.22-3.78 2.44-7.51A.42.42 0 0 1 4.82 2a.43.43 0 0 1 .58 0 .42.42 0 0 1 .11.18l2.44 7.49h8.1l2.44-7.51A.42.42 0 0 1 18.6 2a.43.43 0 0 1 .58 0 .42.42 0 0 1 .11.18l2.44 7.51L23 13.45a.84.84 0 0 1-.35.94z"/>
+  
+</svg>
+</a>
+      </li><li>
+        <a href='https://github.com/madhead' target='_blank' rel='noopener me'>
+          <span class='screen-reader-text'>Open Github account in new tab</span><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+  
+</svg>
+</a>
+      </li><li>
+        <a href='https://stackoverflow.com/users/750510' target='_blank' rel='noopener me'>
+          <span class='screen-reader-text'>Open Stackoverflow account in new tab</span><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <line x1="3.472" y1="18.689" x2="16.612" y2="18.689" />
+  <line x1="4.017" y1="12.715" x2="16.884" y2="15.404" />
+  <line x1="5.991" y1="6.673" x2="17.906" y2="12.238" />
+  <line x1="9.582" y1="1.021" x2="19.692" y2="9.430" />
+  
+</svg>
+</a>
+      </li><li>
+        <a href='https://linkedin.com/in/krukaus' target='_blank' rel='noopener me'>
+          <span class='screen-reader-text'>Open Linkedin account in new tab</span><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+  <rect x="2" y="9" width="4" height="12"/>
+  <circle cx="4" cy="4" r="2"/>
+  
+</svg>
+</a>
+      </li><li>
+        <a href='https://instagram.com/m.a.d.h.e.a.d' target='_blank' rel='noopener me'>
+          <span class='screen-reader-text'>Open Instagram account in new tab</span><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+  <line x1="17.5" y1="6.5" x2="17.5" y2="6.5"/>
+  
+</svg>
+</a>
+      </li><li>
+        <a href='https://www.youtube.com/channel/UCO2UZ6hUzjn9XQIdwwkcXJQ' target='_blank' rel='noopener me'>
+          <span class='screen-reader-text'>Open Youtube account in new tab</span><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z" />
+  <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" />
+  
+</svg>
+</a>
+      </li><li>
+        <a href='https://twitter.com/m_a_d_h_e_a_d' target='_blank' rel='noopener me'>
+          <span class='screen-reader-text'>Open Twitter account in new tab</span><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/>
+  
+</svg>
+</a>
+      </li></ul>
+  </nav>
+</section></div>
+
+  <div class='sidebar-overlay'></div>
+</div><div class='main'><nav id='main-menu' class='menu main-menu' aria-label='Main Menu'>
+  <div class='container'>
+    <a class='screen-reader-text' href='#content'>Skip to Content</a>
+
+<button id='sidebar-toggler' class='sidebar-toggler' aria-controls='sidebar'>
+  <span class='screen-reader-text'>Toggle Sidebar</span>
+  <span class='open'><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <line x1="3" y1="12" x2="21" y2="12" />
+  <line x1="3" y1="6" x2="21" y2="6" />
+  <line x1="3" y1="18" x2="21" y2="18" />
+  
+</svg>
+</span>
+  <span class='close'><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <line x1="18" y1="6" x2="6" y2="18" />
+  <line x1="6" y1="6" x2="18" y2="18" />
+  
+</svg>
+</span>
+</button>
+    <ul></ul>
+  </div>
+</nav><div class='header-widgets'>
+        <div class='container'></div>
+      </div>
+
+      <header id='header' class='header site-header'>
+        <div class='container sep-after'>
+          <div class='header-info'><p class='site-title title'>madhead</p><p class='desc site-desc'></p>
+          </div>
+        </div>
+      </header>
+
+      <main id='content'>
+
+
+<article lang='en' class='entry'>
+  <header class='header entry-header'>
+  <div class='container sep-after'>
+    <div class='header-info'>
+      <h1 class='title'>Redis module in Kotlin/Native</h1>
+      
+
+    </div>
+    <div class='entry-meta'>
+  <span class='posted-on'><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+  <line x1="16" y1="2" x2="16" y2="6"/>
+  <line x1="8" y1="2" x2="8" y2="6"/>
+  <line x1="3" y1="10" x2="21" y2="10"/>
+  
+</svg>
+<span class='screen-reader-text'>Posted on </span>
+  <time class='entry-date' datetime='2020-03-11T09:00:00&#43;03:00'>2020-03-11</time>
+</span>
+
+  
+  
+<span class='reading-time'><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <circle cx="12" cy="12" r="10"/>
+  <polyline points="12 6 12 12 15 15"/>
+  
+</svg>
+15 mins to read
+</span>
+
+
+</div>
+
+
+  </div>
+</header>
+
+  
+  
+
+  <div class='container entry-content'>
+  <div class="paragraph">
+<p>Those of you who have some experience with Redis may know that it is not just a simple cache or a plain key-value store, but actually a data structures server, supporting different kinds of values.
+Out of the box it supports binary-safe strings, sets, lists, hashes, bit arrays, streams and HyperLogLogs.
+Redis also <a href="https://redis.io/topics/modules-native-types">provides</a> a simple C API for custom data structures, called native types.
+Some of the popular community-supported native types are <a href="https://oss.redislabs.com/redisbloom">Bloom filters</a>, <a href="https://oss.redislabs.com/redisgraph">graphs</a>, <a href="https://oss.redislabs.com/redisjson">JSON objects</a>, and <a href="https://oss.redislabs.com/redisai">tensors</a>.</p>
+</div>
+<div class="paragraph">
+<p>Let’s use Kotlin/Native to implement a simple data structure for parentheses expression validation just because we can.
+But first, I want to say thanks to <a href="https://research.jetbrains.org/researchers/artdegt">Artyom Degtyarev</a> from JetBrains, who helped a lot with Kotlin/Native in <a href="https://kotlinlang.slack.com">Kotlin Slack</a>.</p>
+</div>
+<div class="sect1">
+<h2 id="_contents">Contents</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="#101">Redis 101</a></p>
+</li>
+<li>
+<p><a href="#persistence">Redis persistence</a></p>
+</li>
+<li>
+<p><a href="#modules">Redis modules</a></p>
+</li>
+<li>
+<p><a href="#kn">Kotlin/Native Redis module</a></p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="#stack">Parentheses expression validation problem</a></p>
+</li>
+<li>
+<p><a href="#cinterop">C Interop</a></p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="#wrappers">Custom declarations</a></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><a href="#initialization">Module initialization</a></p>
+</li>
+<li>
+<p><a href="#type">Exporting a native type</a></p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="#domain">Domain-specific commands</a></p>
+</li>
+<li>
+<p><a href="#util">Utility functions</a></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><a href="#testing">Testing</a></p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="101">Redis 101</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The best way to start with Redis, is, probably, <a href="https://www.openmymind.net/2012/1/23/The-Little-Redis-Book">The Little Redis Book</a> by Karl Seguin.
+It is absolutely free and takes about an hour to read (Karl mentioned in his blog that the book was written in only two days).</p>
+</div>
+<div class="paragraph">
+<p>But the bare minimum required to understand the rest of the article is that the idea of Redis is storing different data structures and providing access to them by key:</p>
+</div>
+<div class="paragraph">
+<figure class="align-center">
+    <img src="//storage.googleapis.com/madheadme-static/posts/kotlin-native-redis/001.png"/> 
+</figure>
+
+</div>
+<div class="paragraph">
+<p>After grasping the basics consult with the <a href="https://redis.io/commands">list of Redis commands</a> for the details.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="persistence">Redis persistence</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Redis persistence is an advanced topic and not every regular Redis user needs to dig in it.
+But as an author of a native type you need to understand it, as every native type needs to support the persistence.</p>
+</div>
+<div class="paragraph">
+<p>Basically, Redis <a href="https://redis.io/topics/persistence">provides two persistence modes</a>: RDB and AOF.
+RDB (AKA snapshotting) stands for Redis Database Backup and AOF stands for Append Only File.</p>
+</div>
+<div class="paragraph">
+<p>Snapshotting is the simplest persistence mode.
+It produces a point-in-time snapshot of the whole Redist dataset.
+Snapshots can be taken with <a href="https://redis.io/commands/save"><code>SAVE</code></a> or <a href="https://redis.io/commands/bgsave"><code>BGSAVE</code></a> commands, or configured to be taken periodically or after some predefined number of changes, whatever occurs first.
+Snapshots produce a binary file called <code>dump.rdb</code> in Redis’s data directory.</p>
+</div>
+<div class="paragraph">
+<p>AOF is more cunning: every time a change is performed, that operation is logged into the append-only file <code>appendonly.aof</code> in the data directory.
+Operations are logged in the same format used by Redis, so the AOF can be just “replayed” to reconstruct the whole dataset.
+The problem is that the AOF grows as changes are performed.
+So Redis supports an interesting feature: it is able to rebuild the AOF in the background without downtime upon the execution of the <a href="https://redis.io/commands/bgrewriteaof"><code>BGREWRITEAOF</code></a> command or periodically.
+As a result of AOF rewriting it will contain the shortest sequence of commands needed to rebuild the current dataset in memory.</p>
+</div>
+<div class="paragraph">
+<p>More details about Redis persistence can be found in Salvatore Sanfilippo’s (the author of Redis) article: <a href="http://oldblog.antirez.com/post/redis-persistence-demystified.html">Redis persistence demystified</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="modules">Redis modules</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://redis.io/topics/modules-intro">Redis modules</a> make it possible to extend Redis functionality by implementing new functions and data structures.
+Redis modules are dynamic libraries (<code>.so</code> files), that can be loaded into Redis at startup or using the <a href="https://redis.io/commands/module-load"><code>MODULE LOAD</code></a> command without downtime.
+Redis exports its API for the module authors in the form of a single C header file called <a href="https://github.com/antirez/redis/blob/unstable/src/redismodule.h"><code>redismodule.h</code></a>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="kn">Kotlin/Native Redis module</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Kotlin/Native allows developers to produce, among other deliveries, dynamic libraries.
+So, let’s practice a little bit and create a module providing a native type for parentheses expression validation.</p>
+</div>
+<div class="sect2">
+<h3 id="stack">Parentheses expression validation problem</h3>
+<div class="paragraph">
+<p>The <a href="https://www.educative.io/edpresso/the-valid-parentheses-problem">valid parentheses problem</a> involves checking that:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Every opening parenthesis has a corresponding closing parenthesis.</p>
+</li>
+<li>
+<p>Every opening parenthesis should come before the corresponding closing parenthesis.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<figure class="align-center">
+    <img src="//storage.googleapis.com/madheadme-static/posts/kotlin-native-redis/003.png"/> 
+</figure>
+
+</div>
+<div class="paragraph">
+<p>The classic approach to this problem is using a stack:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Declare an empty stack.</p>
+</li>
+<li>
+<p>Traverse the expression from left to right.</p>
+</li>
+<li>
+<p>Push every opening parenthesis on the top of the stack.</p>
+</li>
+<li>
+<p>For every closing bracket, check the topmost stack element:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>If it’s a matching bracket, simply drop both.</p>
+</li>
+<li>
+<p>If it’s not a matching bracket, push the closing bracket on the top of the stack.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>If the expression is valid,​ then the stack will be empty once the input string finishes.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<figure class="align-center">
+    <img src="//storage.googleapis.com/madheadme-static/posts/kotlin-native-redis/004.svg"/> 
+</figure>
+
+</div>
+<div class="paragraph">
+<p>One way to implement a stack is a <a href="https://en.wikipedia.org/wiki/Stack_(abstract_data_type)#Linked_list">singly linked list</a>.
+Singly linked lists contain nodes that have a data field and a pointer to the next node in line of nodes.
+The last node will point to nothing, thereby marking the end of the list:</p>
+</div>
+<div class="paragraph">
+<figure class="align-center">
+    <img src="//storage.googleapis.com/madheadme-static/posts/kotlin-native-redis/005.png"/> 
+</figure>
+
+</div>
+<div class="paragraph">
+<p>Let’s finally write some code.
+<a href="https://gitlab.com/madhead-playgrounds/redis/-/blob/master/kn/src/linuxX64Main/kotlin/bracketsType.kt#L38">Here</a> is a Kotlin class for the single stack node for the parenthesis expression validation problem:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">class Bracket(val prev: Bracket?, val symbol: Char)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And a class for the <a href="https://gitlab.com/madhead-playgrounds/redis/-/blob/master/kn/src/linuxX64Main/kotlin/bracketsType.kt#L40-71">whole expression</a>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">class Brackets {
+    private var head: Bracket? = null
+
+    fun push(symbol: Char) {
+      …
+    }
+
+    val valid: Boolean
+        get() = …
+
+    override fun toString(): String {
+      …
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>push</code> and <code>valid</code> members will make up our stack and <code>toString</code> will be used to print the whole stack and for persistence.</p>
+</div>
+<div class="paragraph">
+<p><code>push</code> drops topmost stack element and the incoming bracket if they match and adds a new node if they don’t match.
+For the sake of simplicity, there are no other checks and validations:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">fun push(symbol: Char) {
+    head = if (
+            ((symbol == &#39;)&#39;) &amp;&amp; (head?.symbol == &#39;(&#39;)) ||
+            ((symbol == &#39;]&#39;) &amp;&amp; (head?.symbol == &#39;[&#39;)) ||
+            ((symbol == &#39;}&#39;) &amp;&amp; (head?.symbol == &#39;{&#39;))
+    ) {
+        head?.prev
+    } else {
+        Bracket(head, symbol)
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>valid</code> is as simple as checking if the <code>head</code> is <code>null</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">val valid: Boolean
+    get() = (head == null)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>toString</code> uses a recursion to construct a string representation of the stack:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">override fun toString(): String {
+    fun visit(b: Bracket, buf: String): String {
+        return if (b.prev != null) {
+            visit(b.prev, b.symbol + buf)
+        } else {
+            b.symbol + buf
+        }
+    }
+
+    return this.head?.let {
+        visit(it, &#34;&#34;)
+    } ?: &#34;&#34;
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The implementation is neither perfect nor safe, but it’s just an example.
+There is a <a href="https://gitlab.com/madhead-playgrounds/redis/-/blob/master/kn/src/linuxX64Test/kotlin/BracketsTest.kt">test</a> for the <code>Brackets</code> class on my GitLab, take a look.
+Also, note that we used only pure Kotlin code here (for both the domain logic and the tests), without any platform-specific dependencies.
+This code could be shared across JVM, JS and Native targets if needed, and that’s a cool feature of Kotlin Multiplatform!</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="cinterop">C Interop</h3>
+<div class="paragraph">
+<p>Before being able to interact with Redis via bindings to its C API, we need to configure a <a href="https://kotlinlang.org/docs/reference/native/c_interop.html">C interop</a> with its <code>redismodule.h</code>.
+As the whole Redis API is defined in that single header, let’s just copy it from <a href="https://github.com/antirez/redis/blob/unstable/src/redismodule.h">their GitHub</a> to the <code>src/nativeInterop/cinterop/redismodule.h</code>.
+Next step is to define a <a href="https://gitlab.com/madhead-playgrounds/redis/-/blob/master/kn/src/nativeInterop/cinterop/redismodule.def"><code>src/nativeInterop/cinterop/redismodule.def</code></a> file describing what things to include into the binding:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>headers = redismodule.h
+
+---
+
+# Custom declarations</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Here we simply want to create bindings for the contents of <code>redismodule.h</code> plus a few <a href="#wrappers">custom declarations</a>.</p>
+</div>
+<div class="paragraph">
+<p>Kotlin Multiplatform Gradle plugin will <a href="https://kotlinlang.org/docs/reference/building-mpp-with-gradle.html#cinterop-support">do the rest</a>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">kotlin {
+    linuxX64 {
+        val main by compilations.getting {
+            val redismodule by cinterops.creating {
+                includeDirs(&#34;src/nativeInterop/cinterop&#34;)
+            }
+        }
+
+        binaries {
+            sharedLib(&#34;brackets_kn&#34;)
+        }
+    }
+}</code></pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="wrappers">Custom declarations</h4>
+<div class="paragraph">
+<p>Redis relies heavily on macros in <code>redismodule.h</code>: all the API functions are exported using a macro  <a href="https://github.com/antirez/redis/blob/unstable/src/redismodule.h#L439"><code>REDISMODULE_API_FUNC</code></a>.
+This results in functions like <a href="https://redis.io/topics/modules-api-ref#coderedismodulecreatecommandcode"><code>RedisModule_CreateCommand</code></a>, used to provide a callback for custom command, to be seen by Kotlin/Native as a nullable global variable:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">var RedisModule_CreateCommand: CPointer&lt;CFunction&lt;(CPointer&lt;RedisModuleCtx&gt;?, CPointer&lt;ByteVar&gt;?, RedisModuleCmdFunc?, CPointer&lt;ByteVar&gt;?, Int, Int, Int) -&gt; Int&gt;&gt;?
+    get() = …
+    set(value) { … }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>It forces an awkward bang-bang syntaxt at call sites:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">(RedisModule_CreateCommand!!)(ctx, …)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To mitigate that, one can <a href="https://kotlinlang.org/docs/reference/native/c_interop.html#adding-custom-declarations">add a wrapper declaration</a> in a <code>.def</code> file:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>static inline int RedisModuleWrapper_CreateCommand(RedisModuleCtx *ctx, const char *name, RedisModuleCmdFunc cmdfunc, const char *strflags, int firstkey, int lastkey, int keystep) {
+    return RedisModule_CreateCommand(ctx, name, cmdfunc, strflags, firstkey, lastkey, keystep);
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Another usecase I found useful is C functions with variadic arguments, like <a href="https://redis.io/topics/modules-api-ref#coderedismoduleemitaofcode"><code>RedisModule_EmitAOF</code></a>.
+Kotlin/Native sees it as:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">var RedisModule_EmitAOF: COpaquePointer?
+    get() = …
+    set(value) { … }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And that’s completely unusable!
+I had to create a custom wrapper specifically for my usecase:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>static inline void Brackets_EmitAOF(RedisModuleIO *io, const RedisModuleString *key, char *bracket) {
+    return RedisModule_EmitAOF(io, &#34;BRACKETS.KN.PUSH&#34;, &#34;sc&#34;, key, bracket);
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>RedisModuleWrapper_CreateCommand</code> and <code>Brackets_EmitAOF</code> will be seen by Kotlin/Native as a regular functions.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="initialization">Module initialization</h3>
+<div class="paragraph">
+<p>Now, having the domain objects defined and the C interop configured the next thing to do is to actually create a Redis module.
+Every Redis module needs to expose a <code>RedisModule_OnLoad</code> function.
+Redis will call it upon loading the module, this is the place where you tell the Redis what your module is.
+Let’s define it:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@CName(&#34;RedisModule_OnLoad&#34;) // <b class="conum">(1)</b>
+fun RedisModule_OnLoad(
+        ctx: CPointer&lt;RedisModuleCtx&gt;?,
+        argv: CPointer&lt;CPointerVar&lt;RedisModuleString&gt;&gt;?,
+        argc: Int // <b class="conum">(2)</b>
+): Int {
+    // <b class="conum">(3)</b>
+    if (!initRedisModule(ctx)) {
+        return REDISMODULE_ERR
+    }
+
+    // <b class="conum">(4)</b>
+    if (!registerVersionFunction(ctx)) {
+        return REDISMODULE_ERR
+    }
+
+    // <b class="conum">(5)</b>
+    if (!registerBracketsType(ctx)) {
+        return REDISMODULE_ERR
+    }
+
+    // <b class="conum">(6)</b>
+    return REDISMODULE_OK
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p><code>@CName</code> is used to prevent name mangling and export the function under the exact name <code>RedisModule_OnLoad</code>.</p>
+</li>
+<li>
+<p>The signature of the <code>RedisModule_OnLoad</code> should be <code>int RedisModule_OnLoad(RedisModuleCtx *, RedisModuleString **, int)</code>.
+This is a Kotlin/Native equivalent.</p>
+</li>
+<li>
+<p>Init the module.</p>
+</li>
+<li>
+<p>Export a function that will respond with the module’s version.
+It’s an optional step, just to show how to define custom commands.</p>
+</li>
+<li>
+<p>Export a native type.
+Details are described in a separate <a href="#type">section</a>.</p>
+</li>
+<li>
+<p>If everything is ok, return <code>REDISMODULE_OK</code>.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><a href="https://gitlab.com/madhead-playgrounds/redis/-/blob/master/kn/src/linuxX64Main/kotlin/brackets.kt#L41-42"><code>initRedisModule</code></a> is a wrapper around <code>RedisModule_Init</code>, provided by Redis.
+Its parameters include module context, module name, module version, and target Redis API version.
+We’ll use &#34;brackets.kn&#34; as a module name and integer &#34;1&#34; as a module version, defined in a global constant <code>BRACKETS_KN_VERSION</code>.
+<code>REDISMODULE_APIVER_1</code> is provided by Redis in <code>redismodule.h</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">private fun initRedisModule(ctx: CPointer&lt;RedisModuleCtx&gt;?) =
+        RedisModule_Init(ctx, &#34;brackets.kn&#34;, BRACKETS_KN_VERSION, REDISMODULE_APIVER_1) != REDISMODULE_ERR</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><a href="https://gitlab.com/madhead-playgrounds/redis/-/blob/master/kn/src/linuxX64Main/kotlin/brackets.kt#L44-45">Exporting a version function</a> is straightfowrard as well, the only interesting part is aquiring a pointer to a Kotlin function to pass as a callback to the <code>RedisModuleWrapper_CreateCommand</code> (which is a <a href="#wrappers">wrapper</a> around <a href="https://redis.io/topics/modules-api-ref#coderedismodulecreatecommandcode"><code>RedisModule_CreateCommand</code></a>) via <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlinx.cinterop/static-c-function.html"><code>staticCFunction</code></a>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">fun bracketsKnVersion(ctx: CPointer&lt;RedisModuleCtx&gt;?, argv: CPointer&lt;CPointerVar&lt;RedisModuleString&gt;&gt;?, argc: Int): Int {
+    println(&#34;bracketsKnVersion&#34;)
+    (RedisModule_ReplyWithLongLong!!)(ctx, BRACKETS_KN_VERSION.toLong())
+    return REDISMODULE_OK
+}
+
+private fun registerVersionFunction(ctx: CPointer&lt;RedisModuleCtx&gt;?) =
+        RedisModuleWrapper_CreateCommand(ctx, &#34;brackets.kn.version&#34;, staticCFunction(::bracketsKnVersion), &#34;&#34;, 0, 0, 0) != REDISMODULE_ERR</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="type">Exporting a native type</h3>
+<div class="paragraph">
+<p>Finally, we approached <a href="https://redis.io/topics/modules-native-types">native types</a>!</p>
+</div>
+<div class="paragraph">
+<p>A module exporting a native type is composed of the following parts:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The implementation of some kind of new data structure and commands operating on the new data structure.
+We’ve done the Redis-agnostic part in the <a href="#stack"><code>Brackets</code></a> class.</p>
+</li>
+<li>
+<p>A set of callbacks that handle: RDB saving, RDB loading, AOF rewriting, releasing of a value associated with a key and some other, optional, events.</p>
+</li>
+<li>
+<p>A 9 character name that is unique to each module native data type.</p>
+</li>
+<li>
+<p>An encoding version used to persist into RDB files a module-specific data version so that a module will be able to load older representations from RDB files.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>A very easy to understand but complete example of native type implementation is available inside the Redis distribution in the <a href="https://github.com/antirez/redis/blob/unstable/src/modules/hellotype.c"><code>/modules/hellotype.c</code></a> file.
+Actually, our stack is the same singly linked list as in this file.</p>
+</div>
+<div class="paragraph">
+<p>To register a new native type into the Redis core, the module needs to declare a global variable that will hold a reference to the data type.
+The API to register the data type will return a data type reference that will be stored in the global variable.
+That global variable will be used later to check the types of the values in commands operating on that native data type.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">lateinit var KNBracketType: CPointer&lt;RedisModuleType&gt;
+
+fun registerBracketsType(ctx: CPointer&lt;RedisModuleCtx&gt;?): Boolean {
+    // <b class="conum">(1)</b>
+    KNBracketType = RedisModuleWrapper_CreateDataType(
+            ctx,
+            &#34;KNBRACKET&#34;, // <b class="conum">(2)</b>
+            BRACKETS_KN_VERSION, // <b class="conum">(3)</b>
+            cValue { // <b class="conum">(4)</b>
+                version = BRACKETS_KN_VERSION.toULong()
+                rdb_load = staticCFunction(::bracketsRdbLoad)
+                rdb_save = staticCFunction(::bracketsRdbSave)
+                aof_rewrite = staticCFunction(::bracketsAofRewrite)
+                free = staticCFunction(::bracketsFree)
+            }
+    ) ?: return false
+
+    // Registering native type commands
+
+    return true
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Calling the <a href="https://redis.io/topics/modules-api-ref#coderedismodulecreatedatatypecode"><code>RedisModule_CreateDataType</code></a> function via a <a href="#wrappers">wrapper</a> to register a native type.
+Returning <code>false</code> as a guard here results in module registration failure upper in the stack, in <code>RedisModule_OnLoad</code>.</p>
+</li>
+<li>
+<p>A <a href="https://redis.io/topics/modules-native-types#ok-but-emwhyem-modules-types-require-a-9-characters-name">9 character name</a> for our native type.</p>
+</li>
+<li>
+<p>Encoding version.
+We’ll simply use <code>BRACKETS_KN_VERSION</code>, our module’s version, everywhere.</p>
+</li>
+<li>
+<p>A pointer to a <code>RedisModuleTypeMethods</code> structure that should be populated with the methods callbacks and structure version.
+<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlinx.cinterop/static-c-function.html"><code>staticCFunction</code></a> is again our friend.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Now, let’s expose <code>Bracket</code>&#39;s operations.</p>
+</div>
+<div class="sect3">
+<h4 id="domain">Domain-specific commands</h4>
+<div class="paragraph">
+<p>We’ll need three main operations for our data type:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Pushing bracket to the expression</p>
+</li>
+<li>
+<p>Checking if the expression is valid</p>
+</li>
+<li>
+<p>Printing the current expression</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>That operations correspond to the members of <code>Brackets</code> type <a href="#stack">above</a>, but they need to be wrapped into Redis commands:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">fun registerBracketsType(ctx: CPointer&lt;RedisModuleCtx&gt;?): Boolean {
+    // Registering a native type
+
+    if (RedisModuleWrapper_CreateCommand(ctx, &#34;brackets.kn.push&#34;, staticCFunction(::bracketsKnPush), &#34;write deny-oom&#34;, 1, 1, 1) == REDISMODULE_ERR) {
+        return false
+    }
+
+    if (RedisModuleWrapper_CreateCommand(ctx, &#34;brackets.kn.print&#34;, staticCFunction(::bracketsKnPrint), &#34;readonly&#34;, 1, 1, 1) == REDISMODULE_ERR) {
+        return false
+    }
+
+    if (RedisModuleWrapper_CreateCommand(ctx, &#34;brackets.kn.valid&#34;, staticCFunction(::bracketsKnValid), &#34;readonly&#34;, 1, 1, 1) == REDISMODULE_ERR) {
+        return false
+    }
+
+    return true
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Here, we marked <code>brackets.kn.push</code> command as a one that changes the dataset (<code>write</code> flag).
+<code>deny-oom</code> means that the command may use additional memory and should be denied during out of memory conditions.</p>
+</div>
+<div class="paragraph">
+<p><code>brackets.kn.print</code> and <code>brackets.kn.valid</code> commands are read-only.</p>
+</div>
+<div class="paragraph">
+<p>All the commands expect a single argument, and that argument is a key of the value in the dataset.
+That’s what those cryptic <code>1, 1, 1</code> arguments mean.</p>
+</div>
+<div class="paragraph">
+<p>Let’s look at the <a href="https://gitlab.com/madhead-playgrounds/redis/-/blob/master/kn/src/linuxX64Main/kotlin/bracketsType.kt#L73-129"><code>bracketsKnPush</code></a>, the most complex function:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">fun bracketsKnPush(ctx: CPointer&lt;RedisModuleCtx&gt;?, argv: CPointer&lt;CPointerVar&lt;RedisModuleString&gt;&gt;?, argc: Int): Int {
+    println(&#34;bracketsKnPush&#34;)
+
+    // <b class="conum">(1)</b>
+    if (argc != 3) {
+        return (RedisModule_WrongArity!!)(ctx)
+    }
+
+    // <b class="conum">(2)</b>
+    if (argv == null) {
+        memScoped {
+            return (RedisModule_ReplyWithError!!)(ctx, &#34;argv is null&#34;.cstr.ptr)
+        }
+    }
+
+    // <b class="conum">(3)</b>
+    val bracket = memScoped {
+        (RedisModule_StringPtrLen!!)(argv[2], alloc&lt;ULongVar&gt;().ptr)?.toKString()?.get(0) ?: &#39; &#39;
+    }
+
+    // <b class="conum">(4)</b>
+    if (bracket !in listOf(&#39;(&#39;, &#39;)&#39;, &#39;{&#39;, &#39;}&#39;, &#39;[&#39;, &#39;]&#39;)) {
+        memScoped {
+            return (RedisModule_ReplyWithError!!)(ctx, &#34;Please, push only one of the `(`, `)`, `{`, `}`, `[`, `]` symbols&#34;.cstr.ptr)
+        }
+    }
+
+    // <b class="conum">(5)</b>
+    val key = (RedisModule_OpenKey!!)(ctx, argv[1], REDISMODULE_READ or REDISMODULE_WRITE)?.reinterpret&lt;cnames.structs.RedisModuleKey&gt;()
+
+    // <b class="conum">(6)</b>
+    val type = (RedisModule_KeyType!!)(key)
+
+    // <b class="conum">(7)</b>
+    if ((type != REDISMODULE_KEYTYPE_EMPTY) &amp;&amp; ((RedisModule_ModuleTypeGetType!!)(key) != KNBracketType)) {
+        memScoped {
+            return (RedisModule_ReplyWithError!!)(ctx, REDISMODULE_ERRORMSG_WRONGTYPE.cstr.ptr)
+        }
+    }
+
+    if (type == REDISMODULE_KEYTYPE_EMPTY) {
+        // <b class="conum">(8)</b>
+        val obj = Brackets()
+
+        obj.push(bracket)
+
+        (RedisModule_ModuleTypeSetValue!!)(key, KNBracketType, StableRef.create(obj).asCPointer())
+    } else {
+        // <b class="conum">(9)</b>
+        (RedisModule_ModuleTypeGetValue!!)(key)?.asStableRef&lt;Brackets&gt;()?.let { ref -&gt;
+            ref.get().push(bracket)
+        }
+    }
+
+    // <b class="conum">(10)</b>
+    memScoped {
+        (RedisModule_ReplyWithSimpleString!!)(ctx, &#34;OK&#34;.cstr.ptr)
+    }
+
+    (RedisModule_CloseKey!!)(key) // <b class="conum">(11)</b>
+    (RedisModule_ReplicateVerbatim!!)(ctx) // <b class="conum">(12)</b>
+
+    return REDISMODULE_OK
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Check the number of arguments.
+<code>brackets.kn.push</code> is called with two arguments — a key and a bracket, so the total number of arguments will be three (the first one will be the command itself).
+Calling <a href="https://redis.io/topics/modules-api-ref#coderedismodulewrongaritycode"><code>RedisModule_WrongArity</code></a> here will result in an error telling the user about the wrong number of arguments.</p>
+</li>
+<li>
+<p>This actually should not happen, but…</p>
+</li>
+<li>
+<p>Extracting the bracket character from the third argument (<code>argv[2]</code>).
+<code>memScoped</code> is needed for <code>alloc&lt;ULongVar&gt;</code>, but that value is not used, it is only needed for the <a href="https://redis.io/topics/modules-api-ref#coderedismodulestringptrlencode"><code>RedisModule_StringPtrLen</code></a> call.</p>
+</li>
+<li>
+<p>Validating the input.
+Only brackets are allowed.</p>
+</li>
+<li>
+<p><a href="https://redis.io/topics/modules-api-ref#coderedismoduleopenkeycode">Opening the key</a> for writing so that it is possible to call other APIs with the key handle as an argument to perform operations on the key.
+Don’t forget to call <a href="https://redis.io/topics/modules-api-ref#coderedismoduleclosekeycode"><code>RedisModule_CloseKey</code></a>.
+Yeah, better wrap that with <code>try</code> one day…</p>
+</li>
+<li>
+<p><a href="https://redis.io/topics/modules-api-ref#coderedismodulekeytypecode">Querying the key type</a>.
+If there is no value associated with that key, <code>REDISMODULE_KEYTYPE_EMPTY</code> will be returned.</p>
+</li>
+<li>
+<p>Fail with <code>REDISMODULE_ERRORMSG_WRONGTYPE</code> message if there is a value associated with that key and it is not empty or of our type.</p>
+</li>
+<li>
+<p>Create a new <code>Brackets</code> value, push the bracket into it, and <a href="https://redis.io/topics/modules-api-ref#coderedismodulemoduletypesetvaluecode">store</a> the value in the dataset.
+The value is wrapped in a <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlinx.cinterop/-stable-ref/"><code>StableRef</code></a> so that Kotlin/Native runtime will maintain a stable address for it.
+<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlinx.cinterop/-stable-ref/dispose.html"><code>dispose</code></a> must be called on that <code>StableRef</code> instance when it’s not needed anymore allowing Kotlin/Native’s GC to collect the object.</p>
+</li>
+<li>
+<p>For the existing values, just call the <code>push</code>.</p>
+</li>
+<li>
+<p>Replying with &#34;OK&#34;.</p>
+</li>
+<li>
+<p><a href="https://redis.io/topics/modules-api-ref#coderedismoduleclosekeycode">Closing</a> the key.</p>
+</li>
+<li>
+<p><a href="https://redis.io/topics/modules-api-ref#coderedismodulereplicateverbatimcode">Replicating</a> the command to slaves and AOF.
+Yes, you get the <a href="#persistence">AOF persistence</a> almost for free!</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><a href="https://gitlab.com/madhead-playgrounds/redis/-/blob/master/kn/src/linuxX64Main/kotlin/bracketsType.kt#L131-165"><code>bracketsKnPrint</code></a> and <a href="https://gitlab.com/madhead-playgrounds/redis/-/blob/master/kn/src/linuxX64Main/kotlin/bracketsType.kt#L167-201"><code>bracketsKnValid</code></a> are similar to the <code>bracketsKnPush</code>: they open the key, check the type and call <code>.toString()</code> or <code>.valid</code> on the <code>Brackets</code> value.
+I won’t provide the code here, as this article became really big.</p>
+</div>
+<div class="paragraph">
+<p>Now, let’s take a look at the utility functions <code>bracketsRdbLoad</code>, <code>bracketsRdbSave</code>, <code>bracketsAofRewrite</code> and <code>bracketsFree</code>.
+They have nothing to do with our <a href="#stack">problem</a>, but they are required by Redis.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="util">Utility functions</h4>
+<div class="paragraph">
+<p><a href="https://gitlab.com/madhead-playgrounds/redis/-/blob/master/kn/src/linuxX64Main/kotlin/bracketsType.kt#L203-228"><code>bracketsRdbLoad</code></a> and <a href="https://gitlab.com/madhead-playgrounds/redis/-/blob/master/kn/src/linuxX64Main/kotlin/bracketsType.kt#L231-244"><code>bracketsRdbSave</code></a> callbacks are required by Redis to support <a href="#persistence">RDB persistence</a>.
+Developers are free to use any kind of encoding for their types.
+The only limit is imagination and the set of available API functions:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://redis.io/topics/modules-api-ref#coderedismodulesaveunsignedcode"><code>RedisModule_SaveUnsigned</code></a> / <a href="https://redis.io/topics/modules-api-ref#coderedismoduleloadunsignedcode"><code>RedisModule_LoadUnsigned</code></a></p>
+</li>
+<li>
+<p><a href="https://redis.io/topics/modules-api-ref#coderedismodulesavesignedcode"><code>RedisModule_SaveSigned</code></a> / <a href="https://redis.io/topics/modules-api-ref#coderedismoduleloadsignedcode"><code>RedisModule_LoadSigned</code></a></p>
+</li>
+<li>
+<p><a href="https://redis.io/topics/modules-api-ref#coderedismodulesavestringcode"><code>RedisModule_SaveString</code></a> / <a href="https://redis.io/topics/modules-api-ref#coderedismoduleloadstringcode"><code>RedisModule_LoadString</code></a></p>
+</li>
+<li>
+<p><a href="https://redis.io/topics/modules-api-ref#coderedismodulesavestringbuffercode"><code>RedisModule_SaveStringBuffer</code></a> / <a href="https://redis.io/topics/modules-api-ref#coderedismoduleloadstringbuffercode"><code>RedisModule_LoadStringBuffer</code></a></p>
+</li>
+<li>
+<p><a href="https://redis.io/topics/modules-api-ref#coderedismodulesavedoublecode"><code>RedisModule_SaveDouble</code></a> / <a href="https://redis.io/topics/modules-api-ref#coderedismoduleloaddoublecode"><code>RedisModule_LoadDouble</code></a></p>
+</li>
+<li>
+<p><a href="https://redis.io/topics/modules-api-ref#coderedismodulesavefloatcode"><code>RedisModule_SaveFloat</code></a> / <a href="https://redis.io/topics/modules-api-ref#coderedismoduleloadfloatcode"><code>RedisModule_LoadFloat</code></a></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Let’s use <a href="https://redis.io/topics/modules-api-ref#coderedismodulesavestringbuffercode"><code>RedisModule_SaveStringBuffer</code></a> / <a href="https://redis.io/topics/modules-api-ref#coderedismoduleloadstringbuffercode"><code>RedisModule_LoadStringBuffer</code></a> to persist our stack as a simple string.
+Redis will call <code>bracketsRdbSave</code> with a pointer to the <code>RedisModuleIO</code> structure, used for RBD operations, and a pointer to the memory location with our data.
+As you saw in the <a href="#domain">previous section</a> the values will be stored using Kotlin/Native’s <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlinx.cinterop/-stable-ref/"><code>StableRef</code></a>, a class used to provide a way to create a stable handle to any Kotlin object.
+So, in <code>bracketsRdbSave</code> we cast the value to <code>StableRef&lt;Brackets&gt;</code>, then, if it’s not empty, convert it to a string using <code>Brackets#toString</code> function, and save it.
+<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlinx.cinterop/mem-scoped.html"><code>memScoped</code></a> is needed to obtain a <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlinx.cinterop/-mem-scope/ptr.html">short-lived pointer</a> to the null-terminated string to pass to the <a href="https://redis.io/topics/modules-api-ref#coderedismodulesavestringbuffercode"><code>RedisModule_SaveStringBuffer</code></a>.
+Note that this may be unsafe if <code>RedisModule_SaveStringBuffer</code> store that pointer for later use, but it seems to use it immediately, so we’re good.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">fun bracketsRdbSave(rdb: CPointer&lt;RedisModuleIO&gt;?, value: COpaquePointer?) {
+    println(&#34;bracketsRdbSave&#34;)
+
+    value?.asStableRef&lt;Brackets&gt;()?.get()?.let {
+        memScoped {
+            val str = it.toString().cstr
+
+            (RedisModule_SaveStringBuffer!!)(rdb, str.ptr, str.size.toULong())
+        }
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In <code>bracketsRdbLoad</code> we’ll do the opposite: read the null-terminated string from the RDB file and recreate <code>Brackets</code> by pushing the brackets one by one.
+The result is wrapped into a <code>StableRef</code> and the pointer returned.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">fun bracketsRdbLoad(rdb: CPointer&lt;RedisModuleIO&gt;?, encver: Int): COpaquePointer? {
+    println(&#34;bracketsRdbLoad&#34;)
+
+    if (encver != BRACKETS_KN_VERSION) {
+        println(&#34;Cannot load version $encver&#34;)
+
+        return null
+    }
+
+    val value = memScoped {
+        val value = (RedisModule_LoadStringBuffer!!)(rdb, alloc&lt;ULongVar&gt;().ptr)
+
+        value?.toKString() ?: &#34;&#34;
+    }
+
+    val obj = Brackets()
+
+    value.forEach {
+        obj.push(it)
+    }
+
+    return StableRef.create(obj).asCPointer()
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In <code>bracketsAofRewrite</code> all we need to do is to emit a sequence of pushes.
+Here I use a <code>Brackets_EmitAOF</code> function, a <a href="#wrappers">wrapper</a> around the <a href="https://redis.io/topics/modules-api-ref#coderedismoduleemitaofcode"><code>RedisModule_EmitAOF</code></a>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">fun bracketsAofRewrite(aof: CPointer&lt;RedisModuleIO&gt;?, key: CPointer&lt;RedisModuleString&gt;?, value: COpaquePointer?) {
+    println(&#34;bracketsAofRewrite&#34;)
+
+    value?.asStableRef&lt;Brackets&gt;()?.get()?.let {
+        it.toString().forEach { bracket -&gt;
+            Brackets_EmitAOF(aof, key, &#34;$bracket&#34;.cstr)
+        }
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This function called for a <code>Brackets</code> value storing <code>({[</code> symbols under the key <code>key</code>, will basically emit a sequence of command like:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>BRACKETS.KN.PUSH key (
+BRACKETS.KN.PUSH key {
+BRACKETS.KN.PUSH key [</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Obviously, by replaying this sequence, the original <code>Brackets</code> value can be recreated.</p>
+</div>
+<div class="paragraph">
+<p><a href="https://gitlab.com/madhead-playgrounds/redis/-/blob/master/kn/src/linuxX64Main/kotlin/bracketsType.kt#L260-264"><code>bracketsFree</code></a> simply disposes a <code>StableRef</code> that we created via <code>brackets.kn.push</code> command or in <code>bracketsRdbLoad</code>.
+Kotlin/Native’s GC then will be able to recycle that object.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">fun bracketsFree(value: COpaquePointer?) {
+    println(&#34;bracketsFree&#34;)
+
+    value?.asStableRef&lt;Brackets&gt;()?.dispose()
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="testing">Testing</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>You’ve already seen a few links to the source code for this article, but to be clear: <a href="https://gitlab.com/madhead-playgrounds/redis">madhead-playgrounds/redis</a> on GitLab or <a href="https://github.com/madhead/kn-redis">madhead/kn-redis</a> if you prefer GitHub.
+Clone or fork, or just give it a star.
+If you want to get your hands dirty, follow the instructions in the <code>README</code>, you’ll need Docker Compose.
+I’ve tried to configure things so that you only need to build the code and start the container, the modules will be loaded automagically.</p>
+</div>
+<div class="paragraph">
+<p>Let’s tail the logs of the Redis container in a separate console and see what happens upon the execution of some commands:</p>
+</div>
+<div class="paragraph">
+<figure class="align-center">
+    <img src="//storage.googleapis.com/madheadme-static/posts/kotlin-native-redis/006.png"/> 
+</figure>
+
+</div>
+<div class="paragraph">
+<p>Let’s also check the AOF:</p>
+</div>
+<div class="paragraph">
+<figure class="align-center">
+    <img src="//storage.googleapis.com/madheadme-static/posts/kotlin-native-redis/007.png"/> 
+</figure>
+
+</div>
+<div class="paragraph">
+<p>Seems good.
+The dataset is recreated correctly after the restart with both RDB and AOF.</p>
+</div>
+<div class="paragraph">
+<p>Congratulations, we’ve done!
+Thank you for reading to the end of the article, I hope you found it informative.</p>
+</div>
+<div class="paragraph">
+<p>Have <code>fun</code>!</p>
+</div>
+</div>
+</div>
+</div>
+
+  
+<footer class='entry-footer'>
+  <div class='container sep-before'><div class='tags'><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <path d="M20.59,13.41l-7.17,7.17a2,2,0,0,1-2.83,0L2,12V2H12l8.59,8.59A2,2,0,0,1,20.59,13.41Z"/>
+  <line x1="7" y1="7" x2="7" y2="7"/>
+  
+</svg>
+<span class='screen-reader-text'>Tags: </span><a class='tag' href='/tags/kotlin/'>kotlin</a>, <a class='tag' href='/tags/kotlin/native/'>kotlin/native</a>, <a class='tag' href='/tags/redis/'>redis</a>, <a class='tag' href='/tags/pet-projects/'>pet projects</a></div>
+
+  </div>
+</footer>
+
+
+</article>
+
+
+<section id='comments' class='comments'>
+  <div class='container sep-before'>
+    <div class='comments-area'><div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "madhead-me" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+  </div>
+</section>
+
+      </main>
+
+      <footer id='footer' class='footer'>
+        <div class='container sep-before'><div class='copyright'>
+  <p></p>
+</div>
+
+        </div>
+      </footer>
+
+    </div>
+  </div><script>window.__assets_js_src="/assets/js/"</script>
+
+<script src='/assets/js/main.f54bd0ac.js'></script>
+
+</body>
+
+</html>
+

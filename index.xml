@@ -1,0 +1,446 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>madhead</title>
+    <link>https://madhead.me/</link>
+    <description>Recent content on madhead</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Thu, 27 May 2021 22:19:00 +0200</lastBuildDate><atom:link href="https://madhead.me/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Sony α6300 as a webcam on Manjaro Lunux</title>
+      <link>https://madhead.me/posts/dslr-webcam/</link>
+      <pubDate>Thu, 27 May 2021 22:19:00 +0200</pubDate>
+      
+      <guid>https://madhead.me/posts/dslr-webcam/</guid>
+      <description>Original article.
+ Change USB connection in settings on camera to PC Remote.
+ sudo pacman -S gphoto2 v4l-utils v4l2loopback-dkms ffmpeg sudo modprobe v4l2loopback exclusive_caps=1 max_buffers=2 v4l2-ctl --list-devices gphoto2 --stdout --capture-movie | ffmpeg -i - -vcodec rawvideo -pix_fmt yuv420p -threads 8 -f v4l2 /dev/video&amp;lt;N&amp;gt; #from v4l2-ctl output   </description>
+    </item>
+    
+    <item>
+      <title>Reading Java properties in GitHub Actions</title>
+      <link>https://madhead.me/posts/read-java-properties/</link>
+      <pubDate>Sun, 28 Mar 2021 00:30:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/posts/read-java-properties/</guid>
+      <description>&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;Have you &lt;a href=&#34;../semver-utils&#34;&gt;heard&lt;/a&gt; that GitHub Actions are cool?&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;I just want to share another action with you, that you may find useful in your Java projects.&lt;/p&gt;
+&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>One-stop shop for working with semantic versions in your GitHub Actions workflows</title>
+      <link>https://madhead.me/posts/semver-utils/</link>
+      <pubDate>Thu, 25 Mar 2021 23:00:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/posts/semver-utils/</guid>
+      <description>&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;GitHub Actions are so cool!&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;Check out &lt;a href=&#34;https://youtu.be/-sr9_AItFQQ&#34;&gt;our recording&lt;/a&gt; about them @ &lt;a href=&#34;https://www.youtube.com/channel/UCFMIGfAAUXUqnnNcWpdezJQ&#34;&gt;Ministry of Testing Abu Dhabi&lt;/a&gt; if you want a quick sneak peek, but today I want to self-advertise one of the reusable Actions I made for you.
+And it wasn’t hard at all, thanks to the way they work (although I’m going to &lt;a href=&#34;../../tags/rant&#34;&gt;rant&lt;/a&gt; about that in future articles).&lt;/p&gt;
+&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>ImgMacroBot</title>
+      <link>https://madhead.me/posts/imgmacrobot/</link>
+      <pubDate>Tue, 16 Mar 2021 09:00:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/posts/imgmacrobot/</guid>
+      <description>&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;&lt;a href=&#34;https://t.me/ImgMacroBot&#34;&gt;@ImgMacroBot&lt;/a&gt; is an &lt;a href=&#34;https://core.telegram.org/bots/inline&#34;&gt;inline&lt;/a&gt; Telegram bot for &lt;a href=&#34;https://en.wikipedia.org/wiki/Image_macro&#34;&gt;image macros&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>No-bullshit guide on publishing your Gradle projects to Maven Central</title>
+      <link>https://madhead.me/posts/no-bullshit-maven-publish/</link>
+      <pubDate>Sat, 27 Feb 2021 18:00:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/posts/no-bullshit-maven-publish/</guid>
+      <description>&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;You’ve heard &lt;a href=&#34;https://jfrog.com/blog/into-the-sunset-bintray-jcenter-gocenter-and-chartcenter&#34;&gt;the news&lt;/a&gt;, haven’t you?
+JFrog is closing JCenter — probably the best Maven-compatible repository ever.
+It was kind of a &amp;#34;default&amp;#34; in Gradle — a drop-in replacement for Maven Central Repository — for years.
+Plus it hosted some extra artifacts from the projects that decided to not deploy into Central (and now I understand why).
+With its own Gradle plugin, JCenter was drop-dead easy to publish: just a dozen of config lines, a single task invocation — and your library is available to everybody.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;It was great.
+Good night, sweet prince.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;It’s time to move your projects to Maven Central Repository, so I’ve gathered some info for you below to minimize the pain.&lt;/p&gt;
+&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>How I fucked up with a private key and newlines</title>
+      <link>https://madhead.me/posts/private-key-newline-fuckup/</link>
+      <pubDate>Tue, 09 Feb 2021 23:00:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/posts/private-key-newline-fuckup/</guid>
+      <description>&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;A short story about wasting a day on a single newline at the end of a private key.&lt;/p&gt;
+&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>Hosting multiple Telegram bots with NGINX, self-signed certificates and Ansible</title>
+      <link>https://madhead.me/posts/nginx-tg-bots/</link>
+      <pubDate>Mon, 08 Feb 2021 21:00:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/posts/nginx-tg-bots/</guid>
+      <description>&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;Imagine you have a few cool ideas for &lt;a href=&#34;https://core.telegram.org/bots&#34;&gt;Telegram bots&lt;/a&gt;.
+Bots have two options of communicating with Telegram servers: either by polling the events by using &lt;a href=&#34;https://core.telegram.org/bots/api#getupdates&#34;&gt;&lt;code&gt;getUpdates&lt;/code&gt;&lt;/a&gt; or by registering a &lt;a href=&#34;https://core.telegram.org/bots/api#setwebhook&#34;&gt;webhook&lt;/a&gt; and receiving the updates as HTTPS POST requests.
+But who the heck uses polling today?
+Right, nobody does that, and webhooks are the option.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;And here be dragons.&lt;/p&gt;
+&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>Graphviz @ Docker</title>
+      <link>https://madhead.me/posts/docker-dot/</link>
+      <pubDate>Thu, 24 Dec 2020 22:05:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/posts/docker-dot/</guid>
+      <description>&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;One more article about my Docker images.
+Graphviz doesn’t seem to have an official Docker image, so I’ve created &lt;a href=&#34;https://hub.docker.com/repository/docker/madhead/graphviz&#34;&gt;my own&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>Learning Kafka: Kafka Connect &#43; Wikipedia</title>
+      <link>https://madhead.me/posts/kafka-connect-wikipedia/</link>
+      <pubDate>Thu, 18 Jun 2020 09:00:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/posts/kafka-connect-wikipedia/</guid>
+      <description>&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;I’ve been developing backend software for almost 10 years already and never had a chance to work closely with &lt;a href=&#34;https://kafka.apache.org&#34;&gt;Apache Kafka&lt;/a&gt;.
+After a couple of technical interviews recently I’ve realized that it’s a significant gap in my experience.
+So, I’ve decided to learn it by playing with publicly available Wikipedia’s recent changes event stream.
+Join me in this article, where I’ll be developing a &lt;a href=&#34;https://kafka.apache.org/documentation/#connect&#34;&gt;Kafka Connect&lt;/a&gt; application listening for the latest Wikipedia edits and storing them in a Kafka topic!
+I’ll develop a &lt;a href=&#34;https://kafka.apache.org/documentation/streams&#34;&gt;Kafka Streams&lt;/a&gt; application processing this topic in one of the future articles, so stay tuned.&lt;/p&gt;
+&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>How I fucked up with enum&#39;s hashCode</title>
+      <link>https://madhead.me/posts/enums-fuckup/</link>
+      <pubDate>Wed, 27 May 2020 09:00:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/posts/enums-fuckup/</guid>
+      <description>&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;A short story about a newbie’s mistake I’ve made recently.&lt;/p&gt;
+&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>YouTube Watch Later Telegram Bot</title>
+      <link>https://madhead.me/posts/ywltb/</link>
+      <pubDate>Wed, 20 May 2020 09:00:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/posts/ywltb/</guid>
+      <description>&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;&lt;a href=&#34;https://ywltb.herokuapp.com&#34;&gt;YWLTB&lt;/a&gt; — or YouTube Watch Later Telegram Bot — is a Telegram bot that does one simple thing: adds incoming YouTube videos into your &amp;#34;Watch Later&amp;#34; playlist.&lt;/p&gt;
+&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>Redis module in Kotlin/Native</title>
+      <link>https://madhead.me/posts/kotlin-native-redis/</link>
+      <pubDate>Wed, 11 Mar 2020 09:00:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/posts/kotlin-native-redis/</guid>
+      <description>&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;Those of you who have some experience with Redis may know that it is not just a simple cache or a plain key-value store, but actually a data structures server, supporting different kinds of values.
+Out of the box it supports binary-safe strings, sets, lists, hashes, bit arrays, streams and HyperLogLogs.
+Redis also &lt;a href=&#34;https://redis.io/topics/modules-native-types&#34;&gt;provides&lt;/a&gt; a simple C API for custom data structures, called native types.
+Some of the popular community-supported native types are &lt;a href=&#34;https://oss.redislabs.com/redisbloom&#34;&gt;Bloom filters&lt;/a&gt;, &lt;a href=&#34;https://oss.redislabs.com/redisgraph&#34;&gt;graphs&lt;/a&gt;, &lt;a href=&#34;https://oss.redislabs.com/redisjson&#34;&gt;JSON objects&lt;/a&gt;, and &lt;a href=&#34;https://oss.redislabs.com/redisai&#34;&gt;tensors&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;Let’s use Kotlin/Native to implement a simple data structure for parentheses expression validation just because we can.
+But first, I want to say thanks to &lt;a href=&#34;https://research.jetbrains.org/researchers/artdegt&#34;&gt;Artyom Degtyarev&lt;/a&gt; from JetBrains, who helped a lot with Kotlin/Native in &lt;a href=&#34;https://kotlinlang.slack.com&#34;&gt;Kotlin Slack&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>Speeding up the detekt task in a multi-project Gradle build.</title>
+      <link>https://madhead.me/posts/detekt-faster/</link>
+      <pubDate>Wed, 12 Feb 2020 09:00:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/posts/detekt-faster/</guid>
+      <description>&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;I’m going to tell you how to significantly speed up the &lt;code&gt;detekt&lt;/code&gt; task in a multi-project Gradle build.
+Precise numbers vary depending on many factors, of course.
+In my case, in a build with 56 subprojects and ~7000 lines of code, it was about &lt;strong&gt;10 times faster&lt;/strong&gt;.&lt;/p&gt;
+&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>JUnit 5 extensions for AWS</title>
+      <link>https://madhead.me/posts/aws-junit5/</link>
+      <pubDate>Thu, 26 Sep 2019 09:00:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/posts/aws-junit5/</guid>
+      <description>&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;Do you test the code that uses AWS services?
+Do you use JUnit 5 in your tests?
+If you do both, I may have something useful for you.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;&lt;a href=&#34;https://gitlab.com/madhead/aws-junit5&#34;&gt;JUnit 5 extensions for AWS&lt;/a&gt;: a few JUnit 5 extensions that could be useful for testing AWS-related code.
+These extensions can be used to inject clients for AWS service mocks provided by tools like &lt;a href=&#34;https://github.com/localstack/localstack&#34;&gt;localstack&lt;/a&gt;.
+Both AWS Java SDK v 2.x and v 1.x are supported.&lt;/p&gt;
+&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>OpenSearch</title>
+      <link>https://madhead.me/posts/awesome-opensearch/</link>
+      <pubDate>Tue, 20 Aug 2019 09:00:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/posts/awesome-opensearch/</guid>
+      <description>&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;I search online every day. I search on Google, StackOverflow, GitHub, Maven Central, Gradle Plugins repository, YouTube and dozen of other sites.
+And, I won’t deny, sometimes I search on Pornhub.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;I bet you search too.&lt;/p&gt;
+&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>Do you need a local master branch?</title>
+      <link>https://madhead.me/posts/do-you-need-a-local-master-branch/</link>
+      <pubDate>Tue, 23 Jul 2019 09:00:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/posts/do-you-need-a-local-master-branch/</guid>
+      <description>&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;I noticed recently that I’ve (almost) never used a local &lt;code&gt;master&lt;/code&gt; branch in Git.
+I only use it in simple one-off playground repos that I don’t plan to support and never in professional development or in “serious” pet-projects.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;So, is it really required?&lt;/p&gt;
+&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>Keeping Gradle up-to-date</title>
+      <link>https://madhead.me/posts/keeping-gradle-up-to-date/</link>
+      <pubDate>Tue, 16 Jul 2019 09:00:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/posts/keeping-gradle-up-to-date/</guid>
+      <description>&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;&lt;a href=&#34;https://gradle.org&#34;&gt;Gradle&lt;/a&gt; is an awesome build tool, and I am always looking forward to new versions to enjoy the latest features, performance improvements and bug fixes.
+Actually, forget what I’ve said about bugfixes: Gradle works like a charm.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;I could just check &lt;a href=&#34;http://services.gradle.org/distributions&#34;&gt;Gradle’s distributions&lt;/a&gt; page periodically, or &lt;a href=&#34;https://help.github.com/en/articles/watching-and-unwatching-releases-for-a-repository&#34;&gt;subscribe&lt;/a&gt; to their &lt;a href=&#34;https://github.com/gradle/gradle/releases&#34;&gt;releases&lt;/a&gt; on GitHub to get notified about new versions faster.
+And I actually do that from time to time when I need to know the latest available version.
+But how can I keep Gradle up-to-date in the existing codebases?&lt;/p&gt;
+&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>Kotlin/Native for AWS Lambda</title>
+      <link>https://madhead.me/posts/kotlin-native-lambda/</link>
+      <pubDate>Fri, 05 Apr 2019 22:02:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/posts/kotlin-native-lambda/</guid>
+      <description>&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;Amazon &lt;a href=&#34;https://aws.amazon.com/about-aws/whats-new/2018/11/aws-lambda-now-supports-custom-runtimes-and-layers&#34;&gt;announced&lt;/a&gt; Lambda Runtime API on AWS &lt;a href=&#34;https://reinvent.awsevents.com&#34;&gt;re:Invent&lt;/a&gt; 2018.
+It allows developers, among other things, to build Lambda functions using any technology they want via so-called &lt;a href=&#34;https://docs.aws.amazon.com/lambda/latest/dg/runtimes-custom.html&#34;&gt;Custom Runtimes&lt;/a&gt;.
+Yes, it’s now possible to author a function on PHP, Perl, Pascal (anybody?) or even Bash (they use it in the &lt;a href=&#34;https://docs.aws.amazon.com/lambda/latest/dg/runtimes-walkthrough.html&#34;&gt;docs&lt;/a&gt;)!&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;Nice, isn’t it?
+Let’s build an AWS Lambda function with &lt;a href=&#34;https://kotlinlang.org/docs/reference/native-overview.html&#34;&gt;Kotlin/Native&lt;/a&gt;!&lt;/p&gt;
+&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>Java classes for server-side App Store receipts validation</title>
+      <link>https://madhead.me/posts/appstore-receipts-validator-j/</link>
+      <pubDate>Tue, 13 Nov 2018 21:00:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/posts/appstore-receipts-validator-j/</guid>
+      <description>&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;I’m working on a bunch of apps that need to verify App Store receipts on a JVM-based server.
+The process &lt;a href=&#34;https://developer.apple.com/documentation/appstorereceipts&#34;&gt;is described in Apples’s Documentation Archive&lt;/a&gt; but lacks of any SDK / libraries (at least for JVM).
+So I made one to improve code reuse.&lt;/p&gt;
+&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>Java classes for AWS Lambda Proxy Integration</title>
+      <link>https://madhead.me/posts/lambda-proxy-integration-java/</link>
+      <pubDate>Tue, 13 Nov 2018 20:00:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/posts/lambda-proxy-integration-java/</guid>
+      <description>&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;When I had to &lt;a href=&#34;https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html&#34;&gt;configure Lambda Proxy Integrations in AWS API Gateway&lt;/a&gt; for the second time for a week I thought about extracting Java classes in a small library for later reuse.&lt;/p&gt;
+&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>(Alpine &#43; JFrog CLI) @ Docker</title>
+      <link>https://madhead.me/posts/lv-alpina/</link>
+      <pubDate>Sun, 16 Sep 2018 02:31:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/posts/lv-alpina/</guid>
+      <description>&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;One more article about my Docker images.&lt;/p&gt;
+&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>(Alpine &#43; AWS CLI &#43; Ansible) @ Docker</title>
+      <link>https://madhead.me/posts/awesible/</link>
+      <pubDate>Sat, 15 Sep 2018 17:14:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/posts/awesible/</guid>
+      <description>&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;I’m using &lt;a href=&#34;https://bitbucket.org/product/features/pipelines&#34;&gt;Bitbucket Pipelines&lt;/a&gt; widely for CI/CD at my current position.
+It sucks a little if compare it with &lt;a href=&#34;https://about.gitlab.com/features/gitlab-ci-cd&#34;&gt;GitLab CI/CD&lt;/a&gt;, but I don’t complain.&lt;/p&gt;
+&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>Hard lesson from NVIDIA</title>
+      <link>https://madhead.me/posts/nvidia-hard-lesson/</link>
+      <pubDate>Sun, 19 Aug 2018 01:42:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/posts/nvidia-hard-lesson/</guid>
+      <description>&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;Last week I’ve managed to accidentally break my Linux installation.
+Probably, the first time for the last ten years where Linux behaved truly “unstable”.&lt;/p&gt;
+&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>Maven is not as stable as many think</title>
+      <link>https://madhead.me/posts/maven-is-not-so-stable/</link>
+      <pubDate>Sun, 19 Aug 2018 00:34:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/posts/maven-is-not-so-stable/</guid>
+      <description>&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;Sometimes I’m trying to show others that there is a better alternative to Maven: Gradle.
+I’m trying to show them how Gradle can make things easy &amp;amp; possible whereas achieving the same results in Maven are Herculean labors or literally impossible.
+I often hear in reply: “Gradle sucks because it’s a hipster technology. It’s new and unstable. Will you help me if something goes wrong?”.&lt;/p&gt;
+&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>Using Monday as a first day of week in KDE 5</title>
+      <link>https://madhead.me/posts/kde-calendar-monday/</link>
+      <pubDate>Sat, 18 Aug 2018 22:01:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/posts/kde-calendar-monday/</guid>
+      <description>&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;&lt;code&gt;en_US.UTF-8&lt;/code&gt; is a great locale and I am using it for my KDE desktop because it gives me full English UI, whereeas other locales can result in semi-translated UIs.
+But it has some flaws.
+For example, weeks begin on Sunday in USA.
+It’s not how we do here in Europe and it’s really annoying to see Sunday as a first day of week in a calendar widget.
+Unfortunatelly, there is no knob for this setting (or my Google-fu failed me), so let’s fix it in a dirty way.&lt;/p&gt;
+&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>BTTF-like sticker @ Inkscape</title>
+      <link>https://madhead.me/posts/back-to-the-inkscape/</link>
+      <pubDate>Sun, 12 Aug 2018 04:58:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/posts/back-to-the-inkscape/</guid>
+      <description>&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;We’re going to organize a &lt;a href=&#34;https://jfuture.by&#34;&gt;Java conference&lt;/a&gt; later this year.
+And it need its stickers.
+So let’s draw one!&lt;/p&gt;
+&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>Preserving MongoDB shell history in Docker</title>
+      <link>https://madhead.me/posts/preserving-mongo-history-in-docker/</link>
+      <pubDate>Sat, 07 Jul 2018 05:24:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/posts/preserving-mongo-history-in-docker/</guid>
+      <description>&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;So, you run &lt;code&gt;mongo&lt;/code&gt; in disposable Docker containers and want to preserve shell history?
+Say no more, pal.&lt;/p&gt;
+&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>AWS Lambda environment variables → AWS SSM parameters in one (long) bash line</title>
+      <link>https://madhead.me/posts/oneliners-1/</link>
+      <pubDate>Wed, 04 Jul 2018 04:47:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/posts/oneliners-1/</guid>
+      <description>&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;So, you want to use AWS SSM parameters instead of AWS Lambda environment variables?
+But you already have dozens of variables defined?&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;Keep calm (tested in production) and use this one-liner.&lt;/p&gt;
+&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>Cleaning Git repos</title>
+      <link>https://madhead.me/posts/gitclean/</link>
+      <pubDate>Thu, 22 Mar 2018 20:19:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/posts/gitclean/</guid>
+      <description>&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;I guess, all popular Git repositories allow you to delete source branch when the PR with this branch is accepted.
+But sometimes you forget to use this option and end up with hundreds or thousands of stale branches across dozens of projects.&lt;/p&gt;
+&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>Mounting directories for Docker containers from Git Bash (Windows)</title>
+      <link>https://madhead.me/posts/git-bash-docker-mounts/</link>
+      <pubDate>Wed, 21 Mar 2018 16:50:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/posts/git-bash-docker-mounts/</guid>
+      <description>Just use double slashes when mounting and accessing directories from Git Bash in Docker on Windows:
+ docker run --rm -it -v //c//Users//Siarhei_Krukau//Downloads:/test alpine ls -la //test   </description>
+    </item>
+    
+    <item>
+      <title>Speeding up Kitchen converges with Squid</title>
+      <link>https://madhead.me/posts/kitchen-squid/</link>
+      <pubDate>Sun, 17 Sep 2017 01:10:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/posts/kitchen-squid/</guid>
+      <description>&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;One day, you may find yourself smoking too often or drinking a lot of coffee while waiting for the files to be downloaded during provisioning of Vagrant / Kitchen VMs.
+E.g: JDK size is ~200 MB and it may take a dozen of minutes to download during the execution of the &lt;code&gt;java&lt;/code&gt; recipe.
+You can save precious seconds of your life with &lt;a href=&#34;http://www.squid-cache.org&#34;&gt;Squid&lt;/a&gt;.
+Though some configuration is required, it wont take more than 5 minutes.&lt;/p&gt;
+&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>Hello, world!</title>
+      <link>https://madhead.me/posts/hello-world/</link>
+      <pubDate>Mon, 05 Jun 2017 23:44:25 +0300</pubDate>
+      
+      <guid>https://madhead.me/posts/hello-world/</guid>
+      <description>Hello, world! So, I’ve decided to run my own blog. I will write my thoughts here from time to time.
+   </description>
+    </item>
+    
+  </channel>
+</rss>

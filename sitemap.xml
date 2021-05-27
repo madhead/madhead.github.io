@@ -1,0 +1,539 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+  <url>
+    <loc>https://madhead.me/tags/bash-magic/</loc>
+    <lastmod>2021-05-27T22:19:00+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://madhead.me/tags/linux/</loc>
+    <lastmod>2021-05-27T22:19:00+02:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="ru"
+                href="https://ru.madhead.me/tags/linux/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://madhead.me/tags/linux/"
+                />
+  </url>
+  
+  <url>
+    <loc>https://madhead.me/</loc>
+    <lastmod>2021-05-27T22:19:00+02:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="ru"
+                href="https://ru.madhead.me/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://madhead.me/"
+                />
+  </url>
+  
+  <url>
+    <loc>https://madhead.me/posts/</loc>
+    <lastmod>2021-05-27T22:19:00+02:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="ru"
+                href="https://ru.madhead.me/posts/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://madhead.me/posts/"
+                />
+  </url>
+  
+  <url>
+    <loc>https://madhead.me/posts/dslr-webcam/</loc>
+    <lastmod>2021-05-27T22:19:00+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://madhead.me/tags/</loc>
+    <lastmod>2021-05-27T22:19:00+02:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="ru"
+                href="https://ru.madhead.me/tags/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://madhead.me/tags/"
+                />
+  </url>
+  
+  <url>
+    <loc>https://madhead.me/tags/ci/</loc>
+    <lastmod>2021-03-28T00:30:00+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://madhead.me/tags/github-actions/</loc>
+    <lastmod>2021-03-28T00:30:00+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://madhead.me/tags/pet-projects/</loc>
+    <lastmod>2021-03-28T00:30:00+03:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="ru"
+                href="https://ru.madhead.me/tags/pet-projects/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://madhead.me/tags/pet-projects/"
+                />
+  </url>
+  
+  <url>
+    <loc>https://madhead.me/posts/read-java-properties/</loc>
+    <lastmod>2021-03-28T00:30:00+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://madhead.me/posts/semver-utils/</loc>
+    <lastmod>2021-03-25T23:00:00+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://madhead.me/posts/imgmacrobot/</loc>
+    <lastmod>2021-03-16T09:00:00+03:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="ru"
+                href="https://ru.madhead.me/posts/imgmacrobot/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://madhead.me/posts/imgmacrobot/"
+                />
+  </url>
+  
+  <url>
+    <loc>https://madhead.me/tags/telegram/</loc>
+    <lastmod>2021-03-16T09:00:00+03:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="ru"
+                href="https://ru.madhead.me/tags/telegram/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://madhead.me/tags/telegram/"
+                />
+  </url>
+  
+  <url>
+    <loc>https://madhead.me/tags/gradle/</loc>
+    <lastmod>2021-02-27T18:00:00+03:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="ru"
+                href="https://ru.madhead.me/tags/gradle/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://madhead.me/tags/gradle/"
+                />
+  </url>
+  
+  <url>
+    <loc>https://madhead.me/tags/maven/</loc>
+    <lastmod>2021-02-27T18:00:00+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://madhead.me/posts/no-bullshit-maven-publish/</loc>
+    <lastmod>2021-02-27T18:00:00+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://madhead.me/tags/rant/</loc>
+    <lastmod>2021-02-27T18:00:00+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://madhead.me/tags/fuckup/</loc>
+    <lastmod>2021-02-09T23:00:00+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://madhead.me/posts/private-key-newline-fuckup/</loc>
+    <lastmod>2021-02-09T23:00:00+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://madhead.me/tags/ssh/</loc>
+    <lastmod>2021-02-09T23:00:00+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://madhead.me/tags/ansible/</loc>
+    <lastmod>2021-02-08T21:00:00+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://madhead.me/posts/nginx-tg-bots/</loc>
+    <lastmod>2021-02-08T21:00:00+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://madhead.me/tags/docker/</loc>
+    <lastmod>2020-12-24T22:05:00+03:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="ru"
+                href="https://ru.madhead.me/tags/docker/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://madhead.me/tags/docker/"
+                />
+  </url>
+  
+  <url>
+    <loc>https://madhead.me/tags/dot/</loc>
+    <lastmod>2020-12-24T22:05:00+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://madhead.me/tags/graphviz/</loc>
+    <lastmod>2020-12-24T22:05:00+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://madhead.me/posts/docker-dot/</loc>
+    <lastmod>2020-12-24T22:05:00+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://madhead.me/tags/kafka/</loc>
+    <lastmod>2020-06-18T09:00:00+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://madhead.me/tags/kotlin/</loc>
+    <lastmod>2020-06-18T09:00:00+03:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="ru"
+                href="https://ru.madhead.me/tags/kotlin/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://madhead.me/tags/kotlin/"
+                />
+  </url>
+  
+  <url>
+    <loc>https://madhead.me/posts/kafka-connect-wikipedia/</loc>
+    <lastmod>2020-06-18T09:00:00+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://madhead.me/posts/enums-fuckup/</loc>
+    <lastmod>2020-05-27T09:00:00+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://madhead.me/tags/java/</loc>
+    <lastmod>2020-05-27T09:00:00+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://madhead.me/posts/ywltb/</loc>
+    <lastmod>2020-05-20T09:00:00+03:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="ru"
+                href="https://ru.madhead.me/posts/ywltb/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://madhead.me/posts/ywltb/"
+                />
+  </url>
+  
+  <url>
+    <loc>https://madhead.me/tags/redis/</loc>
+    <lastmod>2020-03-11T09:00:00+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://madhead.me/posts/kotlin-native-redis/</loc>
+    <lastmod>2020-03-11T09:00:00+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://madhead.me/tags/detekt/</loc>
+    <lastmod>2020-02-12T09:00:00+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://madhead.me/posts/detekt-faster/</loc>
+    <lastmod>2020-02-12T09:00:00+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://madhead.me/tags/aws/</loc>
+    <lastmod>2019-09-26T09:00:00+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://madhead.me/tags/junit/</loc>
+    <lastmod>2019-09-26T09:00:00+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://madhead.me/posts/aws-junit5/</loc>
+    <lastmod>2019-09-26T09:00:00+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://madhead.me/tags/lifehack/</loc>
+    <lastmod>2019-08-20T09:00:00+03:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="ru"
+                href="https://ru.madhead.me/tags/lifehack/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://madhead.me/tags/lifehack/"
+                />
+  </url>
+  
+  <url>
+    <loc>https://madhead.me/posts/awesome-opensearch/</loc>
+    <lastmod>2019-08-20T09:00:00+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://madhead.me/tags/opensearch/</loc>
+    <lastmod>2019-08-20T09:00:00+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://madhead.me/posts/do-you-need-a-local-master-branch/</loc>
+    <lastmod>2019-07-23T09:00:00+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://madhead.me/tags/git/</loc>
+    <lastmod>2019-07-23T09:00:00+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://madhead.me/posts/keeping-gradle-up-to-date/</loc>
+    <lastmod>2019-07-16T09:00:00+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://madhead.me/tags/aws-lambda/</loc>
+    <lastmod>2019-04-05T22:02:00+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://madhead.me/posts/kotlin-native-lambda/</loc>
+    <lastmod>2019-04-05T22:02:00+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://madhead.me/tags/aws-api-gateway/</loc>
+    <lastmod>2018-11-13T21:00:00+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://madhead.me/posts/appstore-receipts-validator-j/</loc>
+    <lastmod>2018-11-13T21:00:00+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://madhead.me/posts/lambda-proxy-integration-java/</loc>
+    <lastmod>2018-11-13T20:00:00+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://madhead.me/posts/lv-alpina/</loc>
+    <lastmod>2018-09-16T02:31:00+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://madhead.me/tags/jfrog-cli/</loc>
+    <lastmod>2018-09-16T02:31:00+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://madhead.me/posts/awesible/</loc>
+    <lastmod>2018-09-15T17:14:00+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://madhead.me/tags/aws-cli/</loc>
+    <lastmod>2018-09-15T17:14:00+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://madhead.me/posts/nvidia-hard-lesson/</loc>
+    <lastmod>2018-08-19T01:42:00+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://madhead.me/tags/nvidia/</loc>
+    <lastmod>2018-08-19T01:42:00+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://madhead.me/posts/maven-is-not-so-stable/</loc>
+    <lastmod>2018-08-19T00:34:00+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://madhead.me/tags/kde/</loc>
+    <lastmod>2018-08-18T22:01:00+03:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="ru"
+                href="https://ru.madhead.me/tags/kde/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://madhead.me/tags/kde/"
+                />
+  </url>
+  
+  <url>
+    <loc>https://madhead.me/posts/kde-calendar-monday/</loc>
+    <lastmod>2018-08-18T22:01:00+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://madhead.me/tags/back-to-the-future/</loc>
+    <lastmod>2018-08-12T04:58:00+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://madhead.me/posts/back-to-the-inkscape/</loc>
+    <lastmod>2018-08-12T04:58:00+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://madhead.me/tags/inkscape/</loc>
+    <lastmod>2018-08-12T04:58:00+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://madhead.me/tags/jfuture-2018/</loc>
+    <lastmod>2018-08-12T04:58:00+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://madhead.me/tags/vector-graphics/</loc>
+    <lastmod>2018-08-12T04:58:00+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://madhead.me/tags/bash/</loc>
+    <lastmod>2018-07-07T05:24:00+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://madhead.me/posts/preserving-mongo-history-in-docker/</loc>
+    <lastmod>2018-07-07T05:24:00+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://madhead.me/posts/oneliners-1/</loc>
+    <lastmod>2018-07-04T04:47:00+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://madhead.me/tags/magic/</loc>
+    <lastmod>2018-07-04T04:47:00+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://madhead.me/tags/one-liner/</loc>
+    <lastmod>2018-07-04T04:47:00+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://madhead.me/posts/gitclean/</loc>
+    <lastmod>2018-03-22T20:19:00+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://madhead.me/posts/git-bash-docker-mounts/</loc>
+    <lastmod>2018-03-21T16:50:00+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://madhead.me/tags/windows/</loc>
+    <lastmod>2018-03-21T16:50:00+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://madhead.me/tags/chef/</loc>
+    <lastmod>2017-09-17T01:10:00+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://madhead.me/tags/kitchen/</loc>
+    <lastmod>2017-09-17T01:10:00+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://madhead.me/posts/kitchen-squid/</loc>
+    <lastmod>2017-09-17T01:10:00+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://madhead.me/tags/squid/</loc>
+    <lastmod>2017-09-17T01:10:00+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://madhead.me/tags/vagrant/</loc>
+    <lastmod>2017-09-17T01:10:00+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://madhead.me/posts/hello-world/</loc>
+    <lastmod>2017-06-05T23:44:25+03:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="ru"
+                href="https://ru.madhead.me/posts/hello-world/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://madhead.me/posts/hello-world/"
+                />
+  </url>
+  
+  <url>
+    <loc>https://madhead.me/tags/kotlin/native/</loc>
+  </url>
+  
+</urlset>

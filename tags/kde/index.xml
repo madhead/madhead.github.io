@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>kde on madhead</title>
+    <link>https://madhead.me/tags/kde/</link>
+    <description>Recent content in kde on madhead</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Sat, 18 Aug 2018 22:01:00 +0300</lastBuildDate><atom:link href="https://madhead.me/tags/kde/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Using Monday as a first day of week in KDE 5</title>
+      <link>https://madhead.me/posts/kde-calendar-monday/</link>
+      <pubDate>Sat, 18 Aug 2018 22:01:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/posts/kde-calendar-monday/</guid>
+      <description>&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;&lt;code&gt;en_US.UTF-8&lt;/code&gt; is a great locale and I am using it for my KDE desktop because it gives me full English UI, whereeas other locales can result in semi-translated UIs.
+But it has some flaws.
+For example, weeks begin on Sunday in USA.
+It’s not how we do here in Europe and it’s really annoying to see Sunday as a first day of week in a calendar widget.
+Unfortunatelly, there is no knob for this setting (or my Google-fu failed me), so let’s fix it in a dirty way.&lt;/p&gt;
+&lt;/div&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

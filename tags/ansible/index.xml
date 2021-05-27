@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ansible on madhead</title>
+    <link>https://madhead.me/tags/ansible/</link>
+    <description>Recent content in ansible on madhead</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Mon, 08 Feb 2021 21:00:00 +0300</lastBuildDate><atom:link href="https://madhead.me/tags/ansible/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Hosting multiple Telegram bots with NGINX, self-signed certificates and Ansible</title>
+      <link>https://madhead.me/posts/nginx-tg-bots/</link>
+      <pubDate>Mon, 08 Feb 2021 21:00:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/posts/nginx-tg-bots/</guid>
+      <description>&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;Imagine you have a few cool ideas for &lt;a href=&#34;https://core.telegram.org/bots&#34;&gt;Telegram bots&lt;/a&gt;.
+Bots have two options of communicating with Telegram servers: either by polling the events by using &lt;a href=&#34;https://core.telegram.org/bots/api#getupdates&#34;&gt;&lt;code&gt;getUpdates&lt;/code&gt;&lt;/a&gt; or by registering a &lt;a href=&#34;https://core.telegram.org/bots/api#setwebhook&#34;&gt;webhook&lt;/a&gt; and receiving the updates as HTTPS POST requests.
+But who the heck uses polling today?
+Right, nobody does that, and webhooks are the option.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;And here be dragons.&lt;/p&gt;
+&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>(Alpine &#43; AWS CLI &#43; Ansible) @ Docker</title>
+      <link>https://madhead.me/posts/awesible/</link>
+      <pubDate>Sat, 15 Sep 2018 17:14:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/posts/awesible/</guid>
+      <description>&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;I’m using &lt;a href=&#34;https://bitbucket.org/product/features/pipelines&#34;&gt;Bitbucket Pipelines&lt;/a&gt; widely for CI/CD at my current position.
+It sucks a little if compare it with &lt;a href=&#34;https://about.gitlab.com/features/gitlab-ci-cd&#34;&gt;GitLab CI/CD&lt;/a&gt;, but I don’t complain.&lt;/p&gt;
+&lt;/div&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

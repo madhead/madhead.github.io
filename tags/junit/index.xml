@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>junit on madhead</title>
+    <link>https://madhead.me/tags/junit/</link>
+    <description>Recent content in junit on madhead</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Thu, 26 Sep 2019 09:00:00 +0300</lastBuildDate><atom:link href="https://madhead.me/tags/junit/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>JUnit 5 extensions for AWS</title>
+      <link>https://madhead.me/posts/aws-junit5/</link>
+      <pubDate>Thu, 26 Sep 2019 09:00:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/posts/aws-junit5/</guid>
+      <description>&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;Do you test the code that uses AWS services?
+Do you use JUnit 5 in your tests?
+If you do both, I may have something useful for you.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;&lt;a href=&#34;https://gitlab.com/madhead/aws-junit5&#34;&gt;JUnit 5 extensions for AWS&lt;/a&gt;: a few JUnit 5 extensions that could be useful for testing AWS-related code.
+These extensions can be used to inject clients for AWS service mocks provided by tools like &lt;a href=&#34;https://github.com/localstack/localstack&#34;&gt;localstack&lt;/a&gt;.
+Both AWS Java SDK v 2.x and v 1.x are supported.&lt;/p&gt;
+&lt;/div&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

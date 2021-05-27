@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>aws lambda on madhead</title>
+    <link>https://madhead.me/tags/aws-lambda/</link>
+    <description>Recent content in aws lambda on madhead</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Fri, 05 Apr 2019 22:02:00 +0300</lastBuildDate><atom:link href="https://madhead.me/tags/aws-lambda/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Kotlin/Native for AWS Lambda</title>
+      <link>https://madhead.me/posts/kotlin-native-lambda/</link>
+      <pubDate>Fri, 05 Apr 2019 22:02:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/posts/kotlin-native-lambda/</guid>
+      <description>&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;Amazon &lt;a href=&#34;https://aws.amazon.com/about-aws/whats-new/2018/11/aws-lambda-now-supports-custom-runtimes-and-layers&#34;&gt;announced&lt;/a&gt; Lambda Runtime API on AWS &lt;a href=&#34;https://reinvent.awsevents.com&#34;&gt;re:Invent&lt;/a&gt; 2018.
+It allows developers, among other things, to build Lambda functions using any technology they want via so-called &lt;a href=&#34;https://docs.aws.amazon.com/lambda/latest/dg/runtimes-custom.html&#34;&gt;Custom Runtimes&lt;/a&gt;.
+Yes, it’s now possible to author a function on PHP, Perl, Pascal (anybody?) or even Bash (they use it in the &lt;a href=&#34;https://docs.aws.amazon.com/lambda/latest/dg/runtimes-walkthrough.html&#34;&gt;docs&lt;/a&gt;)!&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;Nice, isn’t it?
+Let’s build an AWS Lambda function with &lt;a href=&#34;https://kotlinlang.org/docs/reference/native-overview.html&#34;&gt;Kotlin/Native&lt;/a&gt;!&lt;/p&gt;
+&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>Java classes for server-side App Store receipts validation</title>
+      <link>https://madhead.me/posts/appstore-receipts-validator-j/</link>
+      <pubDate>Tue, 13 Nov 2018 21:00:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/posts/appstore-receipts-validator-j/</guid>
+      <description>&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;I’m working on a bunch of apps that need to verify App Store receipts on a JVM-based server.
+The process &lt;a href=&#34;https://developer.apple.com/documentation/appstorereceipts&#34;&gt;is described in Apples’s Documentation Archive&lt;/a&gt; but lacks of any SDK / libraries (at least for JVM).
+So I made one to improve code reuse.&lt;/p&gt;
+&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>Java classes for AWS Lambda Proxy Integration</title>
+      <link>https://madhead.me/posts/lambda-proxy-integration-java/</link>
+      <pubDate>Tue, 13 Nov 2018 20:00:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/posts/lambda-proxy-integration-java/</guid>
+      <description>&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;When I had to &lt;a href=&#34;https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html&#34;&gt;configure Lambda Proxy Integrations in AWS API Gateway&lt;/a&gt; for the second time for a week I thought about extracting Java classes in a small library for later reuse.&lt;/p&gt;
+&lt;/div&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

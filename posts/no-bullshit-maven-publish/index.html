@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang='en' dir='auto'><head>
+  <meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<meta name='description' content='
+You’ve heard the news, haven’t you?
+JFrog is closing JCenter — probably the best Maven-compatible repository ever.
+It was kind of a &#34;default&#34; in Gradle — a drop-in replacement for Maven Central Repository — for years.
+Plus it hosted some extra artifacts from the projects that decided to not deploy into Central (and now I understand why).
+With its own Gradle plugin, JCenter was drop-dead easy to publish: just a dozen of config lines, a single task invocation — and your library is available to everybody.
+
+
+It was great.
+Good night, sweet prince.
+
+
+It’s time to move your projects to Maven Central Repository, so I’ve gathered some info for you below to minimize the pain.
+'>
+
+<meta property='og:title' content='No-bullshit guide on publishing your Gradle projects to Maven Central • madhead'>
+<meta property='og:description' content='
+You’ve heard the news, haven’t you?
+JFrog is closing JCenter — probably the best Maven-compatible repository ever.
+It was kind of a &#34;default&#34; in Gradle — a drop-in replacement for Maven Central Repository — for years.
+Plus it hosted some extra artifacts from the projects that decided to not deploy into Central (and now I understand why).
+With its own Gradle plugin, JCenter was drop-dead easy to publish: just a dozen of config lines, a single task invocation — and your library is available to everybody.
+
+
+It was great.
+Good night, sweet prince.
+
+
+It’s time to move your projects to Maven Central Repository, so I’ve gathered some info for you below to minimize the pain.
+'>
+<meta property='og:url' content='https://madhead.me/posts/no-bullshit-maven-publish/'>
+<meta property='og:site_name' content='madhead'>
+<meta property='og:type' content='article'><meta property='article:section' content='posts'><meta property='article:tag' content='gradle'><meta property='article:tag' content='maven'><meta property='article:tag' content='rant'><meta property='article:published_time' content='2021-02-27T18:00:00&#43;03:00'/><meta property='article:modified_time' content='2021-02-27T18:00:00&#43;03:00'/><meta name='twitter:card' content='summary'>
+
+<meta name="generator" content="Hugo 0.79.1" />
+
+  <title>No-bullshit guide on publishing your Gradle projects to Maven Central • madhead</title>
+  <link rel='canonical' href='https://madhead.me/posts/no-bullshit-maven-publish/'>
+  
+  
+  <link rel='icon' href='/favicon.ico'>
+<link rel='stylesheet' href='/assets/css/main.eecc3c56.css'><style>
+:root{--color-accent:#000000;}
+</style>
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-101212543-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  
+
+</head>
+<body class='page type-posts has-sidebar'>
+
+  <div class='site'><div id='sidebar' class='sidebar'>
+  <a class='screen-reader-text' href='#main-menu'>Skip to Main Menu</a>
+
+  <div class='container'><section class='widget widget-about sep-after'>
+  <header>
+    
+    <div class='logo'>
+      <a href='/'>
+        <img src='/images/logo.svg'>
+      </a>
+    </div>
+    
+    <div class='desc'>
+    
+    </div>
+  </header>
+
+</section>
+<section class='widget widget-sidebar_menu sep-after'><nav id='sidebar-menu' class='menu sidebar-menu' aria-label='Sidebar Menu'>
+    <div class='container'>
+      <ul><li class='item'>
+  <a href='/posts/'>posts</a></li><li class='item'>
+  <a href='/tags/'>tags</a></li><li class='item'>
+  <a href='https://stackoverflow.com/cv/madhead'>cv</a></li></ul>
+    </div>
+  </nav>
+
+</section>
+
+<section class='widget widget-sidebar_menu sep-after'>
+  <nav id='sidebar-menu' class='menu sidebar-menu' aria-label='Sidebar Menu'>
+    <div class='container'>
+      <ul><li class='item'>
+          <a href='https://ru.madhead.me/'>RU</a>
+        </li></ul>
+    </div>
+  </nav>
+</section><section class='widget widget-social_menu sep-after'><nav aria-label='Social Menu'>
+    <ul><li>
+        <a href='mailto:siarhei.krukau@gmail.com' target='_blank' rel='noopener me'>
+          <span class='screen-reader-text'>Contact via Email</span><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+  <polyline points="22,6 12,13 2,6"/>
+  
+</svg>
+</a>
+      </li><li>
+        <a href='https://gitlab.com/madhead' target='_blank' rel='noopener me'>
+          <span class='screen-reader-text'>Open Gitlab account in new tab</span><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <path d="M22.65 14.39L12 22.13 1.35 14.39a.84.84 0 0 1-.3-.94l1.22-3.78 2.44-7.51A.42.42 0 0 1 4.82 2a.43.43 0 0 1 .58 0 .42.42 0 0 1 .11.18l2.44 7.49h8.1l2.44-7.51A.42.42 0 0 1 18.6 2a.43.43 0 0 1 .58 0 .42.42 0 0 1 .11.18l2.44 7.51L23 13.45a.84.84 0 0 1-.35.94z"/>
+  
+</svg>
+</a>
+      </li><li>
+        <a href='https://github.com/madhead' target='_blank' rel='noopener me'>
+          <span class='screen-reader-text'>Open Github account in new tab</span><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+  
+</svg>
+</a>
+      </li><li>
+        <a href='https://stackoverflow.com/users/750510' target='_blank' rel='noopener me'>
+          <span class='screen-reader-text'>Open Stackoverflow account in new tab</span><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <line x1="3.472" y1="18.689" x2="16.612" y2="18.689" />
+  <line x1="4.017" y1="12.715" x2="16.884" y2="15.404" />
+  <line x1="5.991" y1="6.673" x2="17.906" y2="12.238" />
+  <line x1="9.582" y1="1.021" x2="19.692" y2="9.430" />
+  
+</svg>
+</a>
+      </li><li>
+        <a href='https://linkedin.com/in/krukaus' target='_blank' rel='noopener me'>
+          <span class='screen-reader-text'>Open Linkedin account in new tab</span><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+  <rect x="2" y="9" width="4" height="12"/>
+  <circle cx="4" cy="4" r="2"/>
+  
+</svg>
+</a>
+      </li><li>
+        <a href='https://instagram.com/m.a.d.h.e.a.d' target='_blank' rel='noopener me'>
+          <span class='screen-reader-text'>Open Instagram account in new tab</span><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+  <line x1="17.5" y1="6.5" x2="17.5" y2="6.5"/>
+  
+</svg>
+</a>
+      </li><li>
+        <a href='https://www.youtube.com/channel/UCO2UZ6hUzjn9XQIdwwkcXJQ' target='_blank' rel='noopener me'>
+          <span class='screen-reader-text'>Open Youtube account in new tab</span><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z" />
+  <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" />
+  
+</svg>
+</a>
+      </li><li>
+        <a href='https://twitter.com/m_a_d_h_e_a_d' target='_blank' rel='noopener me'>
+          <span class='screen-reader-text'>Open Twitter account in new tab</span><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/>
+  
+</svg>
+</a>
+      </li></ul>
+  </nav>
+</section></div>
+
+  <div class='sidebar-overlay'></div>
+</div><div class='main'><nav id='main-menu' class='menu main-menu' aria-label='Main Menu'>
+  <div class='container'>
+    <a class='screen-reader-text' href='#content'>Skip to Content</a>
+
+<button id='sidebar-toggler' class='sidebar-toggler' aria-controls='sidebar'>
+  <span class='screen-reader-text'>Toggle Sidebar</span>
+  <span class='open'><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <line x1="3" y1="12" x2="21" y2="12" />
+  <line x1="3" y1="6" x2="21" y2="6" />
+  <line x1="3" y1="18" x2="21" y2="18" />
+  
+</svg>
+</span>
+  <span class='close'><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <line x1="18" y1="6" x2="6" y2="18" />
+  <line x1="6" y1="6" x2="18" y2="18" />
+  
+</svg>
+</span>
+</button>
+    <ul></ul>
+  </div>
+</nav><div class='header-widgets'>
+        <div class='container'></div>
+      </div>
+
+      <header id='header' class='header site-header'>
+        <div class='container sep-after'>
+          <div class='header-info'><p class='site-title title'>madhead</p><p class='desc site-desc'></p>
+          </div>
+        </div>
+      </header>
+
+      <main id='content'>
+
+
+<article lang='en' class='entry'>
+  <header class='header entry-header'>
+  <div class='container sep-after'>
+    <div class='header-info'>
+      <h1 class='title'>No-bullshit guide on publishing your Gradle projects to Maven Central</h1>
+      
+
+    </div>
+    <div class='entry-meta'>
+  <span class='posted-on'><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+  <line x1="16" y1="2" x2="16" y2="6"/>
+  <line x1="8" y1="2" x2="8" y2="6"/>
+  <line x1="3" y1="10" x2="21" y2="10"/>
+  
+</svg>
+<span class='screen-reader-text'>Posted on </span>
+  <time class='entry-date' datetime='2021-02-27T18:00:00&#43;03:00'>2021-02-27</time>
+</span>
+
+  
+  
+<span class='reading-time'><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <circle cx="12" cy="12" r="10"/>
+  <polyline points="12 6 12 12 15 15"/>
+  
+</svg>
+11 mins to read
+</span>
+
+
+</div>
+
+
+  </div>
+</header>
+
+  
+  
+
+  <div class='container entry-content'>
+  <div class="paragraph">
+<p>You’ve heard <a href="https://jfrog.com/blog/into-the-sunset-bintray-jcenter-gocenter-and-chartcenter">the news</a>, haven’t you?
+JFrog is closing JCenter — probably the best Maven-compatible repository ever.
+It was kind of a &#34;default&#34; in Gradle — a drop-in replacement for Maven Central Repository — for years.
+Plus it hosted some extra artifacts from the projects that decided to not deploy into Central (and now I understand why).
+With its own Gradle plugin, JCenter was drop-dead easy to publish: just a dozen of config lines, a single task invocation — and your library is available to everybody.</p>
+</div>
+<div class="paragraph">
+<p>It was great.
+Good night, sweet prince.</p>
+</div>
+<div class="paragraph">
+<p>It’s time to move your projects to Maven Central Repository, so I’ve gathered some info for you below to minimize the pain.</p>
+</div>
+<div class="sect1">
+<h2 id="_ossrh">OSSRH</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The first thing to know: there is no such thing as &#34;Maven Central Repository&#34;.
+Just like your company’s <a href="https://jfrog.com/artifactory">Artifactory</a> (btw, another tool by JFrog), it’s a facade, a proxy for multiple distributed repositories who actually store the artifacts.
+So, you don’t publish directly to the Central, you publish to one of those repositories and your artifacts appears in the Central.</p>
+</div>
+<div class="paragraph">
+<p><a href="https://central.sonatype.org/pages/ossrh-guide.html">Sonatype OSSRH</a> (OSS Repository Hosting) is such a repository accepting artifacts from individuals and companies who make — you got it! — open-source software.</p>
+</div>
+<div class="paragraph">
+<p>Now, when you know that, go and <strong>create an account in <a href="https://issues.sonatype.org">their Jira</a></strong>.
+You like Jira, don’t you? 🙂</p>
+</div>
+<div class="paragraph">
+<p>Then you’ll need to <strong>request for a namespace for your project in the OSSRH</strong>.
+Go and <a href="https://issues.sonatype.org/secure/CreateIssue.jspa?issuetype=21&amp;pid=10134">do that</a>.
+If you want to publish a single project — its name is the same as your project’s <code>groupId</code>.
+If you want to publish multiple projects — use something &#34;wider&#34;: it will allow you to publish more projects later without repeating the request.
+Use your domain, if you have one, as a namespace, or go with something like <code>com.github.${yourGitHubUsername}</code>, or <code>io.github.${yourGitHubUsername}</code>.
+Note that when using a domain you’ll need to prove the ownership, e.g. by adding a TXT record to its DNS.
+Other required details include your project’s VCS URL, its site, description, and a list of users allowed to publish the artifacts.
+Your issue will be approved manually, so don’t worry about missing something here: Sonatype staff is friendly and helpful.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_gpg">GPG</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The SLA for that issue is two days but usually, they answer in a few hours.
+Let’s <strong>create a GPG key meanwhile</strong>!
+You’ll need it to sign your artifacts: signing them is mandatory for publishing to the Central, and it is one of those things making this process a lot more painful than publishing to the JCenter.
+As a bonus, using artifacts from the Central is more secure.
+You may already have a key, especially if you have set up <a href="https://docs.github.com/en/github/authenticating-to-github/about-commit-signature-verification">commit signature verification</a> at GitHub, but if you don’t have one, or you want to use a separate key, here is a command for you:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">gpg2 --full-generate-key</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Follow the prompts and fill in the details: use 4096 bit RSA, set the expiration (or make the key eternal, but it’s less secure), and provide your contact details.
+You’ll get a message like this at the end of the process — take a note of that key ID as you’ll need it further:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>gpg: key 96FCFD6F5122768E marked as ultimately trusted
+gpg: revocation certificate stored as &#39;/home/madhead/.gnupg/openpgp-revocs.d/6A9624B0C6E296D3B11B170C96FCFD6F5122768E.rev&#39;
+public and secret key created and signed.
+
+pub   rsa4096 2021-02-26 [SC] [expires: 2022-02-26]
+      6A9624B0C6E296D3B11B170C96FCFD6F5122768E
+uid                      Siarhei Krukau &lt;siarhei.krukau@gmail.com&gt;
+sub   rsa4096 2021-02-26 [E] [expires: 2022-02-26]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now <strong>export the public part of the key in an ASCII-armored format</strong>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">gpg2 --armor --export 6A9624B0C6E296D3B11B170C96FCFD6F5122768E &gt; key.pgp</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Make sure that you’ve exported the public part of the key</strong>, as now we are going to publish it online in a few places, and publishing a private part of the key is a security fiasco.
+A public key in an ASCII-armored format starts with <code>-----BEGIN PGP PUBLIC KEY BLOCK-----</code> — check your key.</p>
+</div>
+<div class="paragraph">
+<p>The next task is to <strong>publish this public key on a few well-known <a href="https://en.wikipedia.org/wiki/Key_server_(cryptographic)">key servers</a></strong>.
+They will spread your key further between other key servers via a sync process, and you’ll become &#34;known&#34; to the network.
+Everybody will be able to know your public key and use it to verify that an artifact is signed using its private counterpart (it will be covered in the next steps).
+That’s basically how public and private keys work to achieve some degree of trust and security.</p>
+</div>
+<div class="paragraph">
+<p>I suggest you to use these key servers:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://keys.openpgp.org" class="bare">https://keys.openpgp.org</a></p>
+</li>
+<li>
+<p><a href="https://keyserver.ubuntu.com" class="bare">https://keyserver.ubuntu.com</a></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Just open these pages and submit the file from the previous step.
+You may need to prove email ownership by clicking a link for some key servers, but others don’t require that.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_configuring_gradle">Configuring Gradle</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Now, while your key is being redistributed among the key servers network and your namespace on OSSRH is being created, let’s <strong>configure your Gradle build</strong>.</p>
+</div>
+<div class="sect2">
+<h3 id="_maven_publish_plugin"><code>maven-publish</code> plugin</h3>
+<div class="paragraph">
+<p>First, you’ll need to <strong>configure the <a href="https://docs.gradle.org/current/userguide/publishing_maven.html"><code>maven-publish</code> plugin</a></strong>.
+Assuming a multi-project build, it’s something like that in the root build file:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">configure(subprojects) {
+    apply&lt;MavenPublishPlugin&gt;()
+
+    configure&lt;JavaPluginExtension&gt; {
+        withJavadocJar()
+        withSourcesJar()
+    }
+
+    configure&lt;PublishingExtension&gt; {
+        publications {
+            val main by creating(MavenPublication::class) {
+                from(components[&#34;java&#34;])
+
+                pom {
+                    name.set(&#34;…&#34;)
+                    description.set(&#34;…&#34;)
+                    url.set(&#34;…&#34;)
+                    licenses {
+                        license {
+                            name.set(&#34;…&#34;)
+                            url.set(&#34;…&#34;)
+                        }
+                    }
+                    developers {
+                        developer {
+                            id.set(&#34;…&#34;)
+                            name.set(&#34;…&#34;)
+                            email.set(&#34;…&#34;)
+                        }
+                    }
+                    scm {
+                        connection.set(&#34;…&#34;)
+                        developerConnection.set(&#34;…&#34;)
+                        url.set(&#34;…&#34;)
+                    }
+                }
+            }
+        }
+        repositories {
+            maven {
+                name = &#34;OSSRH&#34;
+                setUrl(&#34;https://oss.sonatype.org/service/local/staging/deploy/maven2&#34;)
+                credentials {
+                    username = System.getenv(&#34;OSSRH_USER&#34;) ?: return@credentials
+                    password = System.getenv(&#34;OSSRH_PASSWORD&#34;) ?: return@credentials
+                }
+            }
+        }
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>What happens here is that I configure Gradle to produce Javadoc and sources JARs (disabled by default) as a part of my Java code building process and then I create a Maven publication out of the results of that build.
+This publication will include regular JAR files, containing Java classes, as well as Javadocs and sources.
+Having Javadocs and sources published along the regular JARs is another Maven Central Repository requirement, so make sure to enable it, otherwise, you’ll fail the validation process.</p>
+</div>
+<div class="paragraph">
+<p>You also see a <code>pom</code> clause here with a lot of placeholders.
+I bet you know actual values for your project better than I, so it’s your task to fill them.
+And again, providing these values in POMs is another stupid requirement of the Central, so you’d better set them all, otherwise, you’ll fail the validation.</p>
+</div>
+<div class="paragraph">
+<p>Finally, there is a <code>repositories</code> block where I configure the OSSRH repository.
+The arguments here are self-descriptive.</p>
+</div>
+<div class="paragraph">
+<p>Configuring a single-module build would be easier: you could use <code>publishing</code> instead of <code>configure&lt;PublishingExtension&gt;</code> and <code>`maven-publish`</code> in the <code>plugins</code> block instead of <code>apply&lt;MavenPublishPlugin&gt;()</code>.</p>
+</div>
+<div class="paragraph">
+<p>If you got stuck here, check out <a href="https://github.com/madhead/aws-junit5/blob/master/build.gradle.kts">this repository</a>, a project that I’ve moved to the Maven Central Repository recently, that inspired me summarizing my experience here.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_signing_plugin"><code>signing</code> plugin</h3>
+<div class="paragraph">
+<p>Now, do you remember that GPG key and the requirement for your artifacts to be signed, don’t you?
+So, the next thing to do is to <strong>configure the signing</strong>.
+Here is another part of the root build script that does that using a <a href="https://docs.gradle.org/current/userguide/signing_plugin.html"><code>signing</code> plugin</a>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">configure(subprojects) {
+    apply&lt;SigningPlugin&gt;()
+
+    configure&lt;SigningExtension&gt; {
+        val key = System.getenv(&#34;SIGNING_KEY&#34;) ?: return@configure
+        val password = System.getenv(&#34;SIGNING_PASSWORD&#34;) ?: return@configure
+        val publishing: PublishingExtension by project
+
+        useInMemoryPgpKeys(key, password)
+        sign(publishing.publications)
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Note that <strong>to sign your artifacts you need a private key</strong>, not a public key from the previous steps.
+But the command to get it is actually very similar, make sure not to confuse them:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">gpg2 --armor --export-secret-keys 6A9624B0C6E296D3B11B170C96FCFD6F5122768E &gt; key.pgp</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Don’t expose this value anywhere, except for your CI/CD service, which will be used to build, sign and publish your artifacts.
+BTW, this is a good reason to create a separate key instead of using your personal key, if you had one previously.</p>
+</div>
+<div class="paragraph">
+<p>The <code>signing</code> plugin supports <code>gpg-agent</code> and binary GPG keys as well, but ASCII-armored private keys could be passed via environment variables, like in the code above, via <code>useInMemoryPgpKeys</code>.
+It’s a convenient way to use keys in CI/CD services like GitLab CI/CD or GitHub Actions, where you can just paste your ASCII-armored private key contents and password (key’s passphrase) as secrets and use them without hassling with files.</p>
+</div>
+<div class="paragraph">
+<p>The <code>sign</code> clause here just refers to all the publications from the <code>publishing</code> plugin we’ve configured in the previous step.
+You could sign all the publications like here or choose a specific one, but here I sign everything.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_publishing_the_artifacts">Publishing the artifacts</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Now you should be ready to publish your artifacts to the Central.
+To check everything is fine, you could <strong>publish your project</strong> to the local Maven repository (<code>~/.m2/repository</code> directory), by invoking <code>./gradlew publishToMavenLocal</code>.
+Do that and test your artifacts locally before proceeding.
+Make sure you have regular JARs as well as sources and Javadocs.
+You should also be able to see <code>*.asc</code> files, generated by the <code>signing</code> plugin.</p>
+</div>
+<div class="paragraph">
+<p>By this time the ticket in Sonatype Jira you’ve created on the first step should be resolved.
+If not — do not proceed until it is resolved.</p>
+</div>
+<div class="paragraph">
+<p>If you think everything is good…</p>
+</div>
+<div class="paragraph">
+<figure class="align-center">
+    <img src="//storage.googleapis.com/madheadme-static/posts/no-bullshit-maven-publish/001.png"/> 
+</figure>
+
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">./gradlew publish</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You shouldn’t probably invoke it locally, it’s a job for your CI, but the command is the same.
+It will build the project, sign the artifacts and publish them to the OSSRH repository you’ve configured in the previous steps.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_releasing_the_artifacts">Releasing the artifacts</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>When you publish your artifacts to the OSSRH they are not synced to the Central immediately.
+They are stored in a temporary &#34;staging repository&#34;:</p>
+</div>
+<div class="paragraph">
+<figure class="align-center">
+    <img src="//storage.googleapis.com/madheadme-static/posts/no-bullshit-maven-publish/002.png"/> 
+</figure>
+
+</div>
+<div class="paragraph">
+<p>You have to manually &#34;release&#34; them every time you publish a new version, but don’t worry, I’ll tell you how to automate it.
+But let’s do that manually, for now, to understand what happens under the hood.</p>
+</div>
+<div class="paragraph">
+<p>So, after publishing to the OSSRH you should log in to its <a href="https://oss.sonatype.org">repository manager</a> using the same credentials, as in Sonatype Jira.
+Now, navigate to the &#34;Staging Repositories&#34; on the left and choose the repository on the central panel.
+You may have more than one repository here, but probably if you don’t publish multiple projects at once, you will have only one repository there.
+Check its content: it should contain all your artifacts and their signatures.</p>
+</div>
+<div class="paragraph">
+<p>If it looks fine… close it!
+I’m not joking, you should <strong>click the &#34;Close&#34; button at the top to close your staging repo and proceed</strong>.</p>
+</div>
+<div class="paragraph">
+<p>This button triggers a validation process for your project.
+It will validate your POMs for the required fields, ensure your artifacts are signed correctly using a publicly known key (that’s why we published your public key) and contain Javadocs and sources.
+And you shouldn’t probably try to publish a SNAPSHOT in the Central as well.</p>
+</div>
+<div class="paragraph">
+<p>Closing the staging repo will take some time.
+When it’s done you’ll see the status.
+Either everything is fine and you can proceed, or there will be some errors and you should drop that staging repo and repeat the process (publish and close) again.
+Did I told you that publishing in the Central is painful, didn’t I?</p>
+</div>
+<div class="paragraph">
+<p>But imagine everything is fine.
+The next step is to <strong>release the artifacts by clicking the &#34;Release&#34; button for your closed staging repo</strong>.
+Only now your artifacts are in OSSRH!</p>
+</div>
+<div class="paragraph">
+<p>But not in the Central Maven Repository yet…</p>
+</div>
+<div class="paragraph">
+<p>You had to do one more thing, but only for the first time you publish a project: you have to <strong>go back to the issue you’ve opened for a namespace in OSSRH and ask the person it is assigned to turn on the sync of your artifacts to the Central</strong>.
+Successive publications will be synced automatically once the sync is turned on.</p>
+</div>
+<div class="paragraph">
+<p>It will take a few minutes for the artifacts to appear in the Central (<a href="https://repo1.maven.org/maven2" class="bare">https://repo1.maven.org/maven2</a>) after you release them, but the search (<a href="https://search.maven.org" class="bare">https://search.maven.org</a>) may be updating a few hours.</p>
+</div>
+<div class="paragraph">
+<p>Now you’re done!
+Congratulations on publishing your first project to the Central Maven Repository.</p>
+</div>
+<div class="paragraph">
+<p>Do you feel there is room for improvement here?
+Don’t you think it’s not fun at all to manually close and release those staging repositories, do you?
+Think about it: once you passed the validations for the first time, having an automated and reproducible build, it should pass the subsequent checks if you, of course, didn’t change something in that <code>pom</code> block or your key expired.</p>
+</div>
+<div class="paragraph">
+<p>There is a remedy: <a href="https://github.com/gradle-nexus/publish-plugin">Gradle Nexus Publish Plugin</a>.
+This plugin automatically closes and releases OSSRH staging repositories whenever you publish something.
+To use it, remove the <code>repositories</code> section from the <code>publishing</code> plugin configuration of your build script (the one mentioning &#34;OSSRH&#34; in my example above) and add these lines to your build:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">plugins {
+    id(&#34;io.github.gradle-nexus.publish-plugin&#34;).version(&#34;1.0.0&#34;)
+}
+
+nexusPublishing {
+    repositories {
+        sonatype {
+            username.set(System.getenv(&#34;OSSRH_USER&#34;) ?: return@sonatype)
+            password.set(System.getenv(&#34;OSSRH_PASSWORD&#34;) ?: return@sonatype)
+        }
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Finally, use <code>./gradlew publishToSonatype closeAndReleaseSonatypeStagingRepository</code> instead of <code>./gradlew publish</code> to publish your artifacts.</p>
+</div>
+<div class="paragraph">
+<p>Now you are awesome!</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_recap">Recap</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Just to summarize the things and set up a TODO list to follow whenever you publish something to the Central via OSSRH, here is a checklist:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Create an account in Sonatype Jira.</p>
+</li>
+<li>
+<p>Get your namespace in OSSRH.</p>
+</li>
+<li>
+<p>Create a GPG key.</p>
+</li>
+<li>
+<p>Publish the public key part of the GPG key.</p>
+</li>
+<li>
+<p>Configure Maven publishing in Gradle.</p>
+</li>
+<li>
+<p>Configure artifact signing in Gradle using the private key part of the GPG key.</p>
+</li>
+<li>
+<p>Publish your artifacts to OSSRH.</p>
+</li>
+<li>
+<p>Release staged artifacts.</p>
+</li>
+<li>
+<p>Ensure sync between OSSRH and Central Maven Repository.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>If you have any troubles — refer to <a href="https://github.com/madhead/aws-junit5/blob/master/build.gradle.kts">this build script</a> which is <em>working for me</em>. 🙂</p>
+</div>
+<div class="paragraph">
+<p>Good luck!</p>
+</div>
+</div>
+</div>
+</div>
+
+  
+<footer class='entry-footer'>
+  <div class='container sep-before'><div class='tags'><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <path d="M20.59,13.41l-7.17,7.17a2,2,0,0,1-2.83,0L2,12V2H12l8.59,8.59A2,2,0,0,1,20.59,13.41Z"/>
+  <line x1="7" y1="7" x2="7" y2="7"/>
+  
+</svg>
+<span class='screen-reader-text'>Tags: </span><a class='tag' href='/tags/gradle/'>gradle</a>, <a class='tag' href='/tags/maven/'>maven</a>, <a class='tag' href='/tags/rant/'>rant</a></div>
+
+  </div>
+</footer>
+
+
+</article>
+
+
+<section id='comments' class='comments'>
+  <div class='container sep-before'>
+    <div class='comments-area'><div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "madhead-me" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+  </div>
+</section>
+
+      </main>
+
+      <footer id='footer' class='footer'>
+        <div class='container sep-before'><div class='copyright'>
+  <p></p>
+</div>
+
+        </div>
+      </footer>
+
+    </div>
+  </div><script>window.__assets_js_src="/assets/js/"</script>
+
+<script src='/assets/js/main.f54bd0ac.js'></script>
+
+</body>
+
+</html>
+

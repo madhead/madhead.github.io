@@ -1,0 +1,73 @@
+==================================================================
+https://keybase.io/madhead
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of https://madhead.me
+  * I am madhead (https://keybase.io/madhead) on keybase.
+  * I have a public key with fingerprint E551 892E 7DCE D7A7 E1DA  CBF7 6601 7D6A 7E85 EBE6
+
+To do so, I am signing this object:
+
+{
+  "body": {
+    "key": {
+      "eldest_kid": "0120e5c4cf147face910f02d4a4075ad880aabe6cc49ae3db4e4342587a1b1399dd10a",
+      "fingerprint": "e551892e7dced7a7e1dacbf766017d6a7e85ebe6",
+      "host": "keybase.io",
+      "key_id": "66017d6a7e85ebe6",
+      "kid": "01013041ada374ee9db781bd4a741692cfc62548773d67fc67d682ed8f2c15aeab0d0a",
+      "uid": "343ad4f220a7caf4ec047aa3bb846319",
+      "username": "madhead"
+    },
+    "service": {
+      "hostname": "madhead.me",
+      "protocol": "https:"
+    },
+    "type": "web_service_binding",
+    "version": 1
+  },
+  "ctime": 1537915892,
+  "expire_in": 157680000,
+  "prev": "79b84a64c6d12f771100eec85c208e13f7d6e35bfe1044591593d305e32d6ffd",
+  "seqno": 28,
+  "tag": "signature"
+}
+
+which yields the signature:
+
+-----BEGIN PGP MESSAGE-----
+
+owFtkn1MW1UYxgsroXRjMByDxbGNawcJYr3fHwXUqWFG2QAzwMVAOfeec0sttF17
+QQm2zhicGMZGFvEjhsRtyORD3YrIFJ0MJ2pdkWxEUrclxQDZ5hZjyPhwEk+J/GHi
++efkffK8v/O8b86xxHU6Q4wa43vB33xrNiZ4Q9Y93zMc20TILthIWJoIB1q9UC1E
+Xs3qsEPCQpAUTSJOYRWVYgUVKEiiSJWkIQtYUuAAFEUSABnxisJKADFQZhHLsDQn
+CoCSKUaSIKRIQOQSqt1pQx63x+7UMBZxHCVKNBKggqAABERBoMiqwPMkJUAeCyKH
+MBY31ri80Q4cTgZeZLa7sIYL62q8//Gv5SYphmQpAAEjsAhJUBZESsa5BZbiJVpR
+FZ7mWFEQGMgLuMAUkUZQVGmF4gACMglXc9ev4hiWAZBVaZoEggJUFikkKwDAyLLI
+8gwlRY1e5HGCOoTddQDWIAAJXy6BxQa7gqJ7jQ7yX4MZF7mE2+PSXIqrFus1mub2
+WqJ9WqM7anwRydZ/EVbZ7oR4ibijAXm8dpeTsFDYqWj2KJPiGEGiOLzUXAK95LZ7
+kNUedXACL5L4RN9BDRgpSDgz4FmFL4cUrQoCRZEkQorIKTQpIopR8SoQw8kqokiW
+5TBUYiBDcoihIa+qkIhOddDpIiy0iIMCG4Z67TYn0Oo9iPAZW2IZvS7GoMvYkqmf
+KW0x+0K/dEfCwYW1nxcXG/12OmNC8pqik5NWChZHSzr66bk5+alyXV74xozcnBA8
+PbHbX7LYwJxZZ5qt/HKycN9w44MPD3RqtdsH333s6e8jbVrqyZSyRDhUZHb6ji9c
+6rl6fucjxfGdBTvO9rZufzysjTyZUfyWwZz2cksqmX71Jn2rZLwtSbh3gKo8vExs
+PHmqIIvtyJqZbn7la13c8msrJ1I2mJpDNV0Vgcxsoc+oz3+u9e0NFe6H5M9M6KNA
+d+VU2oePFlf85jX0w+vCVrfzboBPuVc2FkprH79JvL933Fx5+cTMQXSp78JM0kR1
+6d9577zZui3x4yuOoPvcT8NL9ZacAt/QuSPO0rvZpoBt8sqRrWnk5aMX3rvj98Tb
+Xh//gCnN44v2r3cl7NiUrGs3OK5nNs7NmwIjjj1N8FB3xc8bk//6lPmzdckTG6k4
+nTZxf5XbPWXLHtRPi+Hsqqln/cPHUyLaG67Z6WeKv9k92lV/2zSSs7zN8Z2x5Fr5
+D3PzdZsLWkKHYoYO+zcXhvfGLyzvS2acY3+c2V8Fa6vT2+Utuov66m9XQGbbgUVF
+d0relZH+xecdqQNHs007B3qn8gPzZX3seWeRNTUY1Mk//n52QN/TX32sa318Vpwn
+FP7kq9rJovtqhn69VrUw6r9d7dmj9WZJCfllkdnYXSF500X4wNgTxiEucqfTPvxq
+kiGdlwa7jaacpaWxwvx/AA==
+=LL9M
+-----END PGP MESSAGE-----
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/madhead
+
+==================================================================

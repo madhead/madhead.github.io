@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang='en' dir='auto'><head>
+  <meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<meta name='description' content='
+Amazon announced Lambda Runtime API on AWS re:Invent 2018.
+It allows developers, among other things, to build Lambda functions using any technology they want via so-called Custom Runtimes.
+Yes, it’s now possible to author a function on PHP, Perl, Pascal (anybody?) or even Bash (they use it in the docs)!
+
+
+Nice, isn’t it?
+Let’s build an AWS Lambda function with Kotlin/Native!
+'>
+
+<meta property='og:title' content='Kotlin/Native for AWS Lambda • madhead'>
+<meta property='og:description' content='
+Amazon announced Lambda Runtime API on AWS re:Invent 2018.
+It allows developers, among other things, to build Lambda functions using any technology they want via so-called Custom Runtimes.
+Yes, it’s now possible to author a function on PHP, Perl, Pascal (anybody?) or even Bash (they use it in the docs)!
+
+
+Nice, isn’t it?
+Let’s build an AWS Lambda function with Kotlin/Native!
+'>
+<meta property='og:url' content='https://madhead.me/posts/kotlin-native-lambda/'>
+<meta property='og:site_name' content='madhead'>
+<meta property='og:type' content='article'><meta property='article:section' content='posts'><meta property='article:tag' content='kotlin'><meta property='article:tag' content='kotlin/native'><meta property='article:tag' content='aws'><meta property='article:tag' content='aws lambda'><meta property='article:tag' content='gradle'><meta property='article:tag' content='pet projects'><meta property='article:tag' content='linux'><meta property='article:published_time' content='2019-04-05T22:02:00&#43;03:00'/><meta property='article:modified_time' content='2019-04-05T22:02:00&#43;03:00'/><meta name='twitter:card' content='summary'>
+
+<meta name="generator" content="Hugo 0.79.1" />
+
+  <title>Kotlin/Native for AWS Lambda • madhead</title>
+  <link rel='canonical' href='https://madhead.me/posts/kotlin-native-lambda/'>
+  
+  
+  <link rel='icon' href='/favicon.ico'>
+<link rel='stylesheet' href='/assets/css/main.eecc3c56.css'><style>
+:root{--color-accent:#000000;}
+</style>
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-101212543-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  
+
+</head>
+<body class='page type-posts has-sidebar'>
+
+  <div class='site'><div id='sidebar' class='sidebar'>
+  <a class='screen-reader-text' href='#main-menu'>Skip to Main Menu</a>
+
+  <div class='container'><section class='widget widget-about sep-after'>
+  <header>
+    
+    <div class='logo'>
+      <a href='/'>
+        <img src='/images/logo.svg'>
+      </a>
+    </div>
+    
+    <div class='desc'>
+    
+    </div>
+  </header>
+
+</section>
+<section class='widget widget-sidebar_menu sep-after'><nav id='sidebar-menu' class='menu sidebar-menu' aria-label='Sidebar Menu'>
+    <div class='container'>
+      <ul><li class='item'>
+  <a href='/posts/'>posts</a></li><li class='item'>
+  <a href='/tags/'>tags</a></li><li class='item'>
+  <a href='https://stackoverflow.com/cv/madhead'>cv</a></li></ul>
+    </div>
+  </nav>
+
+</section>
+
+<section class='widget widget-sidebar_menu sep-after'>
+  <nav id='sidebar-menu' class='menu sidebar-menu' aria-label='Sidebar Menu'>
+    <div class='container'>
+      <ul><li class='item'>
+          <a href='https://ru.madhead.me/'>RU</a>
+        </li></ul>
+    </div>
+  </nav>
+</section><section class='widget widget-social_menu sep-after'><nav aria-label='Social Menu'>
+    <ul><li>
+        <a href='mailto:siarhei.krukau@gmail.com' target='_blank' rel='noopener me'>
+          <span class='screen-reader-text'>Contact via Email</span><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+  <polyline points="22,6 12,13 2,6"/>
+  
+</svg>
+</a>
+      </li><li>
+        <a href='https://gitlab.com/madhead' target='_blank' rel='noopener me'>
+          <span class='screen-reader-text'>Open Gitlab account in new tab</span><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <path d="M22.65 14.39L12 22.13 1.35 14.39a.84.84 0 0 1-.3-.94l1.22-3.78 2.44-7.51A.42.42 0 0 1 4.82 2a.43.43 0 0 1 .58 0 .42.42 0 0 1 .11.18l2.44 7.49h8.1l2.44-7.51A.42.42 0 0 1 18.6 2a.43.43 0 0 1 .58 0 .42.42 0 0 1 .11.18l2.44 7.51L23 13.45a.84.84 0 0 1-.35.94z"/>
+  
+</svg>
+</a>
+      </li><li>
+        <a href='https://github.com/madhead' target='_blank' rel='noopener me'>
+          <span class='screen-reader-text'>Open Github account in new tab</span><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+  
+</svg>
+</a>
+      </li><li>
+        <a href='https://stackoverflow.com/users/750510' target='_blank' rel='noopener me'>
+          <span class='screen-reader-text'>Open Stackoverflow account in new tab</span><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <line x1="3.472" y1="18.689" x2="16.612" y2="18.689" />
+  <line x1="4.017" y1="12.715" x2="16.884" y2="15.404" />
+  <line x1="5.991" y1="6.673" x2="17.906" y2="12.238" />
+  <line x1="9.582" y1="1.021" x2="19.692" y2="9.430" />
+  
+</svg>
+</a>
+      </li><li>
+        <a href='https://linkedin.com/in/krukaus' target='_blank' rel='noopener me'>
+          <span class='screen-reader-text'>Open Linkedin account in new tab</span><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+  <rect x="2" y="9" width="4" height="12"/>
+  <circle cx="4" cy="4" r="2"/>
+  
+</svg>
+</a>
+      </li><li>
+        <a href='https://instagram.com/m.a.d.h.e.a.d' target='_blank' rel='noopener me'>
+          <span class='screen-reader-text'>Open Instagram account in new tab</span><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+  <line x1="17.5" y1="6.5" x2="17.5" y2="6.5"/>
+  
+</svg>
+</a>
+      </li><li>
+        <a href='https://www.youtube.com/channel/UCO2UZ6hUzjn9XQIdwwkcXJQ' target='_blank' rel='noopener me'>
+          <span class='screen-reader-text'>Open Youtube account in new tab</span><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z" />
+  <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" />
+  
+</svg>
+</a>
+      </li><li>
+        <a href='https://twitter.com/m_a_d_h_e_a_d' target='_blank' rel='noopener me'>
+          <span class='screen-reader-text'>Open Twitter account in new tab</span><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/>
+  
+</svg>
+</a>
+      </li></ul>
+  </nav>
+</section></div>
+
+  <div class='sidebar-overlay'></div>
+</div><div class='main'><nav id='main-menu' class='menu main-menu' aria-label='Main Menu'>
+  <div class='container'>
+    <a class='screen-reader-text' href='#content'>Skip to Content</a>
+
+<button id='sidebar-toggler' class='sidebar-toggler' aria-controls='sidebar'>
+  <span class='screen-reader-text'>Toggle Sidebar</span>
+  <span class='open'><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <line x1="3" y1="12" x2="21" y2="12" />
+  <line x1="3" y1="6" x2="21" y2="6" />
+  <line x1="3" y1="18" x2="21" y2="18" />
+  
+</svg>
+</span>
+  <span class='close'><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <line x1="18" y1="6" x2="6" y2="18" />
+  <line x1="6" y1="6" x2="18" y2="18" />
+  
+</svg>
+</span>
+</button>
+    <ul></ul>
+  </div>
+</nav><div class='header-widgets'>
+        <div class='container'></div>
+      </div>
+
+      <header id='header' class='header site-header'>
+        <div class='container sep-after'>
+          <div class='header-info'><p class='site-title title'>madhead</p><p class='desc site-desc'></p>
+          </div>
+        </div>
+      </header>
+
+      <main id='content'>
+
+
+<article lang='en' class='entry'>
+  <header class='header entry-header'>
+  <div class='container sep-after'>
+    <div class='header-info'>
+      <h1 class='title'>Kotlin/Native for AWS Lambda</h1>
+      
+
+    </div>
+    <div class='entry-meta'>
+  <span class='posted-on'><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+  <line x1="16" y1="2" x2="16" y2="6"/>
+  <line x1="8" y1="2" x2="8" y2="6"/>
+  <line x1="3" y1="10" x2="21" y2="10"/>
+  
+</svg>
+<span class='screen-reader-text'>Posted on </span>
+  <time class='entry-date' datetime='2019-04-05T22:02:00&#43;03:00'>2019-04-05</time>
+</span>
+
+  
+  
+<span class='reading-time'><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <circle cx="12" cy="12" r="10"/>
+  <polyline points="12 6 12 12 15 15"/>
+  
+</svg>
+7 mins to read
+</span>
+
+
+</div>
+
+
+  </div>
+</header>
+
+  
+  
+
+  <div class='container entry-content'>
+  <div class="paragraph">
+<p>Amazon <a href="https://aws.amazon.com/about-aws/whats-new/2018/11/aws-lambda-now-supports-custom-runtimes-and-layers">announced</a> Lambda Runtime API on AWS <a href="https://reinvent.awsevents.com">re:Invent</a> 2018.
+It allows developers, among other things, to build Lambda functions using any technology they want via so-called <a href="https://docs.aws.amazon.com/lambda/latest/dg/runtimes-custom.html">Custom Runtimes</a>.
+Yes, it’s now possible to author a function on PHP, Perl, Pascal (anybody?) or even Bash (they use it in the <a href="https://docs.aws.amazon.com/lambda/latest/dg/runtimes-walkthrough.html">docs</a>)!</p>
+</div>
+<div class="paragraph">
+<p>Nice, isn’t it?
+Let’s build an AWS Lambda function with <a href="https://kotlinlang.org/docs/reference/native-overview.html">Kotlin/Native</a>!</p>
+</div>
+<div class="paragraph">
+<p>But first, let’s figure out what should be done.
+How do runtimes work?</p>
+</div>
+<div class="paragraph">
+<p>A runtime’s job is to:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Execute the function’s initialization logic.
+In the case of Java, it means starting the JVM, loading the classes and running static initializers.</p>
+</li>
+<li>
+<p>Locate the handler passed through the “Handler” configuration parameter.
+For <a href="https://docs.aws.amazon.com/lambda/latest/dg/java-programming-model-handler-types.html">Java-based Lambdas</a>, it’s either an FCDN of a class, like <code>some.package.Handler</code>, or a reference to a method, like <code>some.package.Handler::method</code>.</p>
+</li>
+<li>
+<p>Execute the handler for each incoming event.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Here is a picture to help you grasp a function’s lifecycle:</p>
+</div>
+<div class="paragraph">
+<figure>
+    <img src="//storage.googleapis.com/madheadme-static/posts/kotlin-native-lambda/001.png"/> 
+</figure>
+
+</div>
+<div class="paragraph">
+<p>Basically, when you author a Lambda function using one of the supported runtimes, like Java, Nodejs or Go, you are concentrated on the event processing loop in the center.
+The runtime handles the initialization and passes the events directly to your handler in the form of objects or structs (the naming depends on the programming language).</p>
+</div>
+<div class="paragraph">
+<p>In the case of a custom runtime, it’s all your job.</p>
+</div>
+<div class="paragraph">
+<p>A custom runtime is just an executable file named <code>bootstrap</code> in your function’s deployment package that is used as an entry point.
+The file can be included in your the deployment package directly, or in a <a href="https://docs.aws.amazon.com/lambda/latest/dg/configuration-layers.html">layer</a>.
+AWS Lambda executes it with the configuration passed via environment variables.
+The <code>bootstrap</code> should initialize the required resources and enter the event processing loop.
+AWS Lambda provides an <a href="https://docs.aws.amazon.com/lambda/latest/dg/runtimes-api.html">HTTP API</a> for custom runtimes to receive the events and send the responses back.
+Your custom runtime should call this API in a loop and fetch the events.
+For each event, it could either invoke a handler or processes it on its own.</p>
+</div>
+<div class="paragraph">
+<p>Let’s take a look at this Bash-based Lambda function that responds with an <a href="https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html#api-gateway-simple-proxy-for-lambda-output-format">Amazon API Gateway Proxy Integration response</a> that sends HTTP redirects to this blog for all the requests.</p>
+</div>
+<div class="listingblock">
+<div class="title">bootstrap</div>
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">#!/bin/sh
+
+set -euo pipefail
+
+while true
+do
+    HEADERS=&#34;$(mktemp)&#34; # <b class="conum">(1)</b>
+
+    EVENT_DATA=$(curl -v -sS -LD &#34;$HEADERS&#34; -X GET &#34;http://${AWS_LAMBDA_RUNTIME_API}/2018-06-01/runtime/invocation/next&#34;) # <b class="conum">(2)</b>
+
+    INVOCATION_ID=$(grep -Fi Lambda-Runtime-Aws-Request-Id &#34;$HEADERS&#34; | tr -d &#39;[:space:]&#39; | cut -d: -f2) # <b class="conum">(3)</b>
+
+    echo $EVENT_DATA # <b class="conum">(4)</b>
+
+    curl -v -sS -X POST &#34;http://${AWS_LAMBDA_RUNTIME_API}/2018-06-01/runtime/invocation/$INVOCATION_ID/response&#34; -H &#34;Content-Type: application/json&#34; -d &#39;{&#34;statusCode&#34;: 307, &#34;headers&#34;: {&#34;Location&#34;: &#34;https://madhead.me&#34;}}&#39; # <b class="conum">(5)</b>
+done</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Create a file to capture the headers.</p>
+</li>
+<li>
+<p>Receive next event and dump it’s headers to a temporary file created on the previous line.</p>
+</li>
+<li>
+<p>Parse the headers to find the request id.</p>
+</li>
+<li>
+<p>Log the event to <code>STDOUT</code>.</p>
+</li>
+<li>
+<p>Respond to the event using the request id.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>There is no initialization or clean-up here and there is no external handler: it’s a very basic function and the events are processed right in <code>bootstrap</code> script.
+Note the <code>while true</code> loop that polls for events: once this function is started by AWS Lambda it will stay alive and process the requests until Lambda decides to recycle it.
+Also note the way how the function interacts with the AWS Lambda: by calling HTTP API with <code>curl</code>.</p>
+</div>
+<div class="paragraph">
+<p>Now, when you know the basics of custom runtimes, let’s implement echo Lambda function in Kotlin/Native.</p>
+</div>
+<div class="paragraph">
+<p>First, set up the project.
+Latest IntelliJ IDEA supports Kotlin/Native… natively, so it can be done with “File” → “New” → “Project…” → “Kotlin” → “Kotlin/Native”:</p>
+</div>
+<div class="paragraph">
+<figure>
+    <img src="//storage.googleapis.com/madheadme-static/posts/kotlin-native-lambda/002.png"/> 
+</figure>
+
+</div>
+<div class="paragraph">
+<p>IDEA will create a Gradle project with Kotlin Multiplatform plugin and native target.</p>
+</div>
+<div class="paragraph">
+<p>Let’s add two dependencies: <a href="https://ktor.io">Ktor</a> and <a href="https://github.com/Kotlin/kotlinx.serialization">kotlinx.serialization</a>.
+We’ll use first as an HTTP client and second for JSON encoding.</p>
+</div>
+<div class="paragraph">
+<p>In order for Kotlin/Native dependencies to work properly in Gradle, you need to enable <code>GRADLE_METADATA</code> feature.
+Furthermore, kotlinx.serialization’s plugin is not published on <a href="https://plugins.gradle.org">Gradle Plugin Portal</a> (yet), so let’s use some <a href="https://docs.gradle.org/current/userguide/plugins.html#sec:plugin_resolution_rules">black magic</a> to tell it how to find the plugin.
+Both tweaks should go to the <code>settings.gradle.kts</code>, so here is it:</p>
+</div>
+<div class="listingblock">
+<div class="title">settings.gradle.kts</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">import org.gradle.api.internal.FeaturePreviews
+
+rootProject.name = &#34;kotlin-native-lambda&#34;
+
+enableFeaturePreview(FeaturePreviews.Feature.GRADLE_METADATA.name)
+
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        add(jcenter())
+    }
+
+    resolutionStrategy {
+        eachPlugin {
+            if (requested.id.id == &#34;kotlinx-serialization&#34;) {
+                useModule(&#34;org.jetbrains.kotlin:kotlin-serialization:${requested.version}&#34;)
+            }
+        }
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now Gradle “knows” <code>kotlinx-serialization</code> plugin and we can go and configure the build:</p>
+</div>
+<div class="listingblock">
+<div class="title">build.gradle.kts</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">plugins {
+    kotlin(&#34;multiplatform&#34;).version(&#34;1.3.21&#34;)
+    id(&#34;kotlinx-serialization&#34;).version(&#34;1.3.21&#34;) // <b class="conum">(1)</b>
+}
+
+repositories {
+    jcenter()
+    maven(&#34;https://kotlin.bintray.com/kotlinx&#34;) // <b class="conum">(2)</b>
+}
+
+kotlin { // <b class="conum">(3)</b>
+    linuxX64(&#34;bootstrap&#34;) { // <b class="conum">(4)</b>
+        binaries {
+            executable(&#34;bootstrap&#34;) { // <b class="conum">(5)</b>
+                entryPoint = &#34;by.dev.madhead.kotlin_native_lambda.main&#34; // <b class="conum">(6)</b>
+            }
+        }
+    }
+}
+
+dependencies {
+    val bootstrapMainImplementation by configurations // <b class="conum">(7)</b>
+
+    bootstrapMainImplementation(&#34;io.ktor:ktor-client-curl-linuxx64:1.1.3&#34;) // <b class="conum">(8)</b>
+    bootstrapMainImplementation(&#34;io.ktor:ktor-client-json-linuxx64:1.1.3&#34;) // <b class="conum">(8)</b>
+}
+
+tasks {
+    wrapper {
+        gradleVersion = &#34;5.3&#34;
+        distributionType = Wrapper.DistributionType.ALL
+    }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Use <code>org.jetbrains.kotlin:kotlin-serialization:1.3.21</code> as Gradle plugin.
+The resolution rule comes from <code>pluginManagement.resolutionStrategy</code> in <code>settings.gradle.kts</code> configured previously.
+One day, the plugin <a href="https://github.com/Kotlin/kotlinx.serialization/issues/256">will be published officially</a> and these lines could be removed.
+I recommend <a href="https://guides.gradle.org/migrating-build-logic-from-groovy-to-kotlin/#configuring-plugins">applying plugins via <code>plugins</code> block versus <code>apply</code></a> so that Kotlin extension functions are made available to configure them.</p>
+</li>
+<li>
+<p>kotlinx.serialization is not published in JCenter (yet), so we need that additional repository.</p>
+</li>
+<li>
+<p>Kotlin Multiplatform Project configuration block.</p>
+</li>
+<li>
+<p>We configure single Linux x64 binary as it is the platform <a href="https://docs.aws.amazon.com/lambda/latest/dg/current-supported-versions.html">used</a> by AWS Lambda.
+Other <a href="https://kotlinlang.org/docs/reference/building-mpp-with-gradle.html#supported-platforms">supported platforms</a> include Android ARM, iOS ARM and x64, other Linux variants, Windows, Mac OS and Web Assembly.</p>
+</li>
+<li>
+<p>As long as we’re building an <a href="https://en.wikipedia.org/wiki/Executable_and_Linkable_Format">executable file</a>, we need to say that to Gradle.
+<a href="https://kotlinlang.org/docs/reference/building-mpp-with-gradle.html#building-final-native-binaries">Other options</a> are dynamic and static libraries and Objective-C frameworks.</p>
+</li>
+<li>
+<p>As with good old Gradle’s <code>application</code> plugin, we need to specify the entry point.</p>
+</li>
+<li>
+<p>Just <a href="https://guides.gradle.org/migrating-build-logic-from-groovy-to-kotlin/#configurations-and-dependencies">a trick</a> to tell Gradle about the existing configuration and avoid using string literals within the <code>dependencies</code> block.</p>
+</li>
+<li>
+<p>Finally, the libraries we need: Ktor HTTP client based on cURL and Ktor JSON facilities.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Almost done.
+We’ll be using two data classes to model <a href="https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html#api-gateway-simple-proxy-for-lambda-input-format">input</a> and <a href="https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html#api-gateway-simple-proxy-for-lambda-output-format">output</a> of a Lambda function for AWS Lambda Proxy Integration:</p>
+</div>
+<div class="listingblock">
+<div class="title">ProxyIntegrationRequest</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@kotlinx.serialization.Serializable
+data class ProxyIntegrationRequest(
+        val resource: String,
+        val path: String,
+        val httpMethod: String,
+        val headers: Map&lt;String, String&gt;?,
+        val multiValueHeaders: Map&lt;String, List&lt;String&gt;&gt;?,
+        val queryStringParameters: Map&lt;String, String&gt;?,
+        val multiValueQueryStringParameters: Map&lt;String, List&lt;String&gt;&gt;?,
+        val pathParameters: Map&lt;String, String&gt;?,
+        val stageVariables: Map&lt;String, String&gt;?,
+        val body: String?,
+        val isBase64Encoded: Boolean?
+)</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">ProxyIntegrationResponse</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">@kotlinx.serialization.Serializable
+data class ProxyIntegrationResponse(
+        val isBase64Encoded: Boolean = false,
+        val statusCode: Int,
+        val headers: Map&lt;String, String&gt;? = null,
+        val multiValueHeaders: Map&lt;String, List&lt;String&gt;&gt;? = null,
+        val body: String? = null
+)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Finally, the bootstrap’s code:</p>
+</div>
+<div class="listingblock">
+<div class="title">main.kt</div>
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">fun main() = runBlocking { // <b class="conum">(1)</b>
+    val client = HttpClient(Curl) // <b class="conum">(2)</b>
+
+    while (true) { // <b class="conum">(3)</b>
+        val invocation = client.call(&#34;http://${getenv(&#34;AWS_LAMBDA_RUNTIME_API&#34;)!!.toKString()}/2018-06-01/runtime/invocation/next&#34;) {
+            method = HttpMethod.Get
+        } // <b class="conum">(4)</b>
+
+        // <b class="conum">(5)</b>
+        val invocationId = invocation.response.headers[&#34;Lambda-Runtime-Aws-Request-Id&#34;]
+        val payload = invocation.response.content.readRemaining().readText(Charsets.UTF_8)
+        val proxyIntegrationRequest =
+                try {
+                    Json.nonstrict.parse(ProxyIntegrationRequest.serializer(), payload)
+                } catch (e: Exception) {
+                    // <b class="conum">(6)</b>
+                }
+
+        println(proxyIntegrationRequest) // <b class="conum">(7)</b>
+
+        // <b class="conum">(8)</b>
+        client.call(&#34;http://${getenv(&#34;AWS_LAMBDA_RUNTIME_API&#34;)!!.toKString()}/2018-06-01/runtime/invocation/$invocationId/response&#34;) {
+            method = HttpMethod.Post
+            body = TextContent(
+                    Json.nonstrict.stringify(
+                            ProxyIntegrationResponse.serializer(),
+                            ProxyIntegrationResponse(
+                                    statusCode = 200,
+                                    headers = mapOf(
+                                            &#34;Content-Type&#34; to &#34;text/plain&#34;
+                                    ),
+                                    body = proxyIntegrationRequest.toString()
+                            )
+                    ),
+                    ContentType.Application.Json
+            )
+        }
+    }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>As long as we’ll be using coroutines thanks to Ktor, we need a coroutine scope.
+The simplest way to acquire one is <code>runBlocking</code>.</p>
+</li>
+<li>
+<p>Configure the HTTP client <a href="https://ktor.io/clients/http-client/engines.html#curl">using the <code>Curl</code> engine</a>.
+This is the initialization phase from the picture at the beginning of this post.</p>
+</li>
+<li>
+<p>Enter the event loop.</p>
+</li>
+<li>
+<p>Fetch next event to process.</p>
+</li>
+<li>
+<p>Parse the event.
+Feel’s better than <code>grep</code>, isn’t it?</p>
+</li>
+<li>
+<p>Never swallow exceptions like that.</p>
+</li>
+<li>
+<p>Log the request.
+Function’s <code>STDOUT</code> is redirected to AWS CloudWatch where you’ll be able to find the logs.</p>
+</li>
+<li>
+<p>Echo the request to the response.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>That’s it!</p>
+</div>
+<div class="paragraph">
+<p>Take a look at <a href="https://gitlab.com/madhead/kotlin-native-lambda">the full source</a> on my GitLab.
+It even has a CI/CD configuration where you can see how to <a href="https://gitlab.com/madhead/kotlin-native-lambda/blob/master/gitlab/gitlab-ci.yml#L6">build</a>, <a href="https://gitlab.com/madhead/kotlin-native-lambda/blob/master/gitlab/gitlab-ci.yml#L24">pack</a> and <a href="https://gitlab.com/madhead/kotlin-native-lambda/blob/master/gitlab/gitlab-ci.yml#L34">deploy</a> functions with custom runtimes!</p>
+</div>
+<div class="paragraph">
+<p>Questions?
+Ask in comments below!</p>
+</div>
+<div class="paragraph">
+<p>But I’ll probably answer one right now.
+The performance.
+Is it worth it or not?</p>
+</div>
+<div class="paragraph">
+<p>I <a href="https://gitlab.com/madhead/naive-lambda-benchmark">have tested</a> multiple different runtimes in a simple task of sending HTTP redirects (just like a Bash function above).
+Take a look at the results:</p>
+</div>
+<iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTsyPILGIYuWs9DJ3zeo7toBzNMbKAxqxMzOXE9uXav55f4NC2OhFu43SlvmC7ndsaV7jsfWfBthCO5/pubhtml?widget=true&amp;headers=false" width="100%" height="600"></iframe>
+<div class="paragraph">
+<p>I know it’s a mess but the results are:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Kotlin/Native and Bash are not very performant.
+It’s still better that cold-started JVM functions, though (who literally sucks).</p>
+</li>
+<li>
+<p>Golang is probably the best choice for Lambda functions as it provides the fastest cold starts and the best performance in general.</p>
+</li>
+<li>
+<p>Pre-warmed JVM functions perform very well (close to Golang).</p>
+</li>
+<li>
+<p>Script languages provide good cold start times but pre-warmed scripted functions concede to Golang and JVM.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Thanks for reading to the end!
+Have <code>fun</code> with Kotlin!</p>
+</div>
+</div>
+
+  
+<footer class='entry-footer'>
+  <div class='container sep-before'><div class='tags'><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <path d="M20.59,13.41l-7.17,7.17a2,2,0,0,1-2.83,0L2,12V2H12l8.59,8.59A2,2,0,0,1,20.59,13.41Z"/>
+  <line x1="7" y1="7" x2="7" y2="7"/>
+  
+</svg>
+<span class='screen-reader-text'>Tags: </span><a class='tag' href='/tags/kotlin/'>kotlin</a>, <a class='tag' href='/tags/kotlin/native/'>kotlin/native</a>, <a class='tag' href='/tags/aws/'>aws</a>, <a class='tag' href='/tags/aws-lambda/'>aws lambda</a>, <a class='tag' href='/tags/gradle/'>gradle</a>, <a class='tag' href='/tags/pet-projects/'>pet projects</a>, <a class='tag' href='/tags/linux/'>linux</a></div>
+
+  </div>
+</footer>
+
+
+</article>
+
+
+<section id='comments' class='comments'>
+  <div class='container sep-before'>
+    <div class='comments-area'><div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "madhead-me" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+  </div>
+</section>
+
+      </main>
+
+      <footer id='footer' class='footer'>
+        <div class='container sep-before'><div class='copyright'>
+  <p></p>
+</div>
+
+        </div>
+      </footer>
+
+    </div>
+  </div><script>window.__assets_js_src="/assets/js/"</script>
+
+<script src='/assets/js/main.f54bd0ac.js'></script>
+
+</body>
+
+</html>
+

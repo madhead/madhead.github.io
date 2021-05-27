@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang='en' dir='auto'><head>
+  <meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<meta name='description' content='
+I’ve been developing backend software for almost 10 years already and never had a chance to work closely with Apache Kafka.
+After a couple of technical interviews recently I’ve realized that it’s a significant gap in my experience.
+So, I’ve decided to learn it by playing with publicly available Wikipedia’s recent changes event stream.
+Join me in this article, where I’ll be developing a Kafka Connect application listening for the latest Wikipedia edits and storing them in a Kafka topic!
+I’ll develop a Kafka Streams application processing this topic in one of the future articles, so stay tuned.
+'>
+
+<meta property='og:title' content='Learning Kafka: Kafka Connect &#43; Wikipedia • madhead'>
+<meta property='og:description' content='
+I’ve been developing backend software for almost 10 years already and never had a chance to work closely with Apache Kafka.
+After a couple of technical interviews recently I’ve realized that it’s a significant gap in my experience.
+So, I’ve decided to learn it by playing with publicly available Wikipedia’s recent changes event stream.
+Join me in this article, where I’ll be developing a Kafka Connect application listening for the latest Wikipedia edits and storing them in a Kafka topic!
+I’ll develop a Kafka Streams application processing this topic in one of the future articles, so stay tuned.
+'>
+<meta property='og:url' content='https://madhead.me/posts/kafka-connect-wikipedia/'>
+<meta property='og:site_name' content='madhead'>
+<meta property='og:type' content='article'><meta property='article:section' content='posts'><meta property='article:tag' content='kotlin'><meta property='article:tag' content='kafka'><meta property='article:tag' content='pet projects'><meta property='article:published_time' content='2020-06-18T09:00:00&#43;03:00'/><meta property='article:modified_time' content='2020-06-18T09:00:00&#43;03:00'/><meta name='twitter:card' content='summary'>
+
+<meta name="generator" content="Hugo 0.79.1" />
+
+  <title>Learning Kafka: Kafka Connect &#43; Wikipedia • madhead</title>
+  <link rel='canonical' href='https://madhead.me/posts/kafka-connect-wikipedia/'>
+  
+  
+  <link rel='icon' href='/favicon.ico'>
+<link rel='stylesheet' href='/assets/css/main.eecc3c56.css'><style>
+:root{--color-accent:#000000;}
+</style>
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-101212543-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  
+
+</head>
+<body class='page type-posts has-sidebar'>
+
+  <div class='site'><div id='sidebar' class='sidebar'>
+  <a class='screen-reader-text' href='#main-menu'>Skip to Main Menu</a>
+
+  <div class='container'><section class='widget widget-about sep-after'>
+  <header>
+    
+    <div class='logo'>
+      <a href='/'>
+        <img src='/images/logo.svg'>
+      </a>
+    </div>
+    
+    <div class='desc'>
+    
+    </div>
+  </header>
+
+</section>
+<section class='widget widget-sidebar_menu sep-after'><nav id='sidebar-menu' class='menu sidebar-menu' aria-label='Sidebar Menu'>
+    <div class='container'>
+      <ul><li class='item'>
+  <a href='/posts/'>posts</a></li><li class='item'>
+  <a href='/tags/'>tags</a></li><li class='item'>
+  <a href='https://stackoverflow.com/cv/madhead'>cv</a></li></ul>
+    </div>
+  </nav>
+
+</section>
+
+<section class='widget widget-sidebar_menu sep-after'>
+  <nav id='sidebar-menu' class='menu sidebar-menu' aria-label='Sidebar Menu'>
+    <div class='container'>
+      <ul><li class='item'>
+          <a href='https://ru.madhead.me/'>RU</a>
+        </li></ul>
+    </div>
+  </nav>
+</section><section class='widget widget-social_menu sep-after'><nav aria-label='Social Menu'>
+    <ul><li>
+        <a href='mailto:siarhei.krukau@gmail.com' target='_blank' rel='noopener me'>
+          <span class='screen-reader-text'>Contact via Email</span><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+  <polyline points="22,6 12,13 2,6"/>
+  
+</svg>
+</a>
+      </li><li>
+        <a href='https://gitlab.com/madhead' target='_blank' rel='noopener me'>
+          <span class='screen-reader-text'>Open Gitlab account in new tab</span><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <path d="M22.65 14.39L12 22.13 1.35 14.39a.84.84 0 0 1-.3-.94l1.22-3.78 2.44-7.51A.42.42 0 0 1 4.82 2a.43.43 0 0 1 .58 0 .42.42 0 0 1 .11.18l2.44 7.49h8.1l2.44-7.51A.42.42 0 0 1 18.6 2a.43.43 0 0 1 .58 0 .42.42 0 0 1 .11.18l2.44 7.51L23 13.45a.84.84 0 0 1-.35.94z"/>
+  
+</svg>
+</a>
+      </li><li>
+        <a href='https://github.com/madhead' target='_blank' rel='noopener me'>
+          <span class='screen-reader-text'>Open Github account in new tab</span><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+  
+</svg>
+</a>
+      </li><li>
+        <a href='https://stackoverflow.com/users/750510' target='_blank' rel='noopener me'>
+          <span class='screen-reader-text'>Open Stackoverflow account in new tab</span><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <line x1="3.472" y1="18.689" x2="16.612" y2="18.689" />
+  <line x1="4.017" y1="12.715" x2="16.884" y2="15.404" />
+  <line x1="5.991" y1="6.673" x2="17.906" y2="12.238" />
+  <line x1="9.582" y1="1.021" x2="19.692" y2="9.430" />
+  
+</svg>
+</a>
+      </li><li>
+        <a href='https://linkedin.com/in/krukaus' target='_blank' rel='noopener me'>
+          <span class='screen-reader-text'>Open Linkedin account in new tab</span><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+  <rect x="2" y="9" width="4" height="12"/>
+  <circle cx="4" cy="4" r="2"/>
+  
+</svg>
+</a>
+      </li><li>
+        <a href='https://instagram.com/m.a.d.h.e.a.d' target='_blank' rel='noopener me'>
+          <span class='screen-reader-text'>Open Instagram account in new tab</span><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+  <line x1="17.5" y1="6.5" x2="17.5" y2="6.5"/>
+  
+</svg>
+</a>
+      </li><li>
+        <a href='https://www.youtube.com/channel/UCO2UZ6hUzjn9XQIdwwkcXJQ' target='_blank' rel='noopener me'>
+          <span class='screen-reader-text'>Open Youtube account in new tab</span><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z" />
+  <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" />
+  
+</svg>
+</a>
+      </li><li>
+        <a href='https://twitter.com/m_a_d_h_e_a_d' target='_blank' rel='noopener me'>
+          <span class='screen-reader-text'>Open Twitter account in new tab</span><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/>
+  
+</svg>
+</a>
+      </li></ul>
+  </nav>
+</section></div>
+
+  <div class='sidebar-overlay'></div>
+</div><div class='main'><nav id='main-menu' class='menu main-menu' aria-label='Main Menu'>
+  <div class='container'>
+    <a class='screen-reader-text' href='#content'>Skip to Content</a>
+
+<button id='sidebar-toggler' class='sidebar-toggler' aria-controls='sidebar'>
+  <span class='screen-reader-text'>Toggle Sidebar</span>
+  <span class='open'><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <line x1="3" y1="12" x2="21" y2="12" />
+  <line x1="3" y1="6" x2="21" y2="6" />
+  <line x1="3" y1="18" x2="21" y2="18" />
+  
+</svg>
+</span>
+  <span class='close'><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <line x1="18" y1="6" x2="6" y2="18" />
+  <line x1="6" y1="6" x2="18" y2="18" />
+  
+</svg>
+</span>
+</button>
+    <ul></ul>
+  </div>
+</nav><div class='header-widgets'>
+        <div class='container'></div>
+      </div>
+
+      <header id='header' class='header site-header'>
+        <div class='container sep-after'>
+          <div class='header-info'><p class='site-title title'>madhead</p><p class='desc site-desc'></p>
+          </div>
+        </div>
+      </header>
+
+      <main id='content'>
+
+
+<article lang='en' class='entry'>
+  <header class='header entry-header'>
+  <div class='container sep-after'>
+    <div class='header-info'>
+      <h1 class='title'>Learning Kafka: Kafka Connect &#43; Wikipedia</h1>
+      
+
+    </div>
+    <div class='entry-meta'>
+  <span class='posted-on'><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+  <line x1="16" y1="2" x2="16" y2="6"/>
+  <line x1="8" y1="2" x2="8" y2="6"/>
+  <line x1="3" y1="10" x2="21" y2="10"/>
+  
+</svg>
+<span class='screen-reader-text'>Posted on </span>
+  <time class='entry-date' datetime='2020-06-18T09:00:00&#43;03:00'>2020-06-18</time>
+</span>
+
+  
+  
+<span class='reading-time'><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <circle cx="12" cy="12" r="10"/>
+  <polyline points="12 6 12 12 15 15"/>
+  
+</svg>
+13 mins to read
+</span>
+
+
+</div>
+
+
+  </div>
+</header>
+
+  
+  
+
+  <div class='container entry-content'>
+  <div class="paragraph">
+<p>I’ve been developing backend software for almost 10 years already and never had a chance to work closely with <a href="https://kafka.apache.org">Apache Kafka</a>.
+After a couple of technical interviews recently I’ve realized that it’s a significant gap in my experience.
+So, I’ve decided to learn it by playing with publicly available Wikipedia’s recent changes event stream.
+Join me in this article, where I’ll be developing a <a href="https://kafka.apache.org/documentation/#connect">Kafka Connect</a> application listening for the latest Wikipedia edits and storing them in a Kafka topic!
+I’ll develop a <a href="https://kafka.apache.org/documentation/streams">Kafka Streams</a> application processing this topic in one of the future articles, so stay tuned.</p>
+</div>
+<div class="sect1">
+<h2 id="_contents">Contents</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="#wikipedia">Wikipedia’s recent changes stream</a></p>
+</li>
+<li>
+<p><a href="#sse">SSE &amp; Kotlin</a></p>
+</li>
+<li>
+<p><a href="#kafka-connect">Kafka Connect</a></p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="#kafka-connect-connector">SourceConnector</a></p>
+</li>
+<li>
+<p><a href="#kafka-connect-task">SourceTask</a></p>
+</li>
+<li>
+<p><a href="#kafka-connect-deployment">Packaging &amp; Deployment</a></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><a href="#recap">Recap</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="wikipedia">Wikipedia’s recent changes stream</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>I’ve been looking for a public event stream with a reasonable load to learn Kafka and found out that Wikipedia publishes all its recent changes on a special page: <a href="https://en.wikipedia.org/wiki/Special:RecentChanges">Special:RecentChanges</a>.
+It seems to be a perfect event source!</p>
+</div>
+<div class="paragraph">
+<p>A few clicks (<a href="https://en.wikipedia.org/wiki/Special:RecentChanges">1</a> → <a href="https://en.wikipedia.org/wiki/Help:Recent_changes">2</a> → <a href="https://meta.wikimedia.org/wiki/Help:Recent_changes">3</a> → <a href="https://wikitech.wikimedia.org/wiki/EventStreams">4</a>) and I found a developer-friendly API.
+It appears to be a very simple <a href="https://en.wikipedia.org/wiki/Server-sent_events">SSE</a> endpoint.
+All you have to do is to connect to <code>https://stream.wikimedia.org/v2/stream/recentchange</code> and listen for events.
+There is an <a href="https://swagger.io/specification">OpenAPI</a> specification <a href="https://stream.wikimedia.org/?spec">available</a> at <code>stream.wikimedia.org</code> and the payload schema is <a href="https://github.com/wikimedia/mediawiki-event-schemas/tree/master/jsonschema/mediawiki/recentchange">documented</a> on GitHub.</p>
+</div>
+<div class="paragraph">
+<p>If I were writing a real production application, I would use a <a href="https://github.com/joelittlejohn/jsonschema2pojo/tree/master/jsonschema2pojo-gradle-plugin">Gradle jsonschema2pojo plugin</a> to convert the schema into Java classes at build time.
+However, let me just use its <a href="http://www.jsonschema2pojo.org">web version</a> today and generate models manually.
+Four Java classes with Jackson and <a href="https://beanvalidation.org/1.0/spec">JSR 303</a> annotations were generated: <code>Length</code>, <code>Meta</code>, <code>RecentChange</code>, <code>Revision</code>, and I’ve just placed them in <code>src/main/java</code> with no changes.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="sse">SSE &amp; Kotlin</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>As a backend developer, I have <a href="https://gitlab.com/madhead-playgrounds/sse">some experience</a> in developing SSE APIs with <a href="https://ktor.io/samples/other/sse.html">Ktor</a>, but I’ve never actually made SSE clients.
+Fortunately, there is an easy-to-use <a href="https://github.com/EnricSala/RxSSE">Kotlin SSE client library</a> on GitHub.</p>
+</div>
+<div class="paragraph">
+<p>Let’s get our hands dirty and write a simple console application to check the stream using <code>RxSSE</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">fun main() {
+    val rxsse = RxSSE()
+    val mapper = ObjectMapper()
+
+    rxsse
+            .connectTo(&#34;https://stream.wikimedia.org/v2/stream/recentchange&#34;)
+            .flatMap {
+                try {
+                    Flowable.just(mapper.readValue(it.data, RecentChange::class.java))
+                } catch (_: Exception) {
+                    Flowable.empty&lt;RecentChange&gt;()
+                }
+            }
+            .forEach { println(it) }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Probably, not the code I should be proud of, but it works!
+Here we just connect to Wikipedia’s recent changes stream, try to parse the events, and print them.
+Run this code and see the latest modifications in real-time!</p>
+</div>
+<div class="paragraph">
+<p>At this point, I’ve noticed a problem with those auto-generated classes.
+Field <code>log_params</code> was defined a bit too… chaotically and Jackson sometimes fails to deserialize it:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yml" data-lang="yml">log_params:
+  description: Property only exists if event has rc_params.
+  type:
+    - array
+    - object
+    - string
+  additionalProperties: true</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>I’ve just removed the <code>logParams</code> property from the generated Java source, so Jackson will not try to deserialize it.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="kafka-connect">Kafka Connect</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>If you are new to Kafka Connect, I would recommend reading the comprehensive <a href="https://docs.confluent.io/current/connect/index.html">Confluent guide about Kafka Connect</a>.
+It covers all the topics: concepts and architecture of Kafka Connect; developing connectors; deployment, administration, and monitoring of Kafka Connect applications; security considerations.
+It’s awesome.</p>
+</div>
+<div class="paragraph">
+<p>Shorter but still sufficient Kafka Connect guide could be found in the <a href="https://kafka.apache.org/documentation/#connect">official Kafka documentation</a>.</p>
+</div>
+<div class="paragraph">
+<p>Finally, if you’re really scarce of time and don’t enjoy theory — read the 7<sup>th</sup> chapter (Building Data Pipelines) of freely available <a href="https://www.confluent.io/resources/kafka-the-definitive-guide">&#34;Kafka: The Definitive Guide&#34;</a> book.
+Brought to you by, again, Confluent.
+They should probably pay me something for the ad, but without any jokes the book is great.</p>
+</div>
+<div class="paragraph">
+<p>After grasping some basics, you’ll realize, that the task of writing a Kafka Connect application for Wikipedia’s latest changes ingestion, facing us, is as simple as implementing only two classes: <code>SourceConnector</code> and <code>SourceTask</code>!</p>
+</div>
+<div class="paragraph">
+<p>Let’s start with a…</p>
+</div>
+<div class="sect2">
+<h3 id="kafka-connect-connector">SourceConnector</h3>
+<div class="paragraph">
+<p>A <a href="https://kafka.apache.org/25/javadoc/org/apache/kafka/connect/connector/Connector.html"><code>Connector</code></a> is kind of a plugin for Kafka Connect.
+Connectors manage the integration of Kafka Connect with other systems, either as an input that ingests data (<a href="https://kafka.apache.org/25/javadoc/org/apache/kafka/connect/source/SourceConnector.html"><code>SourceConnector</code></a>) into Kafka or an output that passes data to an external system (<a href="https://kafka.apache.org/25/javadoc/org/apache/kafka/connect/sink/SinkConnector.html"><code>SinkConnector</code></a>).
+Connectors are responsible for creating configurations for a set of <a href="https://kafka.apache.org/25/javadoc/org/apache/kafka/connect/connector/Task.html"><code>Tasks</code></a> that do the actual data processing.
+The number of tasks may vary and it’s a connector’s responsibility to decide how many of them are required to perform the job.
+A good example, mentioned everywhere, is an RDBMS source connector: whenever it detects a new table (or a dropped table) it asks the framework to spawn (or kill) a task to process that table.</p>
+</div>
+<div class="paragraph">
+<p>In our case, no reconfiguration is needed and a single task is enough.</p>
+</div>
+<div class="paragraph">
+<p>Let’s define a configuration for out connector:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">const val VERSION = &#34;1.0.0&#34;
+const val TOPIC_CONFIG = &#34;topic&#34;
+const val STREAM_URL_CONFIG = &#34;streamUrl&#34;
+
+private val config: ConfigDef = ConfigDef()
+    .define(TOPIC_CONFIG, ConfigDef.Type.STRING, ConfigDef.Importance.HIGH, &#34;The topic to publish data to&#34;)
+    .define(STREAM_URL_CONFIG, ConfigDef.Type.STRING, &#34;https://stream.wikimedia.org/v2/stream/recentchange&#34;, ConfigDef.Importance.MEDIUM, &#34;MediaWiki&#39;s RecentChanges event stream URL&#34;)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This <a href="https://kafka.apache.org/25/javadoc/org/apache/kafka/common/config/ConfigDef.html"><code>ConfigDef</code></a> simply states that our connector has two string configuration parameters: <code>topic</code> and <code>streamUrl</code>.
+<code>topic</code> defines a Kafka topic to publish data to.
+It has high importance and no default values, thus it is required.
+<code>streamUrl</code> is a URL for MediaWiki’s recent changes event stream.
+It has a default value and moderate importance: if you don’t provide any, the default one will be used, but you could set it to other value if you want (e.g. for testing).</p>
+</div>
+<div class="paragraph">
+<p>This configuration definition is declared in our <code>WikipediaSourceConnector</code>&#39;s companion object, along with the connector version and logger.</p>
+</div>
+<div class="paragraph">
+<p>With these values defined, we can easily implement <code>version</code> and <code>config</code> methods:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">override fun version(): String = VERSION
+
+override fun config(): ConfigDef = config</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>taskClass</code> is trivial as well:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">override fun taskClass(): Class&lt;out Task&gt; = WikipediaSourceTask::class.java</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We’ll impmelement the <code>WikipediaSourceTask</code> <a href="#kafka-connect-task">later</a>.</p>
+</div>
+<div class="paragraph">
+<p>When the framework instantiates a connector, it calls its <code>start</code> method.
+This method is used to prepare the connector: parse the provided configuration, allocate required resources, start monitoring the source for any changes.
+Our connector is ordinary.
+It doesn’t need any resources, it doesn’t allocate anything or start any background threads.
+All we need to do is to parse the configuration into local properties to use them later:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">override fun start(props: Map&lt;String, String&gt;) {
+    val parsedConfig = AbstractConfig(config, props)
+
+    topic = parsedConfig.getString(TOPIC_CONFIG)?.takeUnless { it.isBlank() } ?: throw ConfigException(&#34;Topic must be set&#34;)
+    streamUrl = parsedConfig.getString(STREAM_URL_CONFIG)?.takeUnless { it.isBlank() } ?: throw ConfigException(&#34;SSE URL must be set&#34;)
+
+    logger.info(&#34;Started WikipediaSourceConnector with topic &#39;{}&#39;&#34;, topic)
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>As long as we don’t allocate anything or start any threads, the <code>stop</code> method is a no-op:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">override fun stop() {
+    logger.info(&#34;Stopped WikipediaSourceConnector with topic &#39;{}&#39;&#34;, topic)
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Finally, <code>taskConfigs</code>.
+Remember, that we need only a single task, so the result of this method should have only one config for that task.
+The <code>maxTasks</code> parameter could be ignored.
+Here we simply pass the properties down to the task:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">override fun taskConfigs(maxTasks: Int): List&lt;Map&lt;String, String&gt;&gt; {
+    if (maxTasks != 1) {
+        logger.info(&#34;Ignoring maxTasks={}&#34;, maxTasks)
+    }
+
+    return listOf(
+            mapOf(
+                    TOPIC_CONFIG to topic,
+                    STREAM_URL_CONFIG to streamUrl
+            )
+    )
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We’re done!
+You can find the full source at <a href="https://gitlab.com/madhead-playgrounds/kafka/-/blob/master/connect/src/main/kotlin/me/madhead/playgrounds/kafka/connect/WikipediaSourceConnector.kt">my GitLab</a>.</p>
+</div>
+<div class="paragraph">
+<p>Now it’s time for a…</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="kafka-connect-task">SourceTask</h3>
+<div class="paragraph">
+<p>I will not repeat the documentation and tell you about tasks and workers and all those things.
+Just remember: <a href="https://kafka.apache.org/25/javadoc/org/apache/kafka/connect/connector/Task.html"><code>Tasks</code></a> contain the code that actually copies data to or from another system.
+<a href="https://kafka.apache.org/25/javadoc/org/apache/kafka/connect/source/SourceTask.html"><code>SourceTasks</code></a> do that by implementing a <code>poll</code> method, which will be called in a loop by the framework.
+Task’s <code>start</code> method is called at the beginning of its lifecycle, and <code>stop</code> method is called, you’ve guessed it, at the end.
+There is also a <code>version</code> method, but it is trivial.</p>
+</div>
+<div class="paragraph">
+<p>Let’s <code>start</code> our task:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">override fun start(props: Map&lt;String, String&gt;) {
+    // <b class="conum">(1)</b>
+    topic = props[WikipediaSourceConnector.TOPIC_CONFIG] ?: throw ConfigException(&#34;Topic must be set&#34;)
+    streamUrl = props[WikipediaSourceConnector.STREAM_URL_CONFIG] ?: throw ConfigException(&#34;SSE URL must be set&#34;)
+
+    // <b class="conum">(2)</b>
+    recentChanges = RxSSE()
+            .connectTo(streamUrl)
+            .subscribeOn(Schedulers.io())
+            .observeOn(Schedulers.io())
+            .flatMap(::sse2model) // <b class="conum">(3)</b>
+            .observeOn(Schedulers.computation())
+            .doOnNext { logger.debug(&#34;Next SSE: {}&#34;, it?.meta?.id) }
+            .onBackpressureDrop { logger.warn(&#34;Dropping SSE: {}&#34;, it?.meta?.id) } // <b class="conum">(4)</b>
+            .retry() // <b class="conum">(5)</b>
+            .observeOn(Schedulers.io())
+            .subscribeWith(recentChangesSubscriber) // <b class="conum">(6)</b>
+
+    logger.info(&#34;Started WikipediaSourceTask with topic &#39;{}&#39;&#34;, topic)
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>A lot of things happen here!</p>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>I’m extracting the configuration parameters from the provided properties.
+These are the same parameters returned from the connector’s <code>taskConfigs</code>.</p>
+</li>
+<li>
+<p>I’m creating a <a href="http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/disposables/Disposable.html">disposable</a> subscription to Wikipedia’s recent changes event stream, just like we did at the <a href="#sse">beginning of this article</a>.
+Although we have more sophisticated processing here.
+The subscription is stored into a local variable for a later reference in the <code>stop</code> method.</p>
+</li>
+<li>
+<p>This <code>flatMap</code> simply parses JSON payloads into Java classes.</p>
+</li>
+<li>
+<p>In case of events incoming at a higher rate, that we’re able to process, they should be dropped.
+More on that below.</p>
+</li>
+<li>
+<p>I’m declaring that the stream should <a href="http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Flowable.html#retry--">restart itself</a> in case of any errors.</p>
+</li>
+<li>
+<p>A subscriber is added to a fully defined stream.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Now, let’s get distracted a little bit of Kafka Connect and talk about combining push-based SSE stream and pull-based <code>SourceTask</code>&#39;s behavior and backpressure.</p>
+</div>
+<div class="paragraph">
+<p>Wikipedia generates events independently of our tasks.
+We do not own its event stream and we cannot pause it or ask it for a specific number of new events only when we’re ready to accept them.
+Events just happen and we need to deal with them.
+This event stream follows the push model.</p>
+</div>
+<div class="paragraph">
+<p>On the other side, we have a <code>poll</code> method that is invoked by Kafka Connect when it’s ready to accept new records.
+Upon the invocation, <code>poll</code> may return a list of records or block if there are no new records.
+It may also return <code>null</code> (I guess an empty list will work too) to yield the thread periodically.
+Kafka Connect is calling this method in a loop, and this call follows the pull model.</p>
+</div>
+<div class="paragraph">
+<p>And here we have a problem of combining a push-based SSE stream nature with a pull-based framework.</p>
+</div>
+<div class="paragraph">
+<p>Imagine a chameleon and a swarm of flies around it.
+Flies fly in and fly out and the chameleon periodically fires its tongue to catch a fly.</p>
+</div>
+<div class="paragraph">
+<figure class="align-center">
+    <img src="//storage.googleapis.com/madheadme-static/posts/kafka-connect-wikipedia/001.png"
+         alt="Image by Clker-Free-Vector-Images from Pixabay."/> <figcaption>
+            <p>Image by <a href="https://pixabay.com/users/Clker-Free-Vector-Images-3736">Clker-Free-Vector-Images</a> from <a href="https://pixabay.com">Pixabay</a>.</p>
+        </figcaption>
+</figure>
+
+</div>
+<div class="paragraph">
+<p>We’ll use a <a href="https://docs.oracle.com/en/java/javase/14/docs/api/java.base/java/util/concurrent/SynchronousQueue.html"><code>SynchronousQueue</code></a> as a &#34;chameleon’s tongue&#34; between the SSE stream and Kafka Connect.
+Every time there is a new event in the SSE stream we <a href="https://docs.oracle.com/en/java/javase/14/docs/api/java.base/java/util/concurrent/SynchronousQueue.html#put(E)"><code>put</code></a> it to the queue.
+This call blocks until the <a href="https://docs.oracle.com/en/java/javase/14/docs/api/java.base/java/util/concurrent/SynchronousQueue.html#take()"><code>take</code></a> method is called at the other side.
+<code>take</code> is called in the task’s <code>poll</code>.
+Actually, I’ve replaced <code>take</code> with its time-limited <a href="https://docs.oracle.com/en/java/javase/14/docs/api/java.base/java/util/concurrent/SynchronousQueue.html#poll(long,java.util.concurrent.TimeUnit)"><code>poll</code></a> counterpart (<em>another</em> <code>poll</code>, no puns intended here) to yield the thread periodically.</p>
+</div>
+<div class="paragraph">
+<p>That’s not probably how real chameleons work, but, you know, the software was always only an approximation of the real world.</p>
+</div>
+<div class="paragraph">
+<p>Now you may ask: what happens when a fresh event arrives and we’re still not yet finished with the previous one.
+And this is the problem of <a href="https://github.com/ReactiveX/RxJava/wiki/Backpressure">backpressure</a>.</p>
+</div>
+<div class="paragraph">
+<p>Our SSE stream is a <a href="http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Flowable.html"><code>Flowable</code></a> and it supports backpressure out-of-the-box: it allows subscribers to signal a demand for new events via <a href="http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Subscription.html?is-external=true#request-long-"><code>request</code></a> method.
+But in our case the events arrive from the source that doesn’t support backpressure: Wikipedia’s event stream is not pausable, events just happen, we don’t have control over them and they may arrive faster then we call the <code>request</code>.</p>
+</div>
+<div class="paragraph">
+<p>Basically, we could either buffer or drop extra events.
+Buffering only helps to mitigate bursts of events, i.e. when events generally arrive at a slower than the processing rate.
+It won’t help when the event rate exceeds the processing speed.
+In this case, you need to either scale your app or drop the exceeding events.</p>
+</div>
+<div class="paragraph">
+<p>I decided to drop the events for simplicity as this is not a production connector and that’s what <a href="http://reactivex.io/RxJava/2.x/javadoc/io/reactivex/Flowable.html#onBackpressureDrop-io.reactivex.functions.Consumer-"><code>onBackpressureDrop</code></a> means in the stream definition above.
+I want to note that even this naive implementation doesn’t actually drop any events with a single task running on my laptop along with a three-node Kafka cluster.</p>
+</div>
+<div class="paragraph">
+<p>Back to our <code>WikipediaSourceTask</code>, let’s look at the <code>recentChangesSubscriber</code>.
+This is a final destination of the SSE stream:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">private val rendezvous = SynchronousQueue&lt;RecentChange&gt;()
+
+private val recentChangesSubscriber = object : DisposableSubscriber&lt;RecentChange&gt;() {
+    override fun onStart() {
+        request(1)
+    }
+
+    override fun onNext(t: RecentChange?) {
+        t?.let {
+            rendezvous.put(it)
+        }
+        request(1)
+    }
+
+    override fun onComplete() {
+    }
+
+    override fun onError(t: Throwable?) {
+        logger.error(&#34;Error in SSE stream&#34;, t)
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now, the <code>poll</code> method, the other side of the rendezvous queue.
+The implementation is conceptually straightforward: take the event from the queue and turn it into a <a href="https://kafka.apache.org/25/javadoc/org/apache/kafka/connect/source/SourceRecord.html"><code>SourceRecord</code></a>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">override fun poll(): List&lt;SourceRecord&gt; {
+    return rendezvous.poll(1, TimeUnit.SECONDS)?.let { event -&gt;
+        val record = SourceRecord(
+                /* sourcePartition */ mapOf(&#34;domain&#34; to event.meta?.domain),
+                /* sourceOffset */ mapOf(&#34;dt&#34; to event.meta?.dt?.time),
+                /* topic */ topic,
+                /* partition */ null,
+                /* keySchema */ Schema.STRING_SCHEMA,
+                /* key */ event.meta?.id ?: &#34;&#34;,
+                /* valueSchema */ Schema.BYTES_SCHEMA,
+                /* value */ mapper.writeValueAsBytes(event)
+        )
+
+        logger.debug(&#34;Producing a record: {}&#34;, record)
+
+        listOf(
+                record
+        )
+    } ?: emptyList()
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Points of interest in this code are <code>sourcePartition</code>, <code>sourceOffset</code>, <code>partition</code>, and schemas.</p>
+</div>
+<div class="paragraph">
+<p><code>sourcePartition</code> and <code>sourceOffset</code> are dictionaries of strings to primitives with arbitrary content.
+Kafka Connect periodically commits these values to internal topics.
+Whenever your task is restarted, you could access the latest committed offset for a given partition from the task’s <a href="https://kafka.apache.org/25/javadoc/org/apache/kafka/connect/source/SourceTask.html#context"><code>context</code></a> and proceed from that position.
+I don’t actually use this feature, but it may be very helpful in other connectors.</p>
+</div>
+<div class="paragraph">
+<p><code>partition</code>, set to <code>null</code>, just means that the record should be published in no specific partition of a target topic.
+This behaviour is on par with Kafka’s <a href="https://kafka.apache.org/25/javadoc/org/apache/kafka/clients/producer/ProducerRecord.html"><code>ProducerRecord</code></a>.</p>
+</div>
+<div class="paragraph">
+<p>Schemas specify types for keys and values: keys are strings and values are raw bytes.</p>
+</div>
+<div class="paragraph">
+<p>Finally, our task’s <code>stop</code> method just disposes the subscriber:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-kotlin" data-lang="kotlin">override fun stop() {
+    recentChanges.dispose()
+
+    logger.info(&#34;Stopped WikipediaSourceTask with topic &#39;{}&#39;&#34;, topic)
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Again, the full source resides in <a href="https://gitlab.com/madhead-playgrounds/kafka/-/blob/master/connect/src/main/kotlin/me/madhead/playgrounds/kafka/connect/WikipediaSourceTask.kt">my GitLab</a>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="kafka-connect-deployment">Packaging &amp; Deployment</h3>
+<div class="paragraph">
+<p>We’re done with the code, let’s finally deploy it!</p>
+</div>
+<div class="paragraph">
+<p>Kafka Connect searches for available connectors in its <code>plugin.path</code> configured in <code>connect-distributed.properties</code> or <code>connect-standalone.properties</code>.
+Connectors can be packaged either into usual JAR files and placed in the <code>plugin.path</code> along with their dependencies, or into fat JARs with all the dependencies packed inside.</p>
+</div>
+<div class="paragraph">
+<p>I like fat JARs and <a href="https://imperceptiblethoughts.com/shadow">Gradle Shadow Plugin</a> helps me build them.
+The only gotcha to be aware of is that a connector should never contain any libraries provided by the Kafka Connect runtime.
+So, put that provided dependencies into the <code>shadow</code> configuration, provided by the plugin.</p>
+</div>
+<div class="paragraph">
+<p><code>shadowJar</code> task assembles a fat JAR in the project’s build directory.
+I’ve just added it to the Kafka Connect’s <code>plugin.path</code>, so whenever I change something I just reassemble the JAR and restart the framework.
+This trick significantly accelerates the development.</p>
+</div>
+<div class="paragraph">
+<p>I decided to play with Kafka Connect in the distributed mode, but things should be the same in a standalone mode.
+Let’s start the framework:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-shell" data-lang="shell">./bin/connect-distributed.sh config/connect-distributed.properties</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>I almost forgot to mention, that you should start Kafka and create a topic for our stream!</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-shell" data-lang="shell">./bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --partitions 9 --replication-factor 3 --config min.insync.replicas=2 --topic wiki</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Kafka Connect doesn’t have any GUI or CLI for connector deployment by default and all the interactions are made via its REST API.
+To deploy a connector one should POST a specifically crafted JSON to the <code>/connectors</code> endpoint:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-shell" data-lang="shell">curl -X POST -d @connect-config.json http://localhost:8083/connectors --header &#34;Content-Type:application/json&#34;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The content of the <code>connect-config.json</code> (filename is arbitrary) is simple:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-json" data-lang="json">{
+  &#34;name&#34;: &#34;wiki&#34;, // <b class="conum">(1)</b>
+
+  &#34;config&#34;: {
+    &#34;connector.class&#34;: &#34;me.madhead.playgrounds.kafka.connect.WikipediaSourceConnector&#34;, // <b class="conum">(2)</b>
+
+    &#34;topic&#34;: &#34;wiki&#34;, // <b class="conum">(3)</b>
+
+    // <b class="conum">(4)</b>
+    &#34;key.converter&#34;: &#34;org.apache.kafka.connect.storage.StringConverter&#34;,
+    &#34;value.converter&#34;: &#34;org.apache.kafka.connect.converters.ByteArrayConverter&#34;
+  }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Connector’s name.</p>
+</li>
+<li>
+<p>FQDN of the connector class.</p>
+</li>
+<li>
+<p>Connector-specific configuration.
+Remember we need a <code>topic</code> to publish events to?</p>
+</li>
+<li>
+<p>Classes to be used for keys and values serialization.
+Kafka Connect uses JSON converters by default (configured in <code>connect-distributed.properties</code> or <code>connect-standalone.properties</code>).
+I decided to try simpler conversions: raw strings for keys and bytes for values.
+This configuration matches schemas provided to the <code>SourceRecord</code> constructor above.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>After running the cURL command a new connector named &#34;wiki&#34; should appear at <a href="http://localhost:8083/connectors" class="bare">http://localhost:8083/connectors</a>.
+Open <a href="http://localhost:8083/connectors/wiki" class="bare">http://localhost:8083/connectors/wiki</a> to check its details.</p>
+</div>
+<div class="paragraph">
+<p>Finally, when everything is running, all that is left is to check the topic:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-shell" data-lang="shell">./bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --property print.key=true --topic wiki
+
+a455e93a-f921-4944-b32f-496e5dcb740c    {&#34;$schema&#34;:&#34;/mediawiki/recentchange/1.0.0&#34;,&#34;meta&#34;:{&#34;uri&#34;:&#34;https://nl.wikipedia.org/wiki/Cl%C3%A9ment_Lenglet&#34;,&#34;request_id&#34;:&#34;aee180ab-a61b-42a4-979b-6cc260142c0c&#34;,&#34;id&#34;:&#34;a455e93a-f921-4944-b32f-496e5dcb740c&#34;,&#34;dt&#34;:1592339206000,&#34;domain&#34;:&#34;nl.wikipedia.org&#34;,&#34;stream&#34;:&#34;mediawiki.recentchange&#34;,&#34;partition&#34;:0,&#34;offset&#34;:2492455062,&#34;topic&#34;:&#34;eqiad.mediawiki.recentchange&#34;},&#34;id&#34;:112930853,&#34;type&#34;:&#34;edit&#34;,&#34;title&#34;:&#34;Clément Lenglet&#34;,&#34;namespace&#34;:0,&#34;comment&#34;:&#34;&#34;,&#34;parsedcomment&#34;:&#34;&#34;,&#34;timestamp&#34;:1592339206,&#34;user&#34;:&#34;2A02:A446:99EF:1:CC20:4CAE:8399:76BB&#34;,&#34;bot&#34;:false,&#34;server_url&#34;:&#34;https://nl.wikipedia.org&#34;,&#34;server_name&#34;:&#34;nl.wikipedia.org&#34;,&#34;server_script_path&#34;:&#34;/w&#34;,&#34;wiki&#34;:&#34;nlwiki&#34;,&#34;minor&#34;:false,&#34;patrolled&#34;:false,&#34;length&#34;:{&#34;old&#34;:6153,&#34;new&#34;:6153},&#34;revision&#34;:{&#34;new&#34;:56562546,&#34;old&#34;:56562537}}
+…</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Nice!</p>
+</div>
+<div class="paragraph">
+<p>Let’s do a…</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="recap">Recap</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>We’ve developed a simple Wikipedia connector for Kafka Connect in this article.
+It’s not perfect, but it could be a good starting point for something more serious.
+All the code for this article could be found in <a href="https://gitlab.com/madhead-playgrounds/kafka/-/tree/master/connect">my GitLab profile</a>, enjoy!
+I hope you are not afraid of Kafka Connect anymore: a basic connector is just two classes and ten methods big.</p>
+</div>
+<div class="paragraph">
+<p>We’ve also learned a little bit about SSE (server-sent events), RxJava, flowables, subscriptions, backpressure, and combining push and pull models.</p>
+</div>
+<div class="paragraph">
+<p>And chameleons!</p>
+</div>
+<div class="paragraph">
+<p>I’ll be writing another article about Kafka Streams soon, and till then…</p>
+</div>
+<div class="paragraph">
+<p><a href="https://en.wikipedia.org/wiki/Hold_Your_Colour">Hold your colour</a>!</p>
+</div>
+</div>
+</div>
+</div>
+
+  
+<footer class='entry-footer'>
+  <div class='container sep-before'><div class='tags'><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+  
+  <path d="M20.59,13.41l-7.17,7.17a2,2,0,0,1-2.83,0L2,12V2H12l8.59,8.59A2,2,0,0,1,20.59,13.41Z"/>
+  <line x1="7" y1="7" x2="7" y2="7"/>
+  
+</svg>
+<span class='screen-reader-text'>Tags: </span><a class='tag' href='/tags/kotlin/'>kotlin</a>, <a class='tag' href='/tags/kafka/'>kafka</a>, <a class='tag' href='/tags/pet-projects/'>pet projects</a></div>
+
+  </div>
+</footer>
+
+
+</article>
+
+
+<section id='comments' class='comments'>
+  <div class='container sep-before'>
+    <div class='comments-area'><div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "madhead-me" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+  </div>
+</section>
+
+      </main>
+
+      <footer id='footer' class='footer'>
+        <div class='container sep-before'><div class='copyright'>
+  <p></p>
+</div>
+
+        </div>
+      </footer>
+
+    </div>
+  </div><script>window.__assets_js_src="/assets/js/"</script>
+
+<script src='/assets/js/main.f54bd0ac.js'></script>
+
+</body>
+
+</html>
+

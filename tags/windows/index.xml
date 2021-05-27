@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>windows on madhead</title>
+    <link>https://madhead.me/tags/windows/</link>
+    <description>Recent content in windows on madhead</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Wed, 21 Mar 2018 16:50:00 +0300</lastBuildDate><atom:link href="https://madhead.me/tags/windows/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Mounting directories for Docker containers from Git Bash (Windows)</title>
+      <link>https://madhead.me/posts/git-bash-docker-mounts/</link>
+      <pubDate>Wed, 21 Mar 2018 16:50:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/posts/git-bash-docker-mounts/</guid>
+      <description>Just use double slashes when mounting and accessing directories from Git Bash in Docker on Windows:
+ docker run --rm -it -v //c//Users//Siarhei_Krukau//Downloads:/test alpine ls -la //test   </description>
+    </item>
+    
+  </channel>
+</rss>

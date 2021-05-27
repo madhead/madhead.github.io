@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>docker on madhead</title>
+    <link>https://madhead.me/tags/docker/</link>
+    <description>Recent content in docker on madhead</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Thu, 24 Dec 2020 22:05:00 +0300</lastBuildDate><atom:link href="https://madhead.me/tags/docker/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Graphviz @ Docker</title>
+      <link>https://madhead.me/posts/docker-dot/</link>
+      <pubDate>Thu, 24 Dec 2020 22:05:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/posts/docker-dot/</guid>
+      <description>&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;One more article about my Docker images.
+Graphviz doesn’t seem to have an official Docker image, so I’ve created &lt;a href=&#34;https://hub.docker.com/repository/docker/madhead/graphviz&#34;&gt;my own&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>(Alpine &#43; JFrog CLI) @ Docker</title>
+      <link>https://madhead.me/posts/lv-alpina/</link>
+      <pubDate>Sun, 16 Sep 2018 02:31:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/posts/lv-alpina/</guid>
+      <description>&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;One more article about my Docker images.&lt;/p&gt;
+&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>(Alpine &#43; AWS CLI &#43; Ansible) @ Docker</title>
+      <link>https://madhead.me/posts/awesible/</link>
+      <pubDate>Sat, 15 Sep 2018 17:14:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/posts/awesible/</guid>
+      <description>&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;I’m using &lt;a href=&#34;https://bitbucket.org/product/features/pipelines&#34;&gt;Bitbucket Pipelines&lt;/a&gt; widely for CI/CD at my current position.
+It sucks a little if compare it with &lt;a href=&#34;https://about.gitlab.com/features/gitlab-ci-cd&#34;&gt;GitLab CI/CD&lt;/a&gt;, but I don’t complain.&lt;/p&gt;
+&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>Preserving MongoDB shell history in Docker</title>
+      <link>https://madhead.me/posts/preserving-mongo-history-in-docker/</link>
+      <pubDate>Sat, 07 Jul 2018 05:24:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/posts/preserving-mongo-history-in-docker/</guid>
+      <description>&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;So, you run &lt;code&gt;mongo&lt;/code&gt; in disposable Docker containers and want to preserve shell history?
+Say no more, pal.&lt;/p&gt;
+&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>Mounting directories for Docker containers from Git Bash (Windows)</title>
+      <link>https://madhead.me/posts/git-bash-docker-mounts/</link>
+      <pubDate>Wed, 21 Mar 2018 16:50:00 +0300</pubDate>
+      
+      <guid>https://madhead.me/posts/git-bash-docker-mounts/</guid>
+      <description>Just use double slashes when mounting and accessing directories from Git Bash in Docker on Windows:
+ docker run --rm -it -v //c//Users//Siarhei_Krukau//Downloads:/test alpine ls -la //test   </description>
+    </item>
+    
+  </channel>
+</rss>

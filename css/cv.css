@@ -1,0 +1,162 @@
+#cv {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  width: 100%;
+}
+
+#cv a {
+  color: #E2E2E2;
+  text-decoration: none;
+}
+
+#cv a:hover {
+  color: #5A339E;
+}
+
+#general {
+	padding: 25px 35px;
+	border-bottom: 2px solid #5A339E;
+}
+
+#name {
+	float: left;
+}
+
+#name h1{
+    font-size: 2.5rem;
+}
+
+#name h2{
+    font-size: 1.7rem;
+}
+
+#contacts {
+	float: right;
+  padding: 1rem  0;
+}
+
+#details {
+  padding: 0 40px;
+}
+
+#details section {
+  border-top: 1px solid #5A339E;
+	padding: 20px 0 0;
+}
+
+#details section:first-child {
+  border-top: 0;
+}
+
+#details section:last-child {
+  padding: 20px 0 10px;
+}
+
+#details section>header {
+  float: left;
+	width: 25%;
+}
+
+#details section>header>h1 {
+  font-style: italic;
+  font-size: 1.7rem;
+  margin: 0;
+}
+
+#details section>.sectionContent {
+  margin: 0;
+  float: right;
+	width: 72.5%;
+}
+
+#details section>.sectionContent>article {
+  margin: 0;
+}
+
+#details section>.sectionContent>article>h2 {
+  margin: 0 0 0.5em;
+
+  font-size: 1.5rem;
+}
+
+#details section>.sectionContent>article>h3 {
+  margin: 0 0 0.5em;
+
+  font-size: 1.2rem;
+}
+
+.columns {
+	-moz-column-count:3;
+	-webkit-column-count:3;
+	column-count:3;
+}
+
+.clear {
+  clear: both;
+}
+
+.bulleted {
+  list-style-type: disc;
+  list-style-position: inside;
+}
+
+.talk-links {
+  float: right;
+  display: inline-block;
+}
+
+@media all and (min-width: 701px) and (max-width: 800px) {
+	.columns {
+    -moz-column-count:2;
+    -webkit-column-count:2;
+    column-count:2;
+	}
+}
+
+@media all and (max-width: 700px) {
+  #name, #contacts {
+		float: none;
+		width: 100%;
+		text-align: center;
+	}
+
+  #details section>header {
+    margin-bottom: 10px;
+  }
+
+  #details section>header, #details section>.sectionContent {
+    float: none;
+		width: 100%;
+  }
+
+	.columns {
+		-moz-column-count:2;
+		-webkit-column-count:2;
+		column-count:2;
+	}
+}
+
+@media all and (max-width: 480px) {
+  #details {
+    padding: 0 5px;
+  }
+
+	.columns {
+    -moz-column-count:1;
+    -webkit-column-count:1;
+    column-count:1;
+	}
+}
+
+@media print {
+  #cv * {
+    color: #000000;
+  }
+
+  #general, #details section {
+    border-color: #E2E2E2;
+  }
+
+  .talk-links {
+    display: none;
+  }
+}
